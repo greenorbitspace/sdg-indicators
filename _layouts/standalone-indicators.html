@@ -16,12 +16,12 @@
   {% for indicator in indicator_objects %}
 
   <div class="row mb-3">
-    <div class="col-1 ps-5">
+    <div class="col-2">
       <h4>
         <span class="indicator-number"><span class="visually-hidden">{{ page.t.general.indicator }}</span> {{ indicator.indicator_number }}</span>
       </h4>
     </div>
-    <div class="col-8">
+    <div class="col-7">
       <span class="indicator-name"><a href="{{ indicator.url }}">{{ indicator.name }}</a> ({{ indicator.archive_type }})</span>
     </div>
     <div class="col-12 col-md-2 ms-auto text-end text-nowrap">
