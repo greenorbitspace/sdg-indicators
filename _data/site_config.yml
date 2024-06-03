@@ -395,6 +395,7 @@ frontpage_introduction_banner:
     
     
     UK data for the Sustainable Development Goals are collated and reported here.
+<img class="row g-0 no-gutters up-image" src="{{ site.baseurl }}/assets/img/progress%chart.png" alt="image of reporting progress.">
 goal_image_base: 'https://open-sdg.github.io/sdg-translations/assets/img/goals'
 goal_image_extension: svg
 goals_page:
