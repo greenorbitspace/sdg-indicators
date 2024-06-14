@@ -416,7 +416,7 @@ ignored_disaggregations:
   - Age (default)
   - Urbanisation (default)
 indicator_config_form:
-  enabled: false
+  enabled: true
   dropdowns: []
   repository_link: ''
   translation_link: ''
