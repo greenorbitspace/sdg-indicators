@@ -421,7 +421,7 @@ indicator_config_form:
   repository_link: ''
   translation_link: ''
 indicator_data_form:
-  enabled: false
+  enabled: true
   repository_link: ''
 indicator_metadata_form:
   enabled: false
