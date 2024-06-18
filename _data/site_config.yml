@@ -418,7 +418,7 @@ ignored_disaggregations:
 indicator_config_form:
   enabled: true
   dropdowns: []
-  repository_link: ''
+  repository_link: /tree/develop/meta
   translation_link: ''
 indicator_data_form:
   enabled: true
