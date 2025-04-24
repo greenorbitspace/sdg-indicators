@@ -9,3 +9,4 @@ gem "jekyll-redirect-from"
 gem "jekyll-toc"
 gem "kramdown-parser-gfm"
 gem "webrick"
+gem 'jekyll-open-sdg-plugins', git: 'https://github.com/open-sdg/jekyll-open-sdg-plugins.git', branch: '2.4.0-dev'
