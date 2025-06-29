@@ -2,6 +2,7 @@
 
 # Tell the Remote Theme plugin to use the Open SDG platform (Jekyll theme).
 remote_theme: open-sdg/open-sdg@2.3.2
+destination: public
 
 #UK-specific config settings
 survey_url: https://www.smartsurvey.co.uk/s/EZZRYJ/

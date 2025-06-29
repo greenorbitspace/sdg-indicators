@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+        <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Promise%2CString.prototype.includes%2CCustomEvent%2CArray.prototype.includes%2CArray.prototype.find%2CObject.assign%2CObject.values%2CObject.entries%2CArray.from%2CSet%2CArray.prototype.findIndex%2Cfetch"></script>
+<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.15.0/js/canvas-to-blob.min.js"></script>
+
+        <script>
+// This is where we initialise any global variables, namespaced in "opensdg".
+var opensdg = {
+
+  // A base URL for asynchronous calls to SDG data.
+  remoteDataBaseUrl: 'https://ONSdigital.github.io/sdg-data/en',
+
+  chartConfigAlterations: [],
+  // A hook which can be used to modify the configuration for Chart.js.
+  chartConfigAlter: function(callback) {
+    this.chartConfigAlterations.push(callback);
+  },
+
+  tableConfigAlterations: [],
+  // A hook which can be used to modify the configuration for Datatables.
+  tableConfigAlter: function(callback) {
+    this.tableConfigAlterations.push(callback);
+  },
+
+  // A hook which can be replaced to alter whether/how the values that are
+  // displayed on indicator tables/graphs get rounded. A "context" parameter
+  // is also passed which contains additional information.
+  dataRounding: function(value, context) {
+    // Alterations go here.
+    return value;
+  },
+
+  // A hook which can be used to alter the data before it is displayed on charts/tables.
+  dataDisplayAlterations: [],
+  dataDisplayAlter: function(callback) {
+    this.dataDisplayAlterations.push(callback);
+  },
+
+  // Disaggregations which should be ignored on indicator pages.
+  ignoredDisaggregations: null,
+
+  language: 'en',
+
+  mapColors: {
+    "default": [
+        "#c4e1c6",
+        "#b0d1b3",
+        "#9bc2a1",
+        "#87b28f",
+        "#74a37c",
+        "#60946b",
+        "#4d8559",
+        "#3a7747",
+        "#276836"
+    ]
+},
+};
+
+</script>
+
+        <script>
+// JavaScript container for translation data.
+var translations = {
+  //Javascript version of the "t" filter from jekyll-open-sdg-plugins.
+  t: function(key) {
+
+    if (!key || typeof key !== 'string') {
+      return '';
+    }
+
+    // The majority of uses of this function are to translate disaggregation
+    // data. To spare data providers of needing to enter "data." in front of
+    // their disaggregation data, we specifically look for that here.
+    if (typeof this.data === 'object' && this.data !== null && this.data[key]) {
+      return this.data[key];
+    }
+
+    var originalKey = key;
+    var drilled = this;
+    var levelsDrilled = 0;
+    var levels = key.split('.');
+
+    for (var level in levels) {
+      // If we have drilled down to soon, abort.
+      if (typeof drilled !== 'object') {
+        break;
+      }
+
+      if (levels[level] in drilled) {
+        drilled = drilled[levels[level]];
+        levelsDrilled += 1;
+      }
+    }
+
+    // If we didn't drill the right number of levels, return the original string.
+    if (levels.length != levelsDrilled) {
+      return originalKey;
+    }
+
+    // Otherwise we must have drilled all the way.
+    return drilled;
+  },
+};
+</script>
+
+        <!-- Basic Page Needs
+        ================================================== -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Mobile Specific Metas
+        ================================================== -->
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Title and meta description
+        ================================================== -->
+
+        
+    <title>International work - U.K. Indicators For The Sustainable Development Goals</title>
+
+
+
+        
+        <meta name="robots" content="noindex, nofollow">
+        
+
+        <!--[if IE 9]>
+        <script src="/sdg-indicators/assets/js/lib/classList.js"></script>
+        <![endif]-->
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/sdg-indicators/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/sdg-indicators/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/sdg-indicators/assets/img/favicons/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/sdg-indicators/assets/img/favicons/favicon.ico" />
+
+        
+        <link rel="manifest" href="/sdg-indicators/manifest.json">
+        
+
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250629235004">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+        <link rel="stylesheet" href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css"  crossorigin=""/>
+        <link rel="stylesheet" href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'  crossorigin=""/>
+        <link rel="stylesheet" href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css"  crossorigin=""/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css" crossorigin="">
+        <link rel="stylesheet" href="https://cdn.kiprotect.com/klaro/v0.7/klaro.min.css" crossorigin=""/>
+        
+
+        
+
+
+        <!--[if IE]>
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css">
+        <![endif]-->
+
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css">
+<!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+
+
+    </head>
+<body class="language-en
+layout-post
+">
+<!-- <div class="container"> -->
+
+
+
+<script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
+
+<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Skip to main content</a>
+
+<script>
+  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+</script>
+<div id="cookie-banner" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+  <div class="govuk-cookie-banner__message govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on sdgdata.gov.uk</h2>
+
+        <div class="govuk-cookie-banner__content">
+          <p>We use some essential cookies to make this service work.</p>
+          <p>We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      <button id="cookie-accept" value="accept" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+        Accept analytics cookies
+      </button>
+      <button id="cookie-reject" value="reject" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+        Reject analytics cookies
+      </button>
+      <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
+    </div>
+  </div>
+</div>
+<div id="cookie-banner-accept" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+  <div class="govuk-cookie-banner__message govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-cookie-banner__content">
+          <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      <a id="hide-accept" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
+          Hide this message
+      </a>
+    </div>
+  </div>
+</div>
+<div id="cookie-banner-reject" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+  <div class="govuk-cookie-banner__message govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-cookie-banner__content">
+          <p>You’ve rejected analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      <a id="hide-reject" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
+          Hide this message
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<div class="container internet-explorer-message">
+    <h2 class="internet-explorer-message-title">This internet browser is no longer supported</h2>
+    <p class="internet-explorer-message-body">We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.</p>
+</div>
+<div id="disclaimer">
+    
+<div class="container">
+  <div class="disclaimer-alert">
+    <p><strong class="phase-tag">BETA</strong>
+    Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts.
+     <a id="takepartButton" aria-labelledby="takepartButton" href="https://www.smartsurvey.co.uk/s/EZZRYJ/" target="_blank" class="btn btn-primary btn-download btn-takepart" role="link">Take the survey</a>
+
+    </p> 
+    <p>
+      <strong>
+      Since September 2023 we have <a href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities">paused</a>
+      the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is
+      published and whether newer data will become available in future. You can also find up to date SDG data on the
+      <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a> which reports globally comparable data.
+      </strong>
+    </p>
+  </div>
+</div>
+
+
+</div>
+
+<header role="banner" class="">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start">
+            <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
+    <img src="/sdg-indicators/assets/img/SDG_logo.png" alt="Sustainable Development Goals - 17 Goals to Transform our World" />
+</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Show navigation menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="d-flex flex-wrap w-100 justify-content-between">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav" id="menu"><li class="nav-item ">
+    <a class="nav-link" href="/sdg-indicators/">Home</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/sdg-indicators/reporting-status/">Reporting Status</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/sdg-indicators/publications/">Publications</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/sdg-indicators/updates/">Updates</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/sdg-indicators/faq/">FAQ</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/sdg-indicators/about/">About</a>
+</li></ul>
+    
+                </div>
+                <div class="header-search-bar">
+                    <form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
+    <div class="input-group">
+        <label class="visually-hidden" for="indicator_search">Search</label>
+        <input class="form-control" type="search" name="q" id="indicator_search" title="Search">
+        <span class="input-group-append">
+            <button class="btn btn-outline-secondary ms-n5" aria-label="Site search" id="search-btn" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</form>
+
+                </div>
+                <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
+    data-contrast-switch-to="" role="button" href="javascript:void(0)" data-on="click"
+data-event-category="Accessibility"
+data-event-action="Change contrast setting"
+data-event-label="high"
+>A</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<div id="top" tabindex=-1></div>
+
+
+
+<div class="container">
+  
+
+</div>
+
+
+<div id="main-content" class="container" role="main">
+  <div class="row">
+    <div class="col-md-12">
+      <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <h1 class="post-title" itemprop="name headline">International work</h1>
+        <div class="post-header">
+          <time class="post-date" datetime="2019-11-04T00:00:00+00:00" itemprop="datePublished">04 November 2019</time><ul class="post-categories"><li>International</li></ul><span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">SDGs team</span></span></div>
+
+        <div class="post-content" itemprop="articleBody">
+          
+
+
+    <p>The Department for International Development (DfID) has partnered with countries in Africa and Asia and we receive funding from DfID  to support these countries with their SDG reporting. Our aim is to help improve the quality and availability of SDG data for these overseas partners.</p>
+
+<p>The Open SDG software that we have used to build our SDG data site was developed by ONS in partnership with the Centre for Open Data Enterprise (CODE) and the United States Government. The software is open source and free to use, making it potentially accessible to all countries looking to create a data site to report their SDG data.</p>
+
+<p>We have worked with three countries to help them create and use their own country’s data site. Ghana was the first country to copy the UK SDG data site. We <a href="https://blog.ons.gov.uk/2019/01/18/supporting-ghanas-global-goals/">held a workshop to help our colleagues</a> from the Ghana Statistical Service set up their site and explained how to convert existing Ghana data into SDG indicator statistics.</p>
+
+<p>We repeated the process with our colleagues in National Statistics Institute Rwanda. We helped them create their own SDG data site, upload data and explained how to maintain the site. <a href="https://open-sdg.readthedocs.io/en/latest/case-studies/rwanda/">Their experience is given as a case study</a> to help other countries set up their own data site.</p>
+
+<p>We also worked with the United Nations Statistics Division (UNSD) to help the National Statistical Committee of the Kyrgyz Republic. Other countries can also <a href="https://open-sdg.readthedocs.io/en/latest/case-studies/kyrgyzstan/">learn from their experience in a case study</a>.</p>
+
+<p>Any country can create their own version of the SDG data site using <a href="https://open-sdg.readthedocs.io/en/latest/quick-start/">step-by-step online instructions</a>. Over ten countries have copied the site without direct help, to date.</p>
+
+<p>Some countries choose to customise their site. For example, Kazakhstan has <a href="https://kazstat.github.io/sdg-site-kazstat/">added visuals to their homepage</a>. Armenia has <a href="https://armstat.github.io/sdg-site-armenia/3/">added targets as well as indicators</a> and reports national indicators.</p>
+
+<p>The Sustainable Development Goals promote the idea of collaboration. With that in mind, it is important to make sure the SDG community shares new developments. Open SDG shares   software program code for additions, amendments and new features.It is a shared, open-source online GitHub resource. SDG community members can use the program code stored on the site to amend SDG data sites. The community encourages members to submit and review feature updates.</p>
+
+<p>Countries can copy the  Open SDG to create a new data site from scratch. The <a href="https://github.com/open-sdg/open-sdg/releases">Open SDG releases</a> incorporate any revised or new features. These include:
+-	data visualisations
+-	accessibility improvements
+-	language translations
+-	reporting status categories</p>
+
+<p>Open SDG has provided updates to available features following requests from community members. Recent new program code allows people to <a href="https://sustainabledevelopment-rwanda.github.io/sdg-indicators/reporting-status/">mark SDG indicators as ‘not applicable’</a>, for example.</p>
+
+<p>We are working with CODE and the United Nations Statistics Division (UNSD) to develop a way to use data and metadata in SDMX format. We have fixed various data visualisation bugs particularly in relation to maps. We also and added language translations in German, Spanish, French, Russian, Kazakh, Armenian and Arabic.</p>
+
+<p>For more information about the international work we are doing, please <a href="/sdg-indicators/contact-us">contact us</a>.</p>
+
+
+
+        </div>
+      </article>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+<footer role="contentinfo">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div id="footerLinks">
+                    <ul>
+                        <li>
+                            <a href="https://open-sdg.org">Built using Open SDG</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/sdg-indicators/contact-us">Contact us</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://twitter.com/ONS" target="_blank">Twitter</a>
+                            
+                        </li>
+                        <li>
+                            <a href="/sdg-indicators/cookies-no-javascript/">Cookies</a>
+                            
+                        </li>
+                        <li>
+                            <a href="/sdg-indicators/privacy-notice/">Privacy</a>
+                            
+                        </li>
+                        <li>
+                            <a href="/sdg-indicators/accessibility-statement/">Accessibility statement</a>
+                            
+                        </li>
+                        
+                        
+                        
+                        <li>
+                            <a href="/sdg-indicators/config">Configuration</a>
+                        </li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+         
+
+<div class="row">
+  <div class="col-xs-12">
+    <div id="oglLicense">
+        <img alt="Open Government Licence logo" src="/sdg-indicators/assets/img/OGL_logo.png" width="35px" class="me-2">All data is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+    </div>
+  </div>
+</div>
+<div class="mb-2"></div>
+
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js" integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+
+
+<script>
+  
+
+
+var klaroConfig = {
+    noAutoLoad: true, // no autoload because we have a custom notice and form
+    storageMethod: 'cookie',
+    cookieName: 'cookie_settings',
+    cookieExpiresAfterDays: 365,
+    default: false,
+    services: [
+        {
+            name: 'contrast',
+            default: true,
+            cookies: ['contrast'],
+            required: true,
+        },
+        
+        {
+            name: 'google-analytics',
+            
+            cookies: ['_gat', '_gid', '_ga'],
+            
+        },
+        
+        
+    ],
+};
+
+  klaroConfig.lang = 'en';
+klaroConfig.translations = {
+    en: {
+        acceptAll: "Accept all",
+        acceptSelected: "Accept selected",
+        close: "Close",
+        consentModal: {
+            description: "Here you can change which cookies you're happy for us to use.",
+            title: "Cookie settings",
+        },
+        consentNotice: {
+            changeDescription: "The cookies used on this site have changed since you last visited, please renew your consent.",
+            description: "We use some essential cookies to make this service work. We’d also like to use {purposes} so we can understand how you use the service and make improvements.",
+            learnMore: "View cookies",
+            testing: "Testing mode!",
+        },
+        contextualConsent: {
+            acceptAlways: "Always",
+            acceptOnce: "Yes",
+            description: "Do you want to load external content supplied by {title}?",
+        },
+        decline: "Reject additional cookies",
+        ok: "Accept additional cookies",
+        poweredBy: "Realized with Klaro!",
+        privacyPolicy: {
+            name: "privacy policy",
+            text: "To learn more, please read our privacy policy.",
+        },
+        purposeItem: {
+            service: "service",
+            services: "services",
+        },
+        purposes: {
+            functional: {
+                description: "Essential cookies keep your information secure, and do things like remember your preferences and the choices you make whilst you use the website. They always need to be on.",
+                title: "Essential cookies",
+            },
+            analytics: {
+                description: "These services collect information about how you use the website. We use this data to help make the website better.",
+                title: "Analytics cookies",
+            },
+        },
+        save: "Save",
+        service: {
+            disableAll: {
+                description: "Use this switch to enable or disable all services.",
+                title: "Enable or disable all services",
+            },
+            optOut: {
+                description: "This services is loaded by default (but you can opt out)",
+                title: "(opt-out)",
+            },
+            purpose: "purpose",
+            purposes: "purposes",
+            required: {
+                description: "This service is always required",
+                title: "(always required)",
+            },
+        },
+    },
+};
+var allRequired = true;
+klaroConfig.services.forEach(function(service) {
+    if (!service.required) {
+        allRequired = false;
+    }
+    if (service.name === 'contrast') {
+        service.translations = {
+            en: {
+                description: "Retains active state of accessibility services",
+                title: "Accessibility mode",
+            },
+        }
+    }
+    else if (service.name === 'cookie_settings') {
+        service.translations = {
+            en: {
+                description: "Saves your cookie consent settings",
+                title: "Cookie settings",
+            },
+        }
+    }
+    else if (service.name === 'google-analytics') {
+        service.translations = {
+            en: {
+                description: "Collects information about page visits using Google Analytics",
+                title: "Google Analytics",
+            },
+        }
+    }
+});
+
+if (allRequired) {
+    klaroConfig.translations['en'].consentNotice.description = "We use some essential cookies to make this service work. They always need to be on.";
+    klaroConfig.translations['en'].ok = "OK";
+    klaroConfig.hideDeclineAll = true;
+    klaroConfig.hideLearnMore = true;
+}
+
+</script>
+<script src="https://cdn.kiprotect.com/klaro/v0.7/klaro-no-css.js"></script>
+<script>translations['cookies'] = translations['cookies'] || {};
+    translations['cookies']['cookie_settings'] = 'Cookie settings';</script>
+
+
+
+
+
+
+
+<script>translations['general'] = translations['general'] || {};
+    translations['general']['hide'] = 'hide';</script>
+
+<script>translations['search'] = translations['search'] || {};
+    translations['search']['search'] = 'Search';</script>
+
+<script src='/sdg-indicators/assets/js/sdg.js?v=20250629235004'></script>
+<script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"></script>
+<script src="/sdg-indicators/assets/js/govuk.js"></script>
+<script>
+  window.GOVUKFrontend.initAll()
+</script>
+    
+    
+    <script src="/sdg-indicators/assets/js/custom.js?v=20250629235004"></script><script>
+    new indicatorInit();
+    new accessibilitySwitcher();
+</script>
+
+
+</body>
+</html>

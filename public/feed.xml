@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>U.K. Indicators For The Sustainable Development Goals</title>
+    <description></description>
+    <link>https://rjmlaird.github.io/sdg-indicators/</link>
+    <atom:link href="https://rjmlaird.github.io/sdg-indicators/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 29 Jun 2025 23:50:04 +0100</pubDate>
+    <lastBuildDate>Sun, 29 Jun 2025 23:50:04 +0100</lastBuildDate>
+    <generator>Jekyll v3.9.3</generator>
+    
+      <item>
+        <title>Use of non-official sources for SDG reporting</title>
+        <description>&lt;p&gt;In July 2021 we published a detailed outline of our approach to assessing the quality and suitability of statistics from non-official sources for SDG reporting. We produced a &lt;a href=&quot;https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/uksustainabledevelopmentgoalsuseofnonofficialsources&quot;&gt;transparent protocol&lt;/a&gt; with a simple scoring system based on the pillars of the UKSA &lt;a href=&quot;https://code.statisticsauthority.gov.uk/the-code/&quot;&gt;Code of Practice for Statistics&lt;/a&gt; and critical SDG characteristics. Putting this protocol in place was the result of collaborative work and feedback from across the GSS. It allows us to expand our breadth of sources beyond official statistics without compromising on quality. As a result, more vulnerable populations and environments could be highlighted as we fill outstanding headline and disaggregation gaps, making sure no-one and no-where is left behind.&lt;/p&gt;
+
+&lt;p&gt;In brief, the structure of the protocol includes an initial pass or fail gateway with the following essential criteria:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ethics and privacy&lt;/li&gt;
+  &lt;li&gt;transparency and accountability&lt;/li&gt;
+  &lt;li&gt;need&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If the source passes on all of these elements, it proceeds to be scored on a scale of 0 (not acceptable) to 3 (high score) on the criteria:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;relevance&lt;/li&gt;
+  &lt;li&gt;methods&lt;/li&gt;
+  &lt;li&gt;coverage&lt;/li&gt;
+  &lt;li&gt;timeliness and ongoing availability&lt;/li&gt;
+  &lt;li&gt;data quality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A statistical output from a non-official source with an average score of over 1.5, and no scores of 0, is considered appropriate for SDG reporting. Using this system, we can see where strengths and weaknesses lie for each potential data source.&lt;/p&gt;
+
+&lt;p&gt;The scoring criteria listed above represent the latest version as of March 2022. This version differs slightly from the one published in the original publication from July 2021. We have refined the original scoring system following practical use within the SDG team, and dissemination at various conferences and workshops. The change affects the second stage of the scoring, where we have removed the original criteria of “data journey awareness” and “quality assurance”. Instead, we merged these into a single dimension called “data quality”. This change fits better with the details available for most non-official statistical sources. It still captures important and critical aspects of data quality, such as reliability, validity and quality assurance.&lt;/p&gt;
+
+&lt;p&gt;Using this protocol, we have assessed the non-official sources already used in SDG reporting, and confirmed they are fit for purpose. We also have plans to use further non-official sources to fill current gaps. For example, we are looking to fill sub-indicator headline gaps for &lt;a href=&quot;https://sdgdata.gov.uk/6-6-1/&quot;&gt;indicator 6.6.1&lt;/a&gt; using National River Flow Archive data. Another sub-indicator has already been filled with non-official statistics from the British Geological Survey. Also, headline gap for &lt;a href=&quot;https://sdgdata.gov.uk/14-1-1/&quot;&gt;indicator 14.1.1&lt;/a&gt; is soon going to be filled with non-official statistics based on Marine Conservation Society beach litter data.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/uksustainabledevelopmentgoalsuseofnonofficialsources&quot;&gt;original publication&lt;/a&gt; of the protocol, we emphasised that we would prioritise headline gaps, but we committed to outline a set of priorities for filling disaggregation gaps. Here we state that if we need to prioritise due to potential multiple non-official sources, this will be done based on disaggregations explicitly mentioned in the indicator’s title (we call these &lt;i&gt;required disaggregations&lt;/i&gt;). For example, if the indicator has a required disaggregation by age or sex, we will prioritise non-official sources that help to fill those gaps. On the other hand, if a non-official source provides age or sex (or another disaggregation) for an indicator that does not explicitly require this breakdown in its title, the source will be classed as a lower priority. However, if we are in a position where resource is not an issue, we will aim to fill any available disaggregation or headline gap.&lt;/p&gt;
+
+&lt;p&gt;This protocol for assessment of non-official sources has gathered much interest internationally, and we have shared lessons learnt and appropriate resources with other National Statistical Institutes and through dissemination across various UN forums. This work continues to evolve, so we will update and refine in the future as necessary as we implement it. We also plan to publish a version for assessment of non-official qualitative sources relevant to SDGs. Some user research has already been done in this area, and we know there is an appetite for contextual information around indicators. As always, we welcome any feedback and suggestions.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+        <link>https://rjmlaird.github.io/sdg-indicators/updates/2022/03/18/NOP-update.html</link>
+        <guid isPermaLink="true">https://rjmlaird.github.io/sdg-indicators/updates/2022/03/18/NOP-update.html</guid>
+        
+        
+        <category>Data sources</category>
+        
+      </item>
+    
+      <item>
+        <title>2020 indicator changes</title>
+        <description>&lt;p&gt;The UN has recommended 36 changes to the Sustainable Development Goal (SDG) indicators. This was one of the findings of the UN’s &lt;a href=&quot;https://unstats.un.org/sdgs/iaeg-sdgs/2020-comp-rev/&quot;&gt;2020 Comprehensive Review Process&lt;/a&gt;. Within these four groups, the breakdown of changes amounts to:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;14 proposals for replacements of existing indicators&lt;/li&gt;
+  &lt;li&gt;8 proposals for revisions of existing indicators&lt;/li&gt;
+  &lt;li&gt;8 proposals for additional indicators&lt;/li&gt;
+  &lt;li&gt;6 proposals for deleting indicators, including the partial deletion of 4.2.1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://unstats.un.org/sdgs/iaeg-sdgs/2020-comprev/UNSC-proposal/&quot;&gt;The UN has detailed more information on these proposals&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Update (08/04/2021)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The planned indicator updates have now been completed, and the current information on the SDG platform is aligned with the UN’s 2020 Comprehensive Review.&lt;/p&gt;
+
+&lt;p&gt;The indicators that were revised or deleted as part of the updates have been &lt;a href=&quot;https://sdgdata.gov.uk/archived-indicators/&quot;&gt;archived&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As a result of these changes, there is an overall drop in the reporting percentage from 81% to 79%. This reduction is only temporary, and the SDG team is in the process of quality assuring data sources which will fill the new indicator gaps. It is anticipated that the reporting status will be updated with an increased percentage within the next couple of months.&lt;/p&gt;
+
+&lt;p&gt;Details of changes are in the following tables.&lt;/p&gt;
+
+&lt;h3 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-1&quot;&gt;Goal 1&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-2&quot;&gt;Goal 2&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-3&quot;&gt;Goal 3&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-4&quot;&gt;Goal 4&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-5&quot;&gt;Goal 5&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-6&quot;&gt;Goal 6&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-7&quot;&gt;Goal 7&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-8&quot;&gt;Goal 8&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-9&quot;&gt;Goal 9&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-10&quot;&gt;Goal 10&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-11&quot;&gt;Goal 11&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-12&quot;&gt;Goal 12&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-13&quot;&gt;Goal 13&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-14&quot;&gt;Goal 14&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-15&quot;&gt;Goal 15&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-16&quot;&gt;Goal 16&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#goal-17&quot;&gt;Goal 17&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;goal-1&quot;&gt;Goal 1&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1.a.1: Proportion of domestically generated resources allocated by the government directly to poverty reduction programmes&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;Deleted&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1.a.3: Sum of total grants and non-debt-creating inflows directly allocated to poverty reduction programmes as a proportion of GDP&lt;/td&gt;
+      &lt;td&gt;1.a.1: Total official development assistance grants&lt;br /&gt; from all donors that focus on poverty reduction as a share of the recipient country&apos;s gross national income&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1.b.1: Proportion of government recurrent and capital spending to sectors that disproportionately benefit women, the poor and vulnerable groups&lt;/td&gt;
+      &lt;td&gt;1.b.1: Pro-poor public social spending&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-2&quot;&gt;Goal 2&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 2.2.3&lt;/td&gt;
+      &lt;td&gt;2.2.3: Prevalence of anaemia in women aged 15 to 49 years, by pregnancy status (percentage)&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2.4.1: Proportion of agricultural area under productive and sustainable agriculture&lt;/td&gt;
+      &lt;td&gt;Revision of metadata: Change in “use of biodiversity supporting practices” sub-indicator&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2.5.2: Proportion of local breeds classified as being at risk, not at risk or at unknown level of risk of extinction&lt;/td&gt;
+      &lt;td&gt;2.5.2: Proportion of local breeds classified as being at risk of extinction&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+    
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-3&quot;&gt;Goal 3&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 3.d.2&lt;/td&gt;
+      &lt;td&gt;3.d.2: Percentage of bloodstream infections due to selected antimicrobial-resistant organisms&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-4&quot;&gt;Goal 4&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 4.1.2&lt;/td&gt;
+      &lt;td&gt;4.1.2: Completion rate (primary education, lower secondary education, upper secondary education)&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4.2.1: Proportion of children under 5 years of age who are developmentally on track in health, learning and psychosocial well-being, by sex&lt;/td&gt;
+      &lt;td&gt;It is proposed that the portion of the indicator that measures progress for children between 0 and 23 months of age, which is currently in tier III, be deleted&lt;/td&gt;
+      &lt;td&gt;Changed / part deleted&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-5&quot;&gt;Goal 5&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5.a.2: Proportion of countries where the legal framework (including customary law) guarantees women’s equal rights to land ownership and/or control&lt;/td&gt;
+      &lt;td&gt;Revision of metadata: Proxies D and F may be considered conditional measures and therefore would not need to be reported if and when de facto gender equality in land ownership has already been achieved&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-6&quot;&gt;Goal 6&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;6.3.1: Proportion of wastewater safely treated&lt;/td&gt;
+      &lt;td&gt;6.3.1: Proportion of domestic and industrial wastewater flows safely treated&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-7&quot;&gt;Goal 7&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7.b.1: Investments in energy efficiency as a proportion of GDP and the amount of foreign direct investment in financial transfer for infrastructure and technology to sustainable development services&lt;/td&gt;
+      &lt;td&gt;7.b.1: Installed renewable energy-generating capacity in developing countries (in watts per capita) (repeated in the proposed replacement for indicator 12.a.1)&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-8&quot;&gt;Goal 8&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8.3.1: Proportion of informal employment in non-agriculture employment, by sex&lt;/td&gt;
+      &lt;td&gt;8.3.1: Proportion of informal employment in total employment, by sector and sex&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8.9.2: Proportion of jobs in sustainable tourism industries out of total tourism jobs&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;Deleted&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-9&quot;&gt;Goal 9&lt;/h3&gt;
+&lt;p&gt;No changes&lt;/p&gt;
+
+&lt;h3 id=&quot;goal-10&quot;&gt;Goal 10&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 10.4.2&lt;/td&gt;
+      &lt;td&gt;10.4.2: Redistributive impact of fiscal policy&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 10.7.3&lt;/td&gt;
+      &lt;td&gt;10.7.3: Number of migrants killed while attempting to cross maritime, land and air borders&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 10.7.4&lt;/td&gt;
+      &lt;td&gt;10.7.4: Proportion of the population who are refugees, by country of origin&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-11&quot;&gt;Goal 11&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;11.6.1: Proportion of urban solid waste regularly collected and with adequate final discharge out of total urban solid waste generated, by cities&lt;/td&gt;
+      &lt;td&gt;11.6.1: Proportion of municipal solid waste collected and managed in controlled facilities out of total municipal waste generated, by cities&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;11.a.1: Proportion of population living in cities that implement urban and regional development plans integrating population projections and resource needs, by size of city&lt;/td&gt;
+      &lt;td&gt;11.a.1: Number of countries that have national urban policies or regional development plans that (a) respond to population dynamics; (b) ensure balanced territorial development; and (c) increase local fiscal space&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;11.c.1: Proportion of financial support to the least developed countries that is allocated to the construction and retrofitting of sustainable, resilient and resource-efficient buildings utilizing local materials&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;Deleted&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-12&quot;&gt;Goal 12&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;12.a.1: Amount of support to developing countries on research and development for sustainable consumption and production and environmentally sound technologies&lt;/td&gt;
+      &lt;td&gt;12.a.1: Installed renewable energy-generating capacity in developing countries (in watts per capita) (repeat of the proposed replacement for indicator 7.b.1)&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;12.b.1: Number of sustainable tourism strategies or policies and implemented action plans with agreed monitoring and evaluation tools&lt;/td&gt;
+      &lt;td&gt;12.b.1: Implementation of standard accounting tools to monitor the economic and environmental aspects of tourism sustainability&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-13&quot;&gt;Goal 13&lt;/h3&gt;
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;13.2.1: Number of countries that have communicated the establishment or operationalization of an integrated policy/strategy/plan which increases their ability to adapt to the adverse impacts of climate change, and foster climate resilience and low greenhouse gas emissions development in a manner that does not threaten food production (including a national adaptation plan, nationally determined contribution, national communication, biennial update report or other)&lt;/td&gt;
+      &lt;td&gt;13.2.1: Number of countries with nationally determined contributions, long-term strategies, national adaptation plans, strategies as reported in adaptation communications and national communications (repeated with a slight amendment in the proposed replacement for indicator 13.b.1)&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 13.2.2&lt;/td&gt;
+      &lt;td&gt;13.2.2: Total greenhouse gas emissions per year&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;13.3.1: Number of countries that have integrated mitigation, adaptation, impact reduction and early warning into primary, secondary and tertiary curricula&lt;/td&gt;
+      &lt;td&gt;13.3.1: Extent to which (i) global citizenship education and (ii) education for sustainable development are mainstreamed in (a) national education policies; (b) curricula; (c) teacher education; and (d) student assessment (repeated in the refinement to be made to indicators 4.7.1 and 12.8.1)&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;13.3.2: Number of countries that have communicated the strengthening of institutional, systemic and individual capacity-building to implement adaptation, mitigation and technology transfer, and development actions&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;Deleted&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;13.a.1: Mobilized amount of United States dollars per year between 2020 and 2025 accountable towards the $100 billion commitment&lt;/td&gt;
+      &lt;td&gt;13.a.1: Amounts provided and mobilized in United States dollars per year in relation to the continued existing collective mobilization goal of the $100 billion commitment through to 2025&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;13.b.1: Number of least developed countries and small island developing States that are receiving specialized support, and amount of support, including finance, technology and capacity-building, for mechanisms for raising capacities for effective climate change-related planning and management, including focusing on women, youth and local and marginalized communities&lt;/td&gt;
+      &lt;td&gt;13.b.1: Number of least developed countries and small island developing States with nationally determined contributions long-term strategies, national adaptation plans, strategies as reported in adaptation communications and national communications (repeat of the proposed replacement for indicator 13.2.1, with a slight amendment)&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-14&quot;&gt;Goal 14&lt;/h3&gt;
+&lt;p&gt;No changes&lt;/p&gt;
+
+&lt;h3 id=&quot;goal-15&quot;&gt;Goal 15&lt;/h3&gt;
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;15.9.1: Progress towards national targets established in accordance with Aichi Biodiversity Target 2 of the Strategic Plan for Biodiversity 2011–2020&lt;/td&gt;
+      &lt;td&gt;15.9.1: (a) Number of countries that have established national targets in accordance with or similar to Aichi Biodiversity Target 2 of the Strategic Plan for Biodiversity 2011–2020 in their national biodiversity strategy and action plans and the progress reported towards these targets; and (b) integration of biodiversity into national accounting and reporting systems, defined as implementation of the System of Environmental-Economic Accounting&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;15.b.1: Official development assistance and public expenditure on conservation and sustainable use of biodiversity and ecosystems&lt;/td&gt;
+      &lt;td&gt;15.a.1 and 15.b.1 (a) Official development assistance on conservation and sustainable use of biodiversity; and (b) revenue generated and finance mobilized from biodiversity-relevant economic instruments&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-16&quot;&gt;Goal 16&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New indicator 16.3.3&lt;/td&gt;
+      &lt;td&gt;16.3.3: Proportion of the population who have experienced a dispute in the past two years and who accessed a formal or informal dispute resolution mechanism, by type of mechanism&lt;/td&gt;
+      &lt;td&gt;New&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;goal-17&quot;&gt;Goal 17&lt;/h3&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;colgroup&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;fourtyfive&quot; /&gt;
+    &lt;col class=&quot;ten&quot; /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old Indicator&lt;/th&gt;
+      &lt;th&gt;New indicator&lt;/th&gt;
+      &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;17.3.1: Foreign direct investment (FDI), official development assistance and South-South cooperation as a proportion of total domestic budget&lt;/td&gt;
+      &lt;td&gt;17.3.1: Foreign direct investment, official development assistance and South-South cooperation as a proportion of gross national income&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;17.5.1: Number of countries that adopt and implement investment promotion regimes for least developed countries&lt;/td&gt;
+      &lt;td&gt;17.5.1: Number of countries that adopt and implement investment promotion regimes for developing countries, including the least developed countries&lt;/td&gt;
+      &lt;td&gt;Changed&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;17.6.1: Number of science and/or technology cooperation agreements and programmes between countries, by type of cooperation&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;Deleted&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;17.17.1: Amount of United States dollars committed to (a) public-private partnerships and (b) civil society partnerships&lt;/td&gt;
+      &lt;td&gt;17.17.1: Amount in United States dollars committed to public-private partnerships for infrastructure&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;17.18.1: Proportion of sustainable development indicators produced at the national level with full disaggregation when relevant to the target, in accordance with the Fundamental Principles of Official Statistics&lt;/td&gt;
+      &lt;td&gt;17.18.1: Statistical capacity indicator for Sustainable Development Goal monitoring&lt;/td&gt;
+      &lt;td&gt;Replaced&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+</description>
+        <pubDate>Wed, 17 Feb 2021 00:00:00 +0000</pubDate>
+        <link>https://rjmlaird.github.io/sdg-indicators/updates/2021/02/17/2020-indicator-changes.html</link>
+        <guid isPermaLink="true">https://rjmlaird.github.io/sdg-indicators/updates/2021/02/17/2020-indicator-changes.html</guid>
+        
+        
+        <category>Indicator changes</category>
+        
+      </item>
+    
+      <item>
+        <title>Celebrating International Women&apos;s Day 2020</title>
+        <description>&lt;p&gt;In celebration of International Women’s Day on Sunday (8th March), we have looked at what the UK SDG data says about the experience of women in the UK today.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The percentage of &lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMDIsInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwczovL3N1c3RhaW5hYmxlZGV2ZWxvcG1lbnQtdWsuZ2l0aHViLmlvLzUtNS0yLyJ9.bhNuYVZjHaLQcKc6FE57zlscqpxCseJT6yQFHmwFknM/br/75802142619-l&quot;&gt;women in management positions&lt;/a&gt; in the UK increased between 2013 and 2017 and is highest in younger women. In 2017, 48% of 16 to 24-year olds in managerial positions were women. This is compared with 38% in the 45 to 54 age group.&lt;/li&gt;
+  &lt;li&gt;In the last quarter of 2019, &lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMDMsInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwczovL3d3dy5vbnMuZ292LnVrL2VtcGxveW1lbnRhbmRsYWJvdXJtYXJrZXQvcGVvcGxlbm90aW53b3JrL3VuZW1wbG95bWVudC9idWxsZXRpbnMveW91bmdwZW9wbGVub3RpbmVkdWNhdGlvbmVtcGxveW1lbnRvcnRyYWluaW5nbmVldC9mZWJydWFyeTIwMjAifQ.qIoROSigtXedyXj0yiu2dDZsmIGAJMkIX82_xleHTk0/br/75802142619-l&quot;&gt;the percentage of young women who were not in education, employment or training&lt;/a&gt; in the UK was lower than men. The annual decrease of 43,000 in 2019 in the amount of young women in this situation, was the largest since July to September 2017 and the level reached a record low.&lt;/li&gt;
+  &lt;li&gt;In the UK in 2019 &lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMDQsInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwczovL3d3dy5vbnMuZ292LnVrL2J1c2luZXNzaW5kdXN0cnlhbmR0cmFkZS9pdGFuZGludGVybmV0aW5kdXN0cnkvYnVsbGV0aW5zL2ludGVybmV0dXNlcnMvbGF0ZXN0In0.Yd2MVRO-1W5q7BaI58rrlnBU07LmfB0dPSJbQMhmSno/br/75802142619-l&quot;&gt;the proportion of men who had recently used the internet was higher than women&lt;/a&gt;, although this difference has reduced since 2011. In 2019 this difference was driven by those in the oldest age groups. For example, 54% of men aged 75 and over were recent internet users, compared with 41% of women in this age group.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMDUsInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwczovL3N1c3RhaW5hYmxlZGV2ZWxvcG1lbnQtdWsuZ2l0aHViLmlvLzUtNS0xLyJ9.zM001gOdpRh086ElGWieYcvzovCukB2-ixcHlBIapxk/br/75802142619-l&quot;&gt;Female representation in the House of Commons has been increasing&lt;/a&gt; since 1997. The last official figures were reported before the 2019 general election. The House of Commons Library reported that a record 211 (32%) of MPs were women having risen from 27.8% in 1997. More female MPs (220) were elected in December 2019 but those figures have yet to be reported officially.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMDUsInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwczovL3N1c3RhaW5hYmxlZGV2ZWxvcG1lbnQtdWsuZ2l0aHViLmlvLzUtNS0xLyJ9.zM001gOdpRh086ElGWieYcvzovCukB2-ixcHlBIapxk/br/75802142619-l&quot;&gt;More girls than boys reach the learning standards expected for under 5 year olds in England&lt;/a&gt; (according to the Early Years Foundation Stage (EYFS)). In 2018 77% of girls in England reached at least the “expected” level compared with 63% of boys.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The SDGs framework gives a picture of the UK across a broad range of issues in one place. We are looking to collect more data to go beyond the headline measures to show how the issues they cover effect different groups of the population. The Goals aim to “leave no one behind” and the ONS has committed to the &lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMDgsInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwOi8vd3d3LmRhdGE0c2Rncy5vcmcvaW5pdGlhdGl2ZXMvaW5jbHVzaXZlLWRhdGEtY2hhcnRlciJ9._8dc3aKiMpXADryHt0joDSlcck84qaMOck5P2fQyVJI/br/75802142619-l&quot;&gt;Inclusive Data Charter&lt;/a&gt; which encourages an aim to break down headline data wherever possible, including by sex.&lt;/p&gt;
+
+&lt;p&gt;At ONS we are pulling together data from across Government and the country to do this.  Currently, the &lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMDksInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwczovL3N1c3RhaW5hYmxlZGV2ZWxvcG1lbnQtdWsuZ2l0aHViLmlvIn0.shZXGcNfehYrnyjZkNODqdN1o_gswCdQz2iVAq4ipu0/br/75802142619-l&quot;&gt;UK reports data&lt;/a&gt; for 77% of the 244 Sustainable Development Goals indicators.&lt;/p&gt;
+
+&lt;p&gt;We are working to find the best data and are experimenting to see where new statistics need to be created.  More information about this work can be found in &lt;a href=&quot;https://lnks.gd/l/eyJhbGciOiJIUzI1NiJ9.eyJidWxsZXRpbl9saW5rX2lkIjoxMTAsInVyaSI6ImJwMjpjbGljayIsImJ1bGxldGluX2lkIjoiMjAyMDAzMDYuMTgyODcyMjEiLCJ1cmwiOiJodHRwczovL2RhdGFzY2llbmNlY2FtcHVzLm9ucy5nb3YudWsvZGF0YS1zY2llbmNlLWZvci1zdXN0YWluYWJsZS1kZXZlbG9wbWVudC8ifQ.764KnZW3s47ACDKqft48zN5FHp-IP2DYR5OS9dyXWv4/br/75802142619-l&quot;&gt;a recent blog by the ONS’s Data Science Campus&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+        <link>https://rjmlaird.github.io/sdg-indicators/updates/2020/03/06/IWD-2020.html</link>
+        <guid isPermaLink="true">https://rjmlaird.github.io/sdg-indicators/updates/2020/03/06/IWD-2020.html</guid>
+        
+        
+        <category>Equality</category>
+        
+      </item>
+    
+      <item>
+        <title>International work</title>
+        <description>&lt;p&gt;The Department for International Development (DfID) has partnered with countries in Africa and Asia and we receive funding from DfID  to support these countries with their SDG reporting. Our aim is to help improve the quality and availability of SDG data for these overseas partners.&lt;/p&gt;
+
+&lt;p&gt;The Open SDG software that we have used to build our SDG data site was developed by ONS in partnership with the Centre for Open Data Enterprise (CODE) and the United States Government. The software is open source and free to use, making it potentially accessible to all countries looking to create a data site to report their SDG data.&lt;/p&gt;
+
+&lt;p&gt;We have worked with three countries to help them create and use their own country’s data site. Ghana was the first country to copy the UK SDG data site. We &lt;a href=&quot;https://blog.ons.gov.uk/2019/01/18/supporting-ghanas-global-goals/&quot;&gt;held a workshop to help our colleagues&lt;/a&gt; from the Ghana Statistical Service set up their site and explained how to convert existing Ghana data into SDG indicator statistics.&lt;/p&gt;
+
+&lt;p&gt;We repeated the process with our colleagues in National Statistics Institute Rwanda. We helped them create their own SDG data site, upload data and explained how to maintain the site. &lt;a href=&quot;https://open-sdg.readthedocs.io/en/latest/case-studies/rwanda/&quot;&gt;Their experience is given as a case study&lt;/a&gt; to help other countries set up their own data site.&lt;/p&gt;
+
+&lt;p&gt;We also worked with the United Nations Statistics Division (UNSD) to help the National Statistical Committee of the Kyrgyz Republic. Other countries can also &lt;a href=&quot;https://open-sdg.readthedocs.io/en/latest/case-studies/kyrgyzstan/&quot;&gt;learn from their experience in a case study&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Any country can create their own version of the SDG data site using &lt;a href=&quot;https://open-sdg.readthedocs.io/en/latest/quick-start/&quot;&gt;step-by-step online instructions&lt;/a&gt;. Over ten countries have copied the site without direct help, to date.&lt;/p&gt;
+
+&lt;p&gt;Some countries choose to customise their site. For example, Kazakhstan has &lt;a href=&quot;https://kazstat.github.io/sdg-site-kazstat/&quot;&gt;added visuals to their homepage&lt;/a&gt;. Armenia has &lt;a href=&quot;https://armstat.github.io/sdg-site-armenia/3/&quot;&gt;added targets as well as indicators&lt;/a&gt; and reports national indicators.&lt;/p&gt;
+
+&lt;p&gt;The Sustainable Development Goals promote the idea of collaboration. With that in mind, it is important to make sure the SDG community shares new developments. Open SDG shares   software program code for additions, amendments and new features.It is a shared, open-source online GitHub resource. SDG community members can use the program code stored on the site to amend SDG data sites. The community encourages members to submit and review feature updates.&lt;/p&gt;
+
+&lt;p&gt;Countries can copy the  Open SDG to create a new data site from scratch. The &lt;a href=&quot;https://github.com/open-sdg/open-sdg/releases&quot;&gt;Open SDG releases&lt;/a&gt; incorporate any revised or new features. These include:
+-	data visualisations
+-	accessibility improvements
+-	language translations
+-	reporting status categories&lt;/p&gt;
+
+&lt;p&gt;Open SDG has provided updates to available features following requests from community members. Recent new program code allows people to &lt;a href=&quot;https://sustainabledevelopment-rwanda.github.io/sdg-indicators/reporting-status/&quot;&gt;mark SDG indicators as ‘not applicable’&lt;/a&gt;, for example.&lt;/p&gt;
+
+&lt;p&gt;We are working with CODE and the United Nations Statistics Division (UNSD) to develop a way to use data and metadata in SDMX format. We have fixed various data visualisation bugs particularly in relation to maps. We also and added language translations in German, Spanish, French, Russian, Kazakh, Armenian and Arabic.&lt;/p&gt;
+
+&lt;p&gt;For more information about the international work we are doing, please &lt;a href=&quot;/sdg-indicators/contact-us&quot;&gt;contact us&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Nov 2019 00:00:00 +0000</pubDate>
+        <link>https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/international-work.html</link>
+        <guid isPermaLink="true">https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/international-work.html</guid>
+        
+        
+        <category>International</category>
+        
+      </item>
+    
+      <item>
+        <title>Funded work</title>
+        <description>&lt;p&gt;Our Sustainable Development Goals (SDG) project funds specific work across the Office for National Statistics (ONS). In this update those teams that receive SDG project funding explain the work they have been doing directly related to SDGs.&lt;/p&gt;
+
+&lt;h3 id=&quot;ons-centre-for-crime-and-justice&quot;&gt;ONS Centre for Crime and Justice&lt;/h3&gt;
+&lt;p&gt;ONS &lt;a href=&quot;https://blog.ons.gov.uk/2018/10/04/new-ons-centres-to-focus-on-the-public-policy-issues-that-matter/&quot;&gt;announced five centres focussing on key policy areas&lt;/a&gt; in 2018. Our [Centre for Crime and Justice] improves the understanding of the nature of crime.&lt;/p&gt;
+
+&lt;p&gt;This year, we reviewed all the ONS crime data used to report the SDG indicators. We have used the latest and the most appropriate data sources to update indicators as appropriate.&lt;/p&gt;
+
+&lt;p&gt;A key focus for us has been investigating SDG indicators for which data is not provided. This includes indicators on modern slavery, human trafficking and child exploitation (Goal 16). We have made progress exploring new research methods and identifying potential data sources to support these indicators. We engaged with stakeholders from across government, academia and the third sector to help shape the research.&lt;/p&gt;
+
+&lt;h3 id=&quot;ons-centre-for-equalities-and-inclusion&quot;&gt;ONS Centre for Equalities and Inclusion&lt;/h3&gt;
+&lt;p&gt;Our &lt;a href=&quot;https://www.ons.gov.uk/aboutus/whatwedo/programmesandprojects/centreforequalitiesandinclusion&quot;&gt;Centre for Equalities and Inclusion&lt;/a&gt; was announced by ONS in 2018 too. We aim to work with others to ensure that the right data are available to address the main questions about fairness and equity in society.&lt;/p&gt;
+
+&lt;p&gt;We are working with the SDG team to develop the protected characteristics which align with the SDG disaggregations. New data sources and methods could benefit work programmes. They could also increase efforts for disadvantaged or discriminated groups.&lt;/p&gt;
+
+&lt;h3 id=&quot;centre-for-international-migration&quot;&gt;Centre for International Migration&lt;/h3&gt;
+&lt;p&gt;Migration is one of the main SDG disaggregations the United Nations requires countries to measure and report.
+The Centre for International Migration has published a range of research outputs in the last year. The following research reports will provide input to SDG indicators. These reports give breakdowns by migratory status to provide evidence on the contribution that international migrants make to public services and the economy.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/articles/internationalmigrationandtheeducationsectorwhatdoesthecurrentevidenceshow/2019-05-03&quot;&gt;International migration and the education sector&lt;/a&gt;: This outlines the impact and contribution of international migration on the education sector at a local area. This will provide disaggregations for indicators within Goal 4: Quality Education.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/articles/internationalmigrationandthehealthcareworkforce/2019-08-15&quot;&gt;International migration and the healthcare workforce&lt;/a&gt;: This draws on all available data on the migrant workforce in health care in the UK. This will provide a disaggregation for indicator 3.c.1; Health Worker density and distribution by migratory status.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In the coming year we will collaborate with colleagues across ONS to provide disaggregations for indicators related to birth rates and mortality using available data sources. We will also collaborate with colleagues from across the Government Statistical Service (GSS) to provide further disaggregations, specifically against Goal 4: Quality Education.&lt;/p&gt;
+
+&lt;h3 id=&quot;titchfield-city-group-on-ageing-and-age-disaggregated-data&quot;&gt;Titchfield City Group on Ageing and Age-disaggregated data&lt;/h3&gt;
+&lt;p&gt;In March 2018 the UN Statistics Committee endorsed the &lt;a href=&quot;https://unstats.un.org/unsd/methodology/citygroups/Titchfield.cshtml&quot;&gt;Titchfield City Group on Ageing and Age-disaggregated data&lt;/a&gt;. The main aim of our group is working with statistical organisations and others with a particular interest in ageing across the world to improve the measurement of ageing populations and older people. Age is one of the disaggregations required by the UN for measuring the SDGs. This is so that no one is left behind in progress towards the 2030 Agenda.&lt;/p&gt;
+
+&lt;p&gt;We discussed aligning our work to the SDGs at our &lt;a href=&quot;https://gss.civilservice.gov.uk/wp-content/uploads/2019/07/Report-of-the-2nd-technical-meeting-of-the-Titchfield-City-Group-11-12-June-2019.pdf&quot;&gt;second technical meeting in the Republic of Korea&lt;/a&gt;. The four objectives for this work strand are to:
+*	assess the data available to monitor the “Leave No-one Behind” pledge
+*	interface with the IAEG on SDG indicators and to identify data needs to monitor the SDG framework for older people
+*	contribute to harmonisation and standards for producing ageing related data for disaggregation of SDG indicators
+*	pilot innovative approaches to overcome challenges faced by NSOs in relation to availability and presentation of SDG data in relation to older people&lt;/p&gt;
+
+&lt;p&gt;In the past year we submitted a response to the Inter-Agency Expert Group (IAEG) for the SDGs 2020 indicator review. Over the coming year we will work on providing new age-related break downs of the SDG headline data for the UK.&lt;/p&gt;
+
+&lt;h3 id=&quot;natural-capital&quot;&gt;Natural Capital&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.ons.gov.uk/economy/nationalaccounts/uksectoraccounts/methodologies/naturalcapital&quot;&gt;Natural Capital&lt;/a&gt; links economic and environmental data. We use the resulting statistics to estimate the value of the goods and services provided by nature in the UK. We also provide environmental statistical support to the ONS SDG Team.&lt;/p&gt;
+
+&lt;p&gt;We are developing statistics about where air temperature is cooled by trees and water. Our aim is to highlight inequalities between different geographical locations according to deprivation levels. This can inform sub-categories of headline environmental data reported about the SDGs in the UK.&lt;/p&gt;
+
+&lt;p&gt;We are supporting the improvement of data reported for SDG indicators about marine protection. For SDG target 14.7 (indicator 14.7.1) we are working on linking data about fish stock sustainability and the fishing economy.&lt;/p&gt;
+
+&lt;h3 id=&quot;environmental-accounts&quot;&gt;Environmental Accounts&lt;/h3&gt;
+&lt;p&gt;The UK Environmental Accounts also link environmental and economic data. We have continued to help the ONS SDG team develop environmental related SDG indicators this year. We also highlighted the importance of SDG indicators within the UK Environmental Accounts in some publications.&lt;/p&gt;
+
+&lt;p&gt;We worked with the ONS SDG team to write our &lt;a href=&quot;https://www.ons.gov.uk/economy/environmentalaccounts/bulletins/greenhousegasintensityprovisionalestimatesuk/2017#toc&quot;&gt;Greenhouse gas intensity, provisional estimates, UK: 2017 release&lt;/a&gt;. It highlighted SDG target 9.4 (indicator 9.4.1) about carbon dioxide emissions for which our data is used to &lt;a href=&quot;https://sustainabledevelopment-uk.github.io/9-4-1/&quot;&gt;report the UK SDG statistics&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We analysed the environmental impact of burning organic materials alongside its contribution to the UK’s renewable energy industry. Our article, &lt;a href=&quot;https://www.ons.gov.uk/economy/environmentalaccounts/articles/aburningissuebiomassisthebiggestsourceofrenewableenergyconsumedintheuk/2019-08-30&quot;&gt;A burning issue: biomass is the biggest source of renewable energy consumed in the UK&lt;/a&gt; highlighted SDG target 7.2 (indicator 7.2.1). We are working to provide sub-categories for UK SDG data about air emissions.&lt;/p&gt;
+
+&lt;p&gt;We worked with the Department for the Environment, Food and Rural Affairs (DEFRA) and the University of Leeds on &lt;a href=&quot;https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/measuringmaterialfootprintintheuk2008to2016#toc&quot;&gt;Measuring material footprint in the UK: 2008 to 2016&lt;/a&gt;. The article presents updated estimates and discusses methodology for the UK’s material footprint. This work feeds into international decisions about the best methods for estimating material footprint. The data for the UK’s material footprint is used to report SDG targets 8.4 (indicator 8.4.1) and target 12.2 (indicator 12.2.1).&lt;/p&gt;
+
+&lt;h3 id=&quot;geospatial-work-in-data-architecture&quot;&gt;Geospatial work in Data Architecture&lt;/h3&gt;
+&lt;p&gt;We worked on a major cross-team project to produce data for how close people live to roads. The UK data is &lt;a href=&quot;https://sustainabledevelopment-uk.github.io/9-1-1/&quot;&gt;used to report SDG target 9.1 (indicator 9.1.1)&lt;/a&gt;. Our project’s methodology can produce figures for every country in the world and was presented at the UN World Data Forum in Dubai. The project won the inaugural Government Science and Engineering Geography in Government Award. This work led to the World Bank reclassifying the indicator from Tier 3 to Tier 2. Tier 2 indicators have internationally established methodologies and standards available.&lt;/p&gt;
+
+&lt;p&gt;We are also sourcing data and analysing geographic data to tackle Goal 15 (indicators 15.1.1, 15.1.2 and 15.4.1.) Spatial disaggregation of forest area as a percentage of total land area (indicator 15.1.1) for the whole of UK is now available. This data is available at country and local authority level. It is available for years 2015 to 2017 for Great Britain and 2018 for Northern Ireland. Data showing the proportion of important sites for terrestrial and freshwater biodiversity that are covered by protected areas (indicator 15.1.2) should follow shortly. We are also working on coverage by protected areas of important sites for biodiversity (indicator 15.4.1).&lt;/p&gt;
+
+&lt;p&gt;We carried out exploratory work on marine protected areas for SDG target 14.5 (indicator 14.5.1). We have also worked on national exclusive economic zones managed using ecosystem-based approaches for SDG target 14.2 (indicator 14.2.1).&lt;/p&gt;
+
+&lt;p&gt;For more information about the work we are doing with other departments, please &lt;a href=&quot;/sdg-indicators/contact-us&quot;&gt;contact us&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Nov 2019 00:00:00 +0000</pubDate>
+        <link>https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/funded-work.html</link>
+        <guid isPermaLink="true">https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/funded-work.html</guid>
+        
+        
+        <category>Data partners</category>
+        
+      </item>
+    
+      <item>
+        <title>Digital Accessibility Testing</title>
+        <description>&lt;p&gt;The commitment to “leave no one behind” is central to the Sustainable Development Goals (SDGs). It extends to making our digital content accessible and functional for all users regardless of any disability or physical impairment.&lt;/p&gt;
+
+&lt;p&gt;Our SDG data site is still in a testing phase, so we are using the ‘alpha’ label. We want to move the site to the next phase known as ‘beta’. Before we can label the site as beta it has to reach the Web Content Accessibility Guidelines (WCAG) ‘AA’ standard, as well as other Government Digital Service criteria. This is a universally-recognised standard, designed to guarantee that assessed websites reach the predetermined accessibility criteria.&lt;/p&gt;
+
+&lt;p&gt;We updated some of the site’s features before it was tested, including:
+-	making data tables and menus keyboard compatible
+-	improving the high-contrast feature
+-	adding descriptive labels and alternative text&lt;/p&gt;
+
+&lt;p&gt;We tested the improvements on a range of desktop and mobile devices using a variety of browsers and screen-readers.
+The Digital Accessibility Centre tested the data site against the WCAG ‘AA’ standard in July 2019. The newly-accessible site was re-tested in July 2019 and passed, &lt;a href=&quot;http://digitalaccessibilitycentre.org/index.php/office-for-national-statistics-sdg&quot;&gt;receiving ‘AA’ certification&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;With ‘AA’ standard achieved, the UK SDG data site is now considered accessible to all users. A &lt;a href=&quot;https://github.com/open-sdg/open-sdg/releases/tag/0.8.0&quot;&gt;new code release&lt;/a&gt; (0.8.0) included these accessibility updates on the shared code repository &lt;a href=&quot;https://open-sdg.readthedocs.io/en/latest/&quot;&gt;‘Open SDG’&lt;/a&gt;. This means that any country is able to use these updates.&lt;/p&gt;
+
+&lt;p&gt;For more information about what tools the site is compatible with and any know issues, see our &lt;a href=&quot;/sdg-indicators/accessibility-statement/&quot;&gt;accessibility statement&lt;/a&gt;, or please &lt;a href=&quot;/sdg-indicators/contact-us&quot;&gt;contact us&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Nov 2019 00:00:00 +0000</pubDate>
+        <link>https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/accessibility.html</link>
+        <guid isPermaLink="true">https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/accessibility.html</guid>
+        
+        
+        <category>Accessibility</category>
+        
+      </item>
+    
+      <item>
+        <title>Using APIs</title>
+        <description>&lt;p&gt;Currently, our UK SDG data site requires data files to be in a specific format. This means that we have to reformat data that is in a different format in order to make it usable on the site. We are looking to automate the process of updating the data we report. To do this we are working with Application Programming Interfaces (APIs), which allows two software applications to communicate. APIs are commonly used by websites across the internet to automate updates and changes.&lt;/p&gt;
+
+&lt;p&gt;Our aim is to use APIs that will work with data published online on a different website. For example, the ONS Gross Domestic Product (GDP) per head time series has a supporting API which makes the data available in a format we can use.&lt;/p&gt;
+
+&lt;p&gt;We have written software program code to:
+-	Enable our data site to link with APIs used by other websites reporting data
+-	Calculate the relevant new figures
+-	Format the results so they are usable on our site
+-	Print our indicator files ready to go on our site&lt;/p&gt;
+
+&lt;p&gt;We are currently using APIs to update 15 different indicators. By automating these updates, we are able to report the latest data faster. To date we have concentrated on developing API communication with ONS websites. We are investigating which other websites we can connect to using APIs in the future.&lt;/p&gt;
+
+&lt;p&gt;For more information about the work we are doing with APIs, please &lt;a href=&quot;/sdg-indicators/contact-us&quot;&gt;contact us&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Nov 2019 00:00:00 +0000</pubDate>
+        <link>https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/APIs.html</link>
+        <guid isPermaLink="true">https://rjmlaird.github.io/sdg-indicators/updates/2019/11/04/APIs.html</guid>
+        
+        
+        <category>Automation</category>
+        
+      </item>
+    
+  </channel>
+</rss>
