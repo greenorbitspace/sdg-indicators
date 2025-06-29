@@ -45,6 +45,8 @@ country:
   name: UK
   adjective: UK
 
+
+url: "https://rjmlaird.github.io"
 baseurl: "/sdg-indicators"
 
 kramdown:
