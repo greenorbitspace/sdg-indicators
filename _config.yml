@@ -4,10 +4,6 @@
 remote_theme: open-sdg/open-sdg@2.3.2
 destination: public
 
-# UK-specific config settings
-survey_url: https://www.smartsurvey.co.uk/s/EZZRYJ/
-hotjar: false
-
 # Site settings
 title: U.K. Indicators For The Sustainable Development Goals
 
@@ -50,7 +46,7 @@ country:
   adjective: UK
 
 # ✅ Correct GitHub Pages config:
-url: "https://rjmlaird.github.io"
+url: "https://greenorbitspace.github.io"
 baseurl: "/sdg-indicators"
 
 kramdown:
