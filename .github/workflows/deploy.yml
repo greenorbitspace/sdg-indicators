@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -22,7 +23,7 @@ jobs:
           gem install bundler
           bundle install
 
-      - name: Build the site
+      - name: Build Jekyll site
         run: bundle exec jekyll build -d public
 
       - name: Deploy to GitHub Pages
@@ -31,4 +32,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: public
           publish_branch: gh-pages
-          keep_files: false  # Optional: cleans old files
+          keep_files: false
