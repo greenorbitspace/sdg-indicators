@@ -4,7 +4,10 @@
   "description": "[![Build Status](https://github.com/greenorbitspace/sdg-indicators/actions/workflows/deploy.yml/badge.svg)](https://github.com/greenorbitspace/sdg-indicators/actions) [![LICENSE.](https://img.shields.io/badge/license-OGL--3-brightgreen.svg?style=flat)](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "echo \"✅ No tests configured yet\" && exit 0",
+    "lint": "echo \"✅ No linter configured yet\" && exit 0",
+    "test:all": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",
@@ -19,5 +22,8 @@
   "dependencies": {
     "govuk-frontend": "^3.12.0",
     "sass": "^1.35.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.32.0"
   }
 }
