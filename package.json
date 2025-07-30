@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "lint": "eslint . --ext .js,.json,.md,.css",
+    "format": "prettier --write .",
     "test": "echo \"✅ No tests configured yet\" && exit 0",
-    "lint": "echo \"✅ No linter configured yet\" && exit 0",
     "test:all": "npm run lint && npm run test"
   },
   "repository": {
@@ -24,6 +25,7 @@
     "sass": "^1.35.1"
   },
   "devDependencies": {
-    "eslint": "^9.32.0"
+    "eslint": "^9.32.0",
+    "prettier": "^3.0.0"
   }
 }
