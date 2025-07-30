@@ -1,6 +1,5 @@
 # Jekyll configuration for Open SDG platform
 
-# Tell the Remote Theme plugin to use the Open SDG platform (Jekyll theme).
 remote_theme: open-sdg/open-sdg@2.3.2
 destination: public
 
@@ -11,12 +10,10 @@ hotjar: false
 # Site settings
 title: U.K. Indicators For The Sustainable Development Goals
 
-# ⚠️ Remove or comment out this line to avoid conflict
-# url: ""
+# Set your environment
+environment: production    # Change from staging to production if live
 
-environment: staging
-
-# Pages
+# Collections
 collections:
   pages:
     output: true
@@ -34,7 +31,6 @@ plugins:
   - jekyll-open-sdg-plugins
   - jekyll-toc
 
-# Exclude some files/folders.
 exclude:
   - vendor
   - scripts
@@ -49,9 +45,9 @@ country:
   name: UK
   adjective: UK
 
-# ✅ Correct GitHub Pages config:
-url: "https://rjmlaird.github.io"
-baseurl: "/sdg-indicators"
+# === UPDATED ===
+url: "https://sdgs.greenorbit.space"   # Your root production URL
+baseurl: ""                             # Empty string because deployed at root
 
 kramdown:
   input: Kramdown
