@@ -1,6 +1,6 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sdg-indicators/service-worker.js');
+        navigator.serviceWorker.register('/service-worker.js');
     });
 }
 /**
