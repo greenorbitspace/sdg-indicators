@@ -1,797 +1,1163 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-        <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Promise%2CString.prototype.includes%2CCustomEvent%2CArray.prototype.includes%2CArray.prototype.find%2CObject.assign%2CObject.values%2CObject.entries%2CArray.from%2CSet%2CArray.prototype.findIndex%2Cfetch"></script>
-<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.15.0/js/canvas-to-blob.min.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script
+      crossorigin="anonymous"
+      src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Promise%2CString.prototype.includes%2CCustomEvent%2CArray.prototype.includes%2CArray.prototype.find%2CObject.assign%2CObject.values%2CObject.entries%2CArray.from%2CSet%2CArray.prototype.findIndex%2Cfetch"
+    ></script>
+    <script
+      crossorigin="anonymous"
+      src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.15.0/js/canvas-to-blob.min.js"
+    ></script>
 
-        <script>
-// This is where we initialise any global variables, namespaced in "opensdg".
-var opensdg = {
+    <script>
+      // This is where we initialise any global variables, namespaced in "opensdg".
+      var opensdg = {
+        // A base URL for asynchronous calls to SDG data.
+        remoteDataBaseUrl: "https://ONSdigital.github.io/sdg-data/en",
 
-  // A base URL for asynchronous calls to SDG data.
-  remoteDataBaseUrl: 'https://ONSdigital.github.io/sdg-data/en',
+        chartConfigAlterations: [],
+        // A hook which can be used to modify the configuration for Chart.js.
+        chartConfigAlter: function (callback) {
+          this.chartConfigAlterations.push(callback);
+        },
 
-  chartConfigAlterations: [],
-  // A hook which can be used to modify the configuration for Chart.js.
-  chartConfigAlter: function(callback) {
-    this.chartConfigAlterations.push(callback);
-  },
+        tableConfigAlterations: [],
+        // A hook which can be used to modify the configuration for Datatables.
+        tableConfigAlter: function (callback) {
+          this.tableConfigAlterations.push(callback);
+        },
 
-  tableConfigAlterations: [],
-  // A hook which can be used to modify the configuration for Datatables.
-  tableConfigAlter: function(callback) {
-    this.tableConfigAlterations.push(callback);
-  },
+        // A hook which can be replaced to alter whether/how the values that are
+        // displayed on indicator tables/graphs get rounded. A "context" parameter
+        // is also passed which contains additional information.
+        dataRounding: function (value, context) {
+          // Alterations go here.
+          return value;
+        },
 
-  // A hook which can be replaced to alter whether/how the values that are
-  // displayed on indicator tables/graphs get rounded. A "context" parameter
-  // is also passed which contains additional information.
-  dataRounding: function(value, context) {
-    // Alterations go here.
-    return value;
-  },
+        // A hook which can be used to alter the data before it is displayed on charts/tables.
+        dataDisplayAlterations: [],
+        dataDisplayAlter: function (callback) {
+          this.dataDisplayAlterations.push(callback);
+        },
 
-  // A hook which can be used to alter the data before it is displayed on charts/tables.
-  dataDisplayAlterations: [],
-  dataDisplayAlter: function(callback) {
-    this.dataDisplayAlterations.push(callback);
-  },
+        // Disaggregations which should be ignored on indicator pages.
+        ignoredDisaggregations: null,
 
-  // Disaggregations which should be ignored on indicator pages.
-  ignoredDisaggregations: null,
+        language: "en",
 
-  language: 'en',
+        mapColors: {
+          default: [
+            "#c4e1c6",
+            "#b0d1b3",
+            "#9bc2a1",
+            "#87b28f",
+            "#74a37c",
+            "#60946b",
+            "#4d8559",
+            "#3a7747",
+            "#276836",
+          ],
+        },
+      };
+    </script>
 
-  mapColors: {
-    "default": [
-        "#c4e1c6",
-        "#b0d1b3",
-        "#9bc2a1",
-        "#87b28f",
-        "#74a37c",
-        "#60946b",
-        "#4d8559",
-        "#3a7747",
-        "#276836"
-    ]
-},
-};
+    <script>
+      // JavaScript container for translation data.
+      var translations = {
+        //Javascript version of the "t" filter from jekyll-open-sdg-plugins.
+        t: function (key) {
+          if (!key || typeof key !== "string") {
+            return "";
+          }
 
-</script>
+          // The majority of uses of this function are to translate disaggregation
+          // data. To spare data providers of needing to enter "data." in front of
+          // their disaggregation data, we specifically look for that here.
+          if (
+            typeof this.data === "object" &&
+            this.data !== null &&
+            this.data[key]
+          ) {
+            return this.data[key];
+          }
 
-        <script>
-// JavaScript container for translation data.
-var translations = {
-  //Javascript version of the "t" filter from jekyll-open-sdg-plugins.
-  t: function(key) {
+          var originalKey = key;
+          var drilled = this;
+          var levelsDrilled = 0;
+          var levels = key.split(".");
 
-    if (!key || typeof key !== 'string') {
-      return '';
-    }
+          for (var level in levels) {
+            // If we have drilled down to soon, abort.
+            if (typeof drilled !== "object") {
+              break;
+            }
 
-    // The majority of uses of this function are to translate disaggregation
-    // data. To spare data providers of needing to enter "data." in front of
-    // their disaggregation data, we specifically look for that here.
-    if (typeof this.data === 'object' && this.data !== null && this.data[key]) {
-      return this.data[key];
-    }
+            if (levels[level] in drilled) {
+              drilled = drilled[levels[level]];
+              levelsDrilled += 1;
+            }
+          }
 
-    var originalKey = key;
-    var drilled = this;
-    var levelsDrilled = 0;
-    var levels = key.split('.');
+          // If we didn't drill the right number of levels, return the original string.
+          if (levels.length != levelsDrilled) {
+            return originalKey;
+          }
 
-    for (var level in levels) {
-      // If we have drilled down to soon, abort.
-      if (typeof drilled !== 'object') {
-        break;
-      }
+          // Otherwise we must have drilled all the way.
+          return drilled;
+        },
+      };
+    </script>
 
-      if (levels[level] in drilled) {
-        drilled = drilled[levels[level]];
-        levelsDrilled += 1;
-      }
-    }
-
-    // If we didn't drill the right number of levels, return the original string.
-    if (levels.length != levelsDrilled) {
-      return originalKey;
-    }
-
-    // Otherwise we must have drilled all the way.
-    return drilled;
-  },
-};
-</script>
-
-        <!-- Basic Page Needs
+    <!-- Basic Page Needs
         ================================================== -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Mobile Specific Metas
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Specific Metas
         ================================================== -->
-        <meta name="HandheldFriendly" content="True">
-        <meta name="MobileOptimized" content="320">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Title and meta description
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Title and meta description
         ================================================== -->
 
-        
-    <title>Cookies on sdgdata.gov.uk - U.K. Indicators For The Sustainable Development Goals</title>
+    <title>
+      Cookies on sdgdata.gov.uk - U.K. Indicators For The Sustainable
+      Development Goals
+    </title>
 
+    <meta name="robots" content="noindex, nofollow" />
 
+    <!--[if IE 9]>
+      <script src="/sdg-indicators/assets/js/lib/classList.js"></script>
+    <![endif]-->
 
-        
-        <meta name="robots" content="noindex, nofollow">
-        
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/sdg-indicators/assets/img/favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/sdg-indicators/assets/img/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/sdg-indicators/assets/img/favicons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/sdg-indicators/assets/img/favicons/favicon.ico"
+    />
 
-        <!--[if IE 9]>
-        <script src="/sdg-indicators/assets/js/lib/classList.js"></script>
-        <![endif]-->
+    <link rel="manifest" href="/sdg-indicators/manifest.json" />
 
-        <link rel="apple-touch-icon" sizes="180x180" href="/sdg-indicators/assets/img/favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/sdg-indicators/assets/img/favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/sdg-indicators/assets/img/favicons/favicon-16x16.png">
-<link rel="icon" type="image/x-icon" href="/sdg-indicators/assets/img/favicons/favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      res="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="/sdg-indicators/assets/css/style.css?v=20250630120056"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.kiprotect.com/klaro/v0.7/klaro.min.css"
+      crossorigin=""
+    />
 
-        
-        <link rel="manifest" href="/sdg-indicators/manifest.json">
-        
+    <!--[if IE]>
+      <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css" />
+    <![endif]-->
 
-        
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250630120056">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          crossorigin=""/>
-        <link rel="stylesheet" href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css"  crossorigin=""/>
-        <link rel="stylesheet" href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'  crossorigin=""/>
-        <link rel="stylesheet" href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css"  crossorigin=""/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css" crossorigin="">
-        <link rel="stylesheet" href="https://cdn.kiprotect.com/klaro/v0.7/klaro.min.css" crossorigin=""/>
-        
+    <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css" />
+    <!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+  </head>
+  <body class="language-en layout-page">
+    <!-- <div class="container"> -->
 
-        
+    <script>
+      translations["header"] = {
+        alpha: "Alpha",
+        default_contrast: "Default contrast",
+        disable_high_contrast: "Disable high contrast",
+        disclaimer:
+          'This is a development website. We welcome your <a href="mailto:%email_contacts.suggestions">feedback</a>.',
+        enable_high_contrast: "Enable high contrast",
+        hide_menu: "Hide navigation menu",
+        high_contrast: "High contrast",
+        internet_explorer_message:
+          "We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.",
+        internet_explorer_message_title:
+          "This internet browser is no longer supported",
+        logo_title: "Go to homepage",
+        show_menu: "Show navigation menu",
+        skip_link: "Skip to main content",
+        tag_line: "17 Goals to Transform our World",
+        toggle_menu: "Menu toggle. Click to expand or collapse the menu.",
+        toggle_search:
+          "Search toggle. Click to expand or collapse the search bar.",
+      };
+    </script>
 
+    <a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0"
+      >Skip to main content</a
+    >
 
-        <!--[if IE]>
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css">
-        <![endif]-->
+    <script>
+      document.body.className = document.body.className
+        ? document.body.className + " js-enabled"
+        : "js-enabled";
+    </script>
+    <div
+      id="cookie-banner"
+      style="display: none"
+      class="govuk-cookie-banner"
+      data-nosnippet
+      role="region"
+      aria-label="Cookies on sdgdata.gov.uk"
+    >
+      <div class="govuk-cookie-banner__message govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+              Cookies on sdgdata.gov.uk
+            </h2>
 
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css">
-<!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
-
-
-    </head>
-<body class="language-en
-layout-page
-">
-<!-- <div class="container"> -->
-
-
-
-<script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
-
-<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Skip to main content</a>
-
-<script>
-  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-</script>
-<div id="cookie-banner" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
-  <div class="govuk-cookie-banner__message govuk-width-container">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on sdgdata.gov.uk</h2>
-
-        <div class="govuk-cookie-banner__content">
-          <p>We use some essential cookies to make this service work.</p>
-          <p>We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="govuk-button-group">
-      <button id="cookie-accept" value="accept" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
-        Accept analytics cookies
-      </button>
-      <button id="cookie-reject" value="reject" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
-        Reject analytics cookies
-      </button>
-      <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
-    </div>
-  </div>
-</div>
-<div id="cookie-banner-accept" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
-  <div class="govuk-cookie-banner__message govuk-width-container">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-cookie-banner__content">
-          <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="govuk-button-group">
-      <a id="hide-accept" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
-      </a>
-    </div>
-  </div>
-</div>
-<div id="cookie-banner-reject" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
-  <div class="govuk-cookie-banner__message govuk-width-container">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-cookie-banner__content">
-          <p>You’ve rejected analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="govuk-button-group">
-      <a id="hide-reject" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
-      </a>
-    </div>
-  </div>
-</div>
-
-
-<div class="container internet-explorer-message">
-    <h2 class="internet-explorer-message-title">This internet browser is no longer supported</h2>
-    <p class="internet-explorer-message-body">We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.</p>
-</div>
-<div id="disclaimer">
-    
-<div class="container">
-  <div class="disclaimer-alert">
-    <p><strong class="phase-tag">BETA</strong>
-    Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts.
-     <a id="takepartButton" aria-labelledby="takepartButton" href="https://www.smartsurvey.co.uk/s/EZZRYJ/" target="_blank" class="btn btn-primary btn-download btn-takepart" role="link">Take the survey</a>
-
-    </p> 
-    <p>
-      <strong>
-      Since September 2023 we have <a href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities">paused</a>
-      the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is
-      published and whether newer data will become available in future. You can also find up to date SDG data on the
-      <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a> which reports globally comparable data.
-      </strong>
-    </p>
-  </div>
-</div>
-
-
-</div>
-
-<header role="banner" class="">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start">
-            <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
-    <img src="/sdg-indicators/assets/img/SDG_logo.png" alt="Sustainable Development Goals - 17 Goals to Transform our World" />
-</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Show navigation menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex flex-wrap w-100 justify-content-between">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav" id="menu"><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/">Home</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/reporting-status/">Reporting Status</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/publications/">Publications</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/updates/">Updates</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/faq/">FAQ</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/about/">About</a>
-</li></ul>
-    
-                </div>
-                <div class="header-search-bar">
-                    <form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
-    <div class="input-group">
-        <label class="visually-hidden" for="indicator_search">Search</label>
-        <input class="form-control" type="search" name="q" id="indicator_search" title="Search">
-        <span class="input-group-append">
-            <button class="btn btn-outline-secondary ms-n5" aria-label="Site search" id="search-btn" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-        </span>
-    </div>
-</form>
-
-                </div>
-                <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
-    data-contrast-switch-to="" role="button" href="javascript:void(0)" data-on="click"
-data-event-category="Accessibility"
-data-event-action="Change contrast setting"
-data-event-label="high"
->A</a>
-                </div>
+            <div class="govuk-cookie-banner__content">
+              <p>We use some essential cookies to make this service work.</p>
+              <p>
+                We’d also like to use analytics cookies so we can understand how
+                you use the service and make improvements.
+              </p>
             </div>
+          </div>
+        </div>
+
+        <div class="govuk-button-group">
+          <button
+            id="cookie-accept"
+            value="accept"
+            type="button"
+            name="cookies"
+            class="govuk-button"
+            data-module="govuk-button"
+          >
+            Accept analytics cookies
+          </button>
+          <button
+            id="cookie-reject"
+            value="reject"
+            type="button"
+            name="cookies"
+            class="govuk-button"
+            data-module="govuk-button"
+          >
+            Reject analytics cookies
+          </button>
+          <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
+        </div>
+      </div>
+    </div>
+    <div
+      id="cookie-banner-accept"
+      style="display: none"
+      class="govuk-cookie-banner"
+      data-nosnippet
+      role="region"
+      aria-label="Cookies on sdgdata.gov.uk"
+    >
+      <div class="govuk-cookie-banner__message govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-cookie-banner__content">
+              <p>
+                You’ve accepted analytics cookies. You can
+                <a class="govuk-link" href="/sdg-indicators/cookies"
+                  >change your cookie settings</a
+                >
+                at any time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-button-group">
+          <a
+            id="hide-accept"
+            href="#"
+            role="button"
+            draggable="false"
+            class="govuk-button"
+            data-module="govuk-button"
+            aria-label="Hide cookie confirmation message"
+          >
+            Hide this message
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      id="cookie-banner-reject"
+      style="display: none"
+      class="govuk-cookie-banner"
+      data-nosnippet
+      role="region"
+      aria-label="Cookies on sdgdata.gov.uk"
+    >
+      <div class="govuk-cookie-banner__message govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-cookie-banner__content">
+              <p>
+                You’ve rejected analytics cookies. You can
+                <a class="govuk-link" href="/sdg-indicators/cookies"
+                  >change your cookie settings</a
+                >
+                at any time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-button-group">
+          <a
+            id="hide-reject"
+            href="#"
+            role="button"
+            draggable="false"
+            class="govuk-button"
+            data-module="govuk-button"
+            aria-label="Hide cookie confirmation message"
+          >
+            Hide this message
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container internet-explorer-message">
+      <h2 class="internet-explorer-message-title">
+        This internet browser is no longer supported
+      </h2>
+      <p class="internet-explorer-message-body">
+        We have detected that you are using Internet Explorer to visit this
+        website. Internet Explorer is now being phased out by Microsoft. As a
+        result, this website no longer supports any version of Internet
+        Explorer. Some features on this site will not work. You should use a
+        modern browser such as Edge, Chrome, Firefox, or Safari. If you have
+        difficulty installing or accessing a different browser, please contact
+        your IT support team.
+      </p>
+    </div>
+    <div id="disclaimer">
+      <div class="container">
+        <div class="disclaimer-alert">
+          <p>
+            <strong class="phase-tag">BETA</strong>
+            Your feedback will help us continue to improve the site. Complete
+            the short survey to share your thoughts.
+            <a
+              id="takepartButton"
+              aria-labelledby="takepartButton"
+              href="https://www.smartsurvey.co.uk/s/EZZRYJ/"
+              target="_blank"
+              class="btn btn-primary btn-download btn-takepart"
+              role="link"
+              >Take the survey</a
+            >
+          </p>
+          <p>
+            <strong>
+              Since September 2023 we have
+              <a
+                href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities"
+                >paused</a
+              >
+              the uploading of data reported on this site. However, the
+              hyperlinks for the indicator data sources could be used to see
+              where the data is published and whether newer data will become
+              available in future. You can also find up to date SDG data on the
+              <a href="https://unstats.un.org/sdgs/dataportal/"
+                >UN SDG website</a
+              >
+              which reports globally comparable data.
+            </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <header role="banner" class="">
+      <div class="container">
+        <nav
+          class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start"
+        >
+          <a
+            class="navbar-brand"
+            href="/sdg-indicators/"
+            id="home"
+            aria-label="Go to homepage"
+            title="Go to homepage"
+          >
+            <img
+              src="/sdg-indicators/assets/img/SDG_logo.png"
+              alt="Sustainable Development Goals - 17 Goals to Transform our World"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Show navigation menu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="d-flex flex-wrap w-100 justify-content-between">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav" id="menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/reporting-status/"
+                    >Reporting Status</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/publications/"
+                    >Publications</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/updates/"
+                    >Updates</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/faq/">FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/about/">About</a>
+                </li>
+              </ul>
+            </div>
+            <div class="header-search-bar">
+              <form
+                class="align-self-lg-end"
+                id="search"
+                action="/sdg-indicators/search/"
+              >
+                <div class="input-group">
+                  <label class="visually-hidden" for="indicator_search"
+                    >Search</label
+                  >
+                  <input
+                    class="form-control"
+                    type="search"
+                    name="q"
+                    id="indicator_search"
+                    title="Search"
+                  />
+                  <span class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary ms-n5"
+                      aria-label="Site search"
+                      id="search-btn"
+                      type="submit"
+                    >
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                </div>
+              </form>
+            </div>
+            <div class="header-toggles d-flex">
+              <a
+                title="Enable high contrast"
+                aria-label="Enable high contrast"
+                data-contrast-switch-to=""
+                role="button"
+                href="javascript:void(0)"
+                data-on="click"
+                data-event-category="Accessibility"
+                data-event-action="Change contrast setting"
+                data-event-label="high"
+                >A</a
+              >
+            </div>
+          </div>
         </nav>
-    </div>
-</header>
-<div id="top" tabindex=-1></div>
-
-
-
-<div class="container">
-    <nav>
-    <ol aria-label="breadcrumb" class="breadcrumb" style="--bs-breadcrumb-divider: '&rsaquo;';">
-        <li class="breadcrumb-item" >
-            <a href="/sdg-indicators/">Home</a>
-        </li>
-        <li class="breadcrumb-item active">Cookies on sdgdata.gov.uk</li>
-    </ol>
-</nav>
-</div>
-<div id="main-content" class="container" role="main">
-    <div>
-        <h1>Cookies on sdgdata.gov.uk</h1>
-        
-        
-
-
-    <div id="cookie-page-success" style="display: none;" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-  <div class="govuk-notification-banner__header">
-    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-      Success
-    </h2>
-  </div>
-  <div class="govuk-notification-banner__content">
-    <p class="govuk-notification-banner__heading">
-      Your cookie settings were saved.
-    </p>
-    <p>
-      <a id="cookie-page-go-back" class="govuk-notification-banner__link" href="#">Go back to the page you were looking at</a>.
-    </p>
-  </div>
-</div>
-
-<p>Cookies are small files saved on your phone, tablet or computer when you visit a website.</p>
-
-<p>We use cookies to store information about how you use this website, such as the pages you visit.</p>
-
-<p>We use two types of cookies. You can choose which cookies you’re happy for us to use.</p>
-
-<h2 id="cookies-that-measure-website-use-analytics-cookies">Cookies that measure website use (analytics cookies)</h2>
-
-<p>We use Google Analytics and Hotjar to collect information about how you use the website. We use this data to help make the website better.</p>
-
-<p>Google Analytics and Hotjar set cookies that store anonymised information about:</p>
-
-<ul>
-  <li>how you got to the website</li>
-  <li>the pages you visit on the website and how long you spend on them</li>
-  <li>what you click on while you’re visiting the website</li>
-  <li>the way you use a page (for example, what you concentrate on and where you click and scroll)</li>
-  <li>whether you have participated in a Hotjar survey</li>
-</ul>
-
-<p>We do not allow Google or Hotjar to use or share the information about how you use this website.</p>
-
-<details class="govuk-details" data-module="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      List of cookies that measure website use
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-    
-<table class="table">
-  <colgroup>
-    <col class="twenty" />
-    <col class="fourtyfive" />
-    <col class="ten" />
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Purpose</th>
-      <th>Expires</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>_ga</td>
-      <td>Help us count how many people visit the website by tracking if you have visited before</td>
-      <td>2 years</td>
-    </tr>
-    <tr>
-      <td>_gid</td>
-      <td>Help us count how many people visit the website by tracking if you have visited before</td>
-      <td>24 hours</td>
-    </tr>
-    <tr>
-      <td>_gat</td>
-      <td>Used to manage the rate at which page view requests are made</td>
-      <td>1 minute</td>
-    </tr>
-    <tr>
-      <td>_hjClosedSurveyInvites</td>
-      <td>Tell us whether a Hotjar survey invite has been closed to stop it displaying again</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>_hjDonePolls</td>
-      <td>Tell us whether a Hotjar feedback poll has been completed to stop the same poll reappearing</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>_hjMinimizedPolls</td>
-      <td>Keep Hotjar feedback poll widgets minimised (once minimised by the user) when the user navigates through the website</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>_hjDoneTestersWidgets</td>
-      <td>Set when a user submits information in the Hotjar recruit user testers widget. They stop the form reappearing once it has been completed</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>_hjIncludedInSample</td>
-      <td>Lets Hotjar know whether a user is included in the sample for tracking user journeys to important pages on the website</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>_hjShownFeedbackMessage</td>
-      <td>Set when a user minimises or completes a Hotjar feedback survey. The survey will stay minimised if the user navigates to a page where it is set to show</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>_hjid</td>
-      <td>Help us track users who visit the website multiple times. A unique Hotjar user ID is used to link their visits together</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>_hjRecordingLastActivity</td>
-      <td>Updated when a user recording starts and when a user performs an action on a page that Hotjar records. Found in session storage rather than cookies</td>
-      <td>Per session</td>
-    </tr>
-    <tr>
-      <td>_hjTLDTest</td>
-      <td>Stored temporarily and used to determine the root (or top-level) domain so that tracking works on all pages</td>
-      <td>Per session</td>
-    </tr>
-    <tr>
-      <td>_hjUserAttributesHash</td>
-      <td>Store user attributes during a user’s browser session so Hotjar knows when an attribute has changed and needs to be updated</td>
-      <td>Per session</td>
-    </tr>
-    <tr>
-      <td>_hjCachedUserAttributes</td>
-      <td>Store user attributes that are sent through the Hotjar identify API whenever the user is not in the sample. Attributes are only saved if the user interacts with a feedback tool</td>
-      <td>Per session</td>
-    </tr>
-    <tr>
-      <td>_hjLocalStorageTest</td>
-      <td>Used to check if the Hotjar tracking script can use local browser storage</td>
-      <td>Per session</td>
-    </tr>
-  </tbody>
-</table>
-
-  </div>
-</details>
-
-<h2 id="change-your-cookie-settings">Change your cookie settings</h2>
-
-<div class="govuk-form-group">
-  <fieldset class="govuk-fieldset">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l cookie-form-legend">
-      Do you want to accept analytics cookies?
-    </legend>
-    <div class="govuk-radios">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="analytics-cookies" name="analytics-cookies" type="radio" value="yes" />
-        <label class="govuk-label govuk-radios__label" for="analytics-cookies">
-          Yes
-        </label>
       </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="analytics-cookies-2" name="analytics-cookies" type="radio" value="no" checked="" />
-        <label class="govuk-label govuk-radios__label" for="analytics-cookies-2">
-          No
-        </label>
-      </div>
-    </div>
-  </fieldset>
-  <br /><button id="cookie-page-submit" class="govuk-button" data-module="govuk-button">
-    Save cookie settings
-</button>
-</div>
+    </header>
+    <div id="top" tabindex="-1"></div>
 
-<h2 id="essential-cookies">Essential cookies</h2>
-
-<p>Essential cookies keep your information secure, and do things like remember your preferences and the choices you make whilst you use the website.</p>
-
-<p>They always need to be on.</p>
-
-<details class="govuk-details" data-module="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      List of essential cookies
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-    
-<table class="table">
-  <colgroup>
-    <col class="twenty" />
-    <col class="fourtyfive" />
-    <col class="ten" />
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Purpose</th>
-      <th>Expires</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>cookie_settings</td>
-      <td>Saves your cookie consent settings</td>
-      <td>1 year</td>
-    </tr>
-    <tr>
-      <td>contrast</td>
-      <td>Retains active state of accessibility services</td>
-      <td>1 year</td>
-    </tr>
-  </tbody>
-</table>
-
-  </div>
-</details>
-
-<h2 id="surveys">Surveys</h2>
-
-<p>We use <a href="https://www.smartsurvey.co.uk/">Smart Survey</a> to collect feedback about the website, and recruit participants to take part in user research activities (for example, usability testing). If you complete either of these surveys, SmartSurvey will <a href="https://www.smartsurvey.co.uk/company/how-we-use-cookies">save extra cookies</a> to track your progress on their website.</p>
-
-<h2 id="how-we-use-the-information-we-collect">How we use the information we collect</h2>
-
-<p>To find out how we collect, store and use information about you or your visit, see our <a href="/sdg-indicators/privacy-notice">privacy notice</a>.</p>
-
-
-
-    </div>
-</div>
-
-<footer role="contentinfo">
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <div id="footerLinks">
-                    <ul>
-                        <li>
-                            <a href="https://open-sdg.org">Built using Open SDG</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/sdg-indicators/contact-us">Contact us</a>
-                            
-                        </li>
-                        <li>
-                            
-                            <a href="https://twitter.com/ONS" target="_blank">Twitter</a>
-                            
-                        </li>
-                        <li>
-                            <a href="/sdg-indicators/cookies-no-javascript/">Cookies</a>
-                            
-                        </li>
-                        <li>
-                            <a href="/sdg-indicators/privacy-notice/">Privacy</a>
-                            
-                        </li>
-                        <li>
-                            <a href="/sdg-indicators/accessibility-statement/">Accessibility statement</a>
-                            
-                        </li>
-                        
-                        
-                        
-                        <li>
-                            <a href="/sdg-indicators/config">Configuration</a>
-                        </li>
-                        </ul>
-                </div>
-            </div>
+      <nav>
+        <ol
+          aria-label="breadcrumb"
+          class="breadcrumb"
+          style="--bs-breadcrumb-divider: &quot;&rsaquo;&quot;"
+        >
+          <li class="breadcrumb-item">
+            <a href="/sdg-indicators/">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Cookies on sdgdata.gov.uk</li>
+        </ol>
+      </nav>
+    </div>
+    <div id="main-content" class="container" role="main">
+      <div>
+        <h1>Cookies on sdgdata.gov.uk</h1>
+
+        <div
+          id="cookie-page-success"
+          style="display: none"
+          class="govuk-notification-banner govuk-notification-banner--success"
+          role="alert"
+          aria-labelledby="govuk-notification-banner-title"
+          data-module="govuk-notification-banner"
+        >
+          <div class="govuk-notification-banner__header">
+            <h2
+              class="govuk-notification-banner__title"
+              id="govuk-notification-banner-title"
+            >
+              Success
+            </h2>
+          </div>
+          <div class="govuk-notification-banner__content">
+            <p class="govuk-notification-banner__heading">
+              Your cookie settings were saved.
+            </p>
+            <p>
+              <a
+                id="cookie-page-go-back"
+                class="govuk-notification-banner__link"
+                href="#"
+                >Go back to the page you were looking at</a
+              >.
+            </p>
+          </div>
         </div>
-         
 
-<div class="row">
-  <div class="col-xs-12">
-    <div id="oglLicense">
-        <img alt="Open Government Licence logo" src="/sdg-indicators/assets/img/OGL_logo.png" width="35px" class="me-2">All data is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+        <p>
+          Cookies are small files saved on your phone, tablet or computer when
+          you visit a website.
+        </p>
+
+        <p>
+          We use cookies to store information about how you use this website,
+          such as the pages you visit.
+        </p>
+
+        <p>
+          We use two types of cookies. You can choose which cookies you’re happy
+          for us to use.
+        </p>
+
+        <h2 id="cookies-that-measure-website-use-analytics-cookies">
+          Cookies that measure website use (analytics cookies)
+        </h2>
+
+        <p>
+          We use Google Analytics and Hotjar to collect information about how
+          you use the website. We use this data to help make the website better.
+        </p>
+
+        <p>
+          Google Analytics and Hotjar set cookies that store anonymised
+          information about:
+        </p>
+
+        <ul>
+          <li>how you got to the website</li>
+          <li>
+            the pages you visit on the website and how long you spend on them
+          </li>
+          <li>what you click on while you’re visiting the website</li>
+          <li>
+            the way you use a page (for example, what you concentrate on and
+            where you click and scroll)
+          </li>
+          <li>whether you have participated in a Hotjar survey</li>
+        </ul>
+
+        <p>
+          We do not allow Google or Hotjar to use or share the information about
+          how you use this website.
+        </p>
+
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              List of cookies that measure website use
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <table class="table">
+              <colgroup>
+                <col class="twenty" />
+                <col class="fourtyfive" />
+                <col class="ten" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Purpose</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>_ga</td>
+                  <td>
+                    Help us count how many people visit the website by tracking
+                    if you have visited before
+                  </td>
+                  <td>2 years</td>
+                </tr>
+                <tr>
+                  <td>_gid</td>
+                  <td>
+                    Help us count how many people visit the website by tracking
+                    if you have visited before
+                  </td>
+                  <td>24 hours</td>
+                </tr>
+                <tr>
+                  <td>_gat</td>
+                  <td>
+                    Used to manage the rate at which page view requests are made
+                  </td>
+                  <td>1 minute</td>
+                </tr>
+                <tr>
+                  <td>_hjClosedSurveyInvites</td>
+                  <td>
+                    Tell us whether a Hotjar survey invite has been closed to
+                    stop it displaying again
+                  </td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>_hjDonePolls</td>
+                  <td>
+                    Tell us whether a Hotjar feedback poll has been completed to
+                    stop the same poll reappearing
+                  </td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>_hjMinimizedPolls</td>
+                  <td>
+                    Keep Hotjar feedback poll widgets minimised (once minimised
+                    by the user) when the user navigates through the website
+                  </td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>_hjDoneTestersWidgets</td>
+                  <td>
+                    Set when a user submits information in the Hotjar recruit
+                    user testers widget. They stop the form reappearing once it
+                    has been completed
+                  </td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>_hjIncludedInSample</td>
+                  <td>
+                    Lets Hotjar know whether a user is included in the sample
+                    for tracking user journeys to important pages on the website
+                  </td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>_hjShownFeedbackMessage</td>
+                  <td>
+                    Set when a user minimises or completes a Hotjar feedback
+                    survey. The survey will stay minimised if the user navigates
+                    to a page where it is set to show
+                  </td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>_hjid</td>
+                  <td>
+                    Help us track users who visit the website multiple times. A
+                    unique Hotjar user ID is used to link their visits together
+                  </td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>_hjRecordingLastActivity</td>
+                  <td>
+                    Updated when a user recording starts and when a user
+                    performs an action on a page that Hotjar records. Found in
+                    session storage rather than cookies
+                  </td>
+                  <td>Per session</td>
+                </tr>
+                <tr>
+                  <td>_hjTLDTest</td>
+                  <td>
+                    Stored temporarily and used to determine the root (or
+                    top-level) domain so that tracking works on all pages
+                  </td>
+                  <td>Per session</td>
+                </tr>
+                <tr>
+                  <td>_hjUserAttributesHash</td>
+                  <td>
+                    Store user attributes during a user’s browser session so
+                    Hotjar knows when an attribute has changed and needs to be
+                    updated
+                  </td>
+                  <td>Per session</td>
+                </tr>
+                <tr>
+                  <td>_hjCachedUserAttributes</td>
+                  <td>
+                    Store user attributes that are sent through the Hotjar
+                    identify API whenever the user is not in the sample.
+                    Attributes are only saved if the user interacts with a
+                    feedback tool
+                  </td>
+                  <td>Per session</td>
+                </tr>
+                <tr>
+                  <td>_hjLocalStorageTest</td>
+                  <td>
+                    Used to check if the Hotjar tracking script can use local
+                    browser storage
+                  </td>
+                  <td>Per session</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <h2 id="change-your-cookie-settings">Change your cookie settings</h2>
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend
+              class="govuk-fieldset__legend govuk-fieldset__legend--l cookie-form-legend"
+            >
+              Do you want to accept analytics cookies?
+            </legend>
+            <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                <input
+                  class="govuk-radios__input"
+                  id="analytics-cookies"
+                  name="analytics-cookies"
+                  type="radio"
+                  value="yes"
+                />
+                <label
+                  class="govuk-label govuk-radios__label"
+                  for="analytics-cookies"
+                >
+                  Yes
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input
+                  class="govuk-radios__input"
+                  id="analytics-cookies-2"
+                  name="analytics-cookies"
+                  type="radio"
+                  value="no"
+                  checked=""
+                />
+                <label
+                  class="govuk-label govuk-radios__label"
+                  for="analytics-cookies-2"
+                >
+                  No
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <br /><button
+            id="cookie-page-submit"
+            class="govuk-button"
+            data-module="govuk-button"
+          >
+            Save cookie settings
+          </button>
+        </div>
+
+        <h2 id="essential-cookies">Essential cookies</h2>
+
+        <p>
+          Essential cookies keep your information secure, and do things like
+          remember your preferences and the choices you make whilst you use the
+          website.
+        </p>
+
+        <p>They always need to be on.</p>
+
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              List of essential cookies
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <table class="table">
+              <colgroup>
+                <col class="twenty" />
+                <col class="fourtyfive" />
+                <col class="ten" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Purpose</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>cookie_settings</td>
+                  <td>Saves your cookie consent settings</td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>contrast</td>
+                  <td>Retains active state of accessibility services</td>
+                  <td>1 year</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <h2 id="surveys">Surveys</h2>
+
+        <p>
+          We use <a href="https://www.smartsurvey.co.uk/">Smart Survey</a> to
+          collect feedback about the website, and recruit participants to take
+          part in user research activities (for example, usability testing). If
+          you complete either of these surveys, SmartSurvey will
+          <a href="https://www.smartsurvey.co.uk/company/how-we-use-cookies"
+            >save extra cookies</a
+          >
+          to track your progress on their website.
+        </p>
+
+        <h2 id="how-we-use-the-information-we-collect">
+          How we use the information we collect
+        </h2>
+
+        <p>
+          To find out how we collect, store and use information about you or
+          your visit, see our
+          <a href="/sdg-indicators/privacy-notice">privacy notice</a>.
+        </p>
+      </div>
     </div>
-  </div>
-</div>
-<div class="mb-2"></div>
 
-    </div>
-</footer>
+    <footer role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div id="footerLinks">
+              <ul>
+                <li>
+                  <a href="https://open-sdg.org">Built using Open SDG</a>
+                </li>
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js" integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.js"></script>
+                <li>
+                  <a href="/sdg-indicators/contact-us">Contact us</a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/ONS" target="_blank">Twitter</a>
+                </li>
+                <li>
+                  <a href="/sdg-indicators/cookies-no-javascript/">Cookies</a>
+                </li>
+                <li>
+                  <a href="/sdg-indicators/privacy-notice/">Privacy</a>
+                </li>
+                <li>
+                  <a href="/sdg-indicators/accessibility-statement/"
+                    >Accessibility statement</a
+                  >
+                </li>
 
+                <li>
+                  <a href="/sdg-indicators/config">Configuration</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="oglLicense">
+              <img
+                alt="Open Government Licence logo"
+                src="/sdg-indicators/assets/img/OGL_logo.png"
+                width="35px"
+                class="me-2"
+              />All data is available under the
+              <a
+                href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+                >Open Government Licence v3.0</a
+              >, except where otherwise stated
+            </div>
+          </div>
+        </div>
+        <div class="mb-2"></div>
+      </div>
+    </footer>
 
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+      integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"
+      integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.js"></script>
 
-<script>
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
 
-
-var klaroConfig = {
-    noAutoLoad: true, // no autoload because we have a custom notice and form
-    storageMethod: 'cookie',
-    cookieName: 'cookie_settings',
-    cookieExpiresAfterDays: 365,
-    default: false,
-    services: [
-        {
-            name: 'contrast',
+    <script>
+      var klaroConfig = {
+        noAutoLoad: true, // no autoload because we have a custom notice and form
+        storageMethod: "cookie",
+        cookieName: "cookie_settings",
+        cookieExpiresAfterDays: 365,
+        default: false,
+        services: [
+          {
+            name: "contrast",
             default: true,
-            cookies: ['contrast'],
+            cookies: ["contrast"],
             required: true,
-        },
-        
-        {
-            name: 'google-analytics',
-            
-            cookies: ['_gat', '_gid', '_ga'],
-            
-        },
-        
-        
-    ],
-};
+          },
 
-  klaroConfig.lang = 'en';
-klaroConfig.translations = {
-    en: {
-        acceptAll: "Accept all",
-        acceptSelected: "Accept selected",
-        close: "Close",
-        consentModal: {
-            description: "Here you can change which cookies you're happy for us to use.",
+          {
+            name: "google-analytics",
+
+            cookies: ["_gat", "_gid", "_ga"],
+          },
+        ],
+      };
+
+      klaroConfig.lang = "en";
+      klaroConfig.translations = {
+        en: {
+          acceptAll: "Accept all",
+          acceptSelected: "Accept selected",
+          close: "Close",
+          consentModal: {
+            description:
+              "Here you can change which cookies you're happy for us to use.",
             title: "Cookie settings",
-        },
-        consentNotice: {
-            changeDescription: "The cookies used on this site have changed since you last visited, please renew your consent.",
-            description: "We use some essential cookies to make this service work. We’d also like to use {purposes} so we can understand how you use the service and make improvements.",
+          },
+          consentNotice: {
+            changeDescription:
+              "The cookies used on this site have changed since you last visited, please renew your consent.",
+            description:
+              "We use some essential cookies to make this service work. We’d also like to use {purposes} so we can understand how you use the service and make improvements.",
             learnMore: "View cookies",
             testing: "Testing mode!",
-        },
-        contextualConsent: {
+          },
+          contextualConsent: {
             acceptAlways: "Always",
             acceptOnce: "Yes",
-            description: "Do you want to load external content supplied by {title}?",
-        },
-        decline: "Reject additional cookies",
-        ok: "Accept additional cookies",
-        poweredBy: "Realized with Klaro!",
-        privacyPolicy: {
+            description:
+              "Do you want to load external content supplied by {title}?",
+          },
+          decline: "Reject additional cookies",
+          ok: "Accept additional cookies",
+          poweredBy: "Realized with Klaro!",
+          privacyPolicy: {
             name: "privacy policy",
             text: "To learn more, please read our privacy policy.",
-        },
-        purposeItem: {
+          },
+          purposeItem: {
             service: "service",
             services: "services",
-        },
-        purposes: {
+          },
+          purposes: {
             functional: {
-                description: "Essential cookies keep your information secure, and do things like remember your preferences and the choices you make whilst you use the website. They always need to be on.",
-                title: "Essential cookies",
+              description:
+                "Essential cookies keep your information secure, and do things like remember your preferences and the choices you make whilst you use the website. They always need to be on.",
+              title: "Essential cookies",
             },
             analytics: {
-                description: "These services collect information about how you use the website. We use this data to help make the website better.",
-                title: "Analytics cookies",
+              description:
+                "These services collect information about how you use the website. We use this data to help make the website better.",
+              title: "Analytics cookies",
             },
-        },
-        save: "Save",
-        service: {
+          },
+          save: "Save",
+          service: {
             disableAll: {
-                description: "Use this switch to enable or disable all services.",
-                title: "Enable or disable all services",
+              description: "Use this switch to enable or disable all services.",
+              title: "Enable or disable all services",
             },
             optOut: {
-                description: "This services is loaded by default (but you can opt out)",
-                title: "(opt-out)",
+              description:
+                "This services is loaded by default (but you can opt out)",
+              title: "(opt-out)",
             },
             purpose: "purpose",
             purposes: "purposes",
             required: {
-                description: "This service is always required",
-                title: "(always required)",
+              description: "This service is always required",
+              title: "(always required)",
             },
+          },
         },
-    },
-};
-var allRequired = true;
-klaroConfig.services.forEach(function(service) {
-    if (!service.required) {
-        allRequired = false;
-    }
-    if (service.name === 'contrast') {
-        service.translations = {
-            en: {
-                description: "Retains active state of accessibility services",
-                title: "Accessibility mode",
-            },
+      };
+      var allRequired = true;
+      klaroConfig.services.forEach(function (service) {
+        if (!service.required) {
+          allRequired = false;
         }
-    }
-    else if (service.name === 'cookie_settings') {
-        service.translations = {
+        if (service.name === "contrast") {
+          service.translations = {
             en: {
-                description: "Saves your cookie consent settings",
-                title: "Cookie settings",
+              description: "Retains active state of accessibility services",
+              title: "Accessibility mode",
             },
-        }
-    }
-    else if (service.name === 'google-analytics') {
-        service.translations = {
+          };
+        } else if (service.name === "cookie_settings") {
+          service.translations = {
             en: {
-                description: "Collects information about page visits using Google Analytics",
-                title: "Google Analytics",
+              description: "Saves your cookie consent settings",
+              title: "Cookie settings",
             },
+          };
+        } else if (service.name === "google-analytics") {
+          service.translations = {
+            en: {
+              description:
+                "Collects information about page visits using Google Analytics",
+              title: "Google Analytics",
+            },
+          };
         }
-    }
-});
+      });
 
-if (allRequired) {
-    klaroConfig.translations['en'].consentNotice.description = "We use some essential cookies to make this service work. They always need to be on.";
-    klaroConfig.translations['en'].ok = "OK";
-    klaroConfig.hideDeclineAll = true;
-    klaroConfig.hideLearnMore = true;
-}
+      if (allRequired) {
+        klaroConfig.translations["en"].consentNotice.description =
+          "We use some essential cookies to make this service work. They always need to be on.";
+        klaroConfig.translations["en"].ok = "OK";
+        klaroConfig.hideDeclineAll = true;
+        klaroConfig.hideLearnMore = true;
+      }
+    </script>
+    <script src="https://cdn.kiprotect.com/klaro/v0.7/klaro-no-css.js"></script>
+    <script>
+      translations["cookies"] = translations["cookies"] || {};
+      translations["cookies"]["cookie_settings"] = "Cookie settings";
+    </script>
 
-</script>
-<script src="https://cdn.kiprotect.com/klaro/v0.7/klaro-no-css.js"></script>
-<script>translations['cookies'] = translations['cookies'] || {};
-    translations['cookies']['cookie_settings'] = 'Cookie settings';</script>
+    <script>
+      translations["general"] = translations["general"] || {};
+      translations["general"]["hide"] = "hide";
+    </script>
 
+    <script>
+      translations["search"] = translations["search"] || {};
+      translations["search"]["search"] = "Search";
+    </script>
 
+    <script src="/sdg-indicators/assets/js/sdg.js?v=20250630120056"></script>
+    <script
+      src="//cdn.loop11.com/embed.js"
+      type="text/javascript"
+      async="async"
+    ></script>
+    <script src="/sdg-indicators/assets/js/govuk.js"></script>
+    <script>
+      window.GOVUKFrontend.initAll();
+    </script>
 
-
-
-
-
-<script>translations['general'] = translations['general'] || {};
-    translations['general']['hide'] = 'hide';</script>
-
-<script>translations['search'] = translations['search'] || {};
-    translations['search']['search'] = 'Search';</script>
-
-<script src='/sdg-indicators/assets/js/sdg.js?v=20250630120056'></script>
-<script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"></script>
-<script src="/sdg-indicators/assets/js/govuk.js"></script>
-<script>
-  window.GOVUKFrontend.initAll()
-</script>
-    
-    
-    <script src="/sdg-indicators/assets/js/custom.js?v=20250630120056"></script><script>
-    new indicatorInit();
-    new accessibilitySwitcher();
-</script>
-
-
-</body>
+    <script src="/sdg-indicators/assets/js/custom.js?v=20250630120056"></script>
+    <script>
+      new indicatorInit();
+      new accessibilitySwitcher();
+    </script>
+  </body>
 </html>

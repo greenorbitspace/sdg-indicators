@@ -6,19 +6,19 @@ category: "Data sources"
 excerpt: In July 2021 we published a detailed outline of our approach to assessing the quality and suitability of statistics from non-official sources for SDG reporting. We produced a [transparent protocol](https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/uksustainabledevelopmentgoalsuseofnonofficialsources) with a simple scoring system based on the pillars of the UKSA [Code of Practice for Statistics](https://code.statisticsauthority.gov.uk/the-code/) and critical SDG characteristics. We have since updated some of the criteria used in this protocol.
 ---
 
-In July 2021 we published a detailed outline of our approach to assessing the quality and suitability of statistics from non-official sources for SDG reporting. We produced a [transparent protocol](https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/uksustainabledevelopmentgoalsuseofnonofficialsources) with a simple scoring system based on the pillars of the UKSA [Code of Practice for Statistics](https://code.statisticsauthority.gov.uk/the-code/) and critical SDG characteristics. Putting this protocol in place was the result of collaborative work and feedback from across the GSS. It allows us to expand our breadth of sources beyond official statistics without compromising on quality. As a result, more vulnerable populations and environments could be highlighted as we fill outstanding headline and disaggregation gaps, making sure no-one and no-where is left behind. 
+In July 2021 we published a detailed outline of our approach to assessing the quality and suitability of statistics from non-official sources for SDG reporting. We produced a [transparent protocol](https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/uksustainabledevelopmentgoalsuseofnonofficialsources) with a simple scoring system based on the pillars of the UKSA [Code of Practice for Statistics](https://code.statisticsauthority.gov.uk/the-code/) and critical SDG characteristics. Putting this protocol in place was the result of collaborative work and feedback from across the GSS. It allows us to expand our breadth of sources beyond official statistics without compromising on quality. As a result, more vulnerable populations and environments could be highlighted as we fill outstanding headline and disaggregation gaps, making sure no-one and no-where is left behind.
 
-In brief, the structure of the protocol includes an initial pass or fail gateway with the following essential criteria: 
+In brief, the structure of the protocol includes an initial pass or fail gateway with the following essential criteria:
 
-- ethics and privacy 
+- ethics and privacy
 - transparency and accountability
-- need 
+- need
 
-If the source passes on all of these elements, it proceeds to be scored on a scale of 0 (not acceptable) to 3 (high score) on the criteria: 
+If the source passes on all of these elements, it proceeds to be scored on a scale of 0 (not acceptable) to 3 (high score) on the criteria:
 
-- relevance 
-- methods 
-- coverage 
+- relevance
+- methods
+- coverage
 - timeliness and ongoing availability
 - data quality
 

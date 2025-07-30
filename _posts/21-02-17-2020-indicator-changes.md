@@ -26,6 +26,7 @@ As a result of these changes, there is an overall drop in the reporting percenta
 Details of changes are in the following tables.
 
 ### Table of contents
+
 - [Goal 1](#goal-1)
 - [Goal 2](#goal-2)
 - [Goal 3](#goal-3)
@@ -43,7 +44,6 @@ Details of changes are in the following tables.
 - [Goal 15](#goal-15)
 - [Goal 16](#goal-16)
 - [Goal 17](#goal-17)
-
 
 ### Goal 1
 
@@ -81,7 +81,6 @@ Details of changes are in the following tables.
 
 ### Goal 2
 
-
 <table class="table">
   <colgroup>
     <col class="fourtyfive" />
@@ -115,7 +114,6 @@ Details of changes are in the following tables.
   </tbody>
 </table>
 
-
 ### Goal 3
 
 <table class="table">
@@ -139,7 +137,6 @@ Details of changes are in the following tables.
     </tr>
   </tbody>
 </table>
-
 
 ### Goal 4
 
@@ -169,7 +166,6 @@ Details of changes are in the following tables.
     </tr>
   </tbody>
 </table>
-
 
 ### Goal 5
 
@@ -273,6 +269,7 @@ Details of changes are in the following tables.
 </table>
 
 ### Goal 9
+
 No changes
 
 ### Goal 10
@@ -373,6 +370,7 @@ No changes
 </table>
 
 ### Goal 13
+
 <table class="table">
   <colgroup>
     <col class="fourtyfive" />
@@ -421,9 +419,11 @@ No changes
 </table>
 
 ### Goal 14
+
 No changes
 
 ### Goal 15
+
 <table class="table">
   <colgroup>
     <col class="fourtyfive" />
@@ -518,4 +518,3 @@ No changes
     </tr>
   </tbody>
 </table>
-

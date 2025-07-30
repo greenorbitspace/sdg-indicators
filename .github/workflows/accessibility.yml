@@ -7,33 +7,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
 
-    - uses: actions/checkout@v2
-      
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1.52.0
-      with:
-        ruby-version: 2.7
-        
-    - name: Setup NodeJS
-      uses: actions/setup-node@v2.1.2
-      
-    - name: Build site
-      run: |
-        gem install bundler -v 2.4.22
-        gem install jekyll
-        bundle install && bundle exec jekyll build
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.52.0
+        with:
+          ruby-version: 2.7
 
-    - name: Install Pa11y
-      run: npm install -g pa11y
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2.1.2
 
-    - name: Run accessibility tests
-      run: |
-        chmod +x ./scripts/accessibility-test/run_tests.sh
-        ./scripts/accessibility-test/run_tests.sh
-        pagePath="1" ./scripts/accessibility-test/run_tests.sh
-        pagePath="about" ./scripts/accessibility-test/run_tests.sh
-        pagePath="reporting-status" ./scripts/accessibility-test/run_tests.sh
-        pagePath="faq" ./scripts/accessibility-test/run_tests.sh
-        pagePath="updates" ./scripts/accessibility-test/run_tests.sh
-        pagePath="accessibility-statement" ./scripts/accessibility-test/run_tests.sh
+      - name: Build site
+        run: |
+          gem install bundler -v 2.4.22
+          gem install jekyll
+          bundle install && bundle exec jekyll build
+
+      - name: Install Pa11y
+        run: npm install -g pa11y
+
+      - name: Run accessibility tests
+        run: |
+          chmod +x ./scripts/accessibility-test/run_tests.sh
+          ./scripts/accessibility-test/run_tests.sh
+          pagePath="1" ./scripts/accessibility-test/run_tests.sh
+          pagePath="about" ./scripts/accessibility-test/run_tests.sh
+          pagePath="reporting-status" ./scripts/accessibility-test/run_tests.sh
+          pagePath="faq" ./scripts/accessibility-test/run_tests.sh
+          pagePath="updates" ./scripts/accessibility-test/run_tests.sh
+          pagePath="accessibility-statement" ./scripts/accessibility-test/run_tests.sh

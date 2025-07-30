@@ -3,9 +3,10 @@ layout: post
 title: International work
 author: SDGs team
 category: "International"
-excerpt: 
+excerpt:
 ---
-The Department for International Development (DfID) has partnered with countries in Africa and Asia and we receive funding from DfID  to support these countries with their SDG reporting. Our aim is to help improve the quality and availability of SDG data for these overseas partners.
+
+The Department for International Development (DfID) has partnered with countries in Africa and Asia and we receive funding from DfID to support these countries with their SDG reporting. Our aim is to help improve the quality and availability of SDG data for these overseas partners.
 
 The Open SDG software that we have used to build our SDG data site was developed by ONS in partnership with the Centre for Open Data Enterprise (CODE) and the United States Government. The software is open source and free to use, making it potentially accessible to all countries looking to create a data site to report their SDG data.
 
@@ -19,13 +20,14 @@ Any country can create their own version of the SDG data site using [step-by-ste
 
 Some countries choose to customise their site. For example, Kazakhstan has [added visuals to their homepage](https://kazstat.github.io/sdg-site-kazstat/). Armenia has [added targets as well as indicators](https://armstat.github.io/sdg-site-armenia/3/) and reports national indicators.
 
-The Sustainable Development Goals promote the idea of collaboration. With that in mind, it is important to make sure the SDG community shares new developments. Open SDG shares   software program code for additions, amendments and new features.It is a shared, open-source online GitHub resource. SDG community members can use the program code stored on the site to amend SDG data sites. The community encourages members to submit and review feature updates.
+The Sustainable Development Goals promote the idea of collaboration. With that in mind, it is important to make sure the SDG community shares new developments. Open SDG shares software program code for additions, amendments and new features.It is a shared, open-source online GitHub resource. SDG community members can use the program code stored on the site to amend SDG data sites. The community encourages members to submit and review feature updates.
 
-Countries can copy the  Open SDG to create a new data site from scratch. The [Open SDG releases](https://github.com/open-sdg/open-sdg/releases) incorporate any revised or new features. These include:
--	data visualisations
--	accessibility improvements
--	language translations
--	reporting status categories
+Countries can copy the Open SDG to create a new data site from scratch. The [Open SDG releases](https://github.com/open-sdg/open-sdg/releases) incorporate any revised or new features. These include:
+
+- data visualisations
+- accessibility improvements
+- language translations
+- reporting status categories
 
 Open SDG has provided updates to available features following requests from community members. Recent new program code allows people to [mark SDG indicators as ‘not applicable’](https://sustainabledevelopment-rwanda.github.io/sdg-indicators/reporting-status/), for example.
 

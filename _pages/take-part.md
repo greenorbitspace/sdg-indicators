@@ -11,11 +11,12 @@ We’re looking for volunteers to take part in our user research activities.
 
 The type of activities you could be involved in are surveys, one-to-one interviews, usability testing and more.
 
-If you’d like to take part, please click the button below and complete our brief survey. We’ll then be in touch when we have a suitable activity planned to see if you wish to take part. 
+If you’d like to take part, please click the button below and complete our brief survey. We’ll then be in touch when we have a suitable activity planned to see if you wish to take part.
 
 You have to be 18 or over.
 
 <a class="btn btn-primary btn-download" href="https://www.smartsurvey.co.uk/s/EZZRYJ/" target="_blank" style="display: block; margin-left: auto; margin-right: auto; width: 8em; margin-bottom: inherit; margin-top: 40px;">Take part</a>
+
 <p style="text-align: center; font-size: 12px; margin-bottom: 40px;">(opens in a new tab)</p>
 
 If you have specific feedback about this website please complete our [feedback questionnaire](https://www.smartsurvey.co.uk/s/EZZRYJ/)

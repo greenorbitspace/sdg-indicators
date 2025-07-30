@@ -1,32 +1,33 @@
 // Enter any custom Sass in this file.
 
 .layout-frontpage .emergency-banner {
-    border-bottom: 5px solid #fff;
-    border-top: 5px solid #fff;
-    margin-bottom: -10px;
-    margin-top: 0;
-    position: relative;
-    z-index: 10;
+  border-bottom: 5px solid #fff;
+  border-top: 5px solid #fff;
+  margin-bottom: -10px;
+  margin-top: 0;
+  position: relative;
+  z-index: 10;
 }
 
 .emergency-banner {
-    color: #fff;
+  color: #fff;
 }
 
 .emergency-banner__heading {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .emergency-banner--notable-death {
-    background-color: #0b0c0c;
+  background-color: #0b0c0c;
 }
 
 .layout-frontpage .emergency-banner__description {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 
-.emergency-banner__link.govuk-link:link, .emergency-banner__link.govuk-link:visited {
-    color: #fff;
+.emergency-banner__link.govuk-link:link,
+.emergency-banner__link.govuk-link:visited {
+  color: #fff;
 }
 
 @media (min-width: 40.0625em) {
@@ -51,57 +52,57 @@
   }
 }
 
-
 .site-intro {
-    margin-top: 20px;
-    .description{
-        margin-top:  30px;
-        font-size:  21px;
+  margin-top: 20px;
+  .description {
+    margin-top: 30px;
+    font-size: 21px;
 
-        text-align: justify;
-        text-justify: inter-word;
-    }
+    text-align: justify;
+    text-justify: inter-word;
+  }
 
-    @media only screen and (min-width: 700px) {
-        padding-right: 300px;
-        min-height: 180px;
+  @media only screen and (min-width: 700px) {
+    padding-right: 300px;
+    min-height: 180px;
 
-        background: url('../img/SDG Wheel_Transparent-01.png');
-        background-position: right 30px center;
-        background-size: 220px;
-        background-repeat: no-repeat;
-    }
+    background: url("../img/SDG Wheel_Transparent-01.png");
+    background-position: right 30px center;
+    background-size: 220px;
+    background-repeat: no-repeat;
+  }
 }
 
 #disclaimer .alert a {
-      color: #0000CD; }
+  color: #0000cd;
+}
 
-.navbar-brand img{
-      width: 250px;
+.navbar-brand img {
+  width: 250px;
 }
 
 #main-content .alert {
   white-space: nowrap;
   p {
-     white-space: normal;
-      }
+    white-space: normal;
+  }
 }
 
-@media screen and (min-width: 500px){
-      .navbar-brand img{
-            width: 350px;
-      }
+@media screen and (min-width: 500px) {
+  .navbar-brand img {
+    width: 350px;
+  }
 }
 
 #disclaimer {
   .disclaimer-alert {
     padding-bottom: 15px;
-    padding-top: 15px
+    padding-top: 15px;
   }
 }
 
 .btn-takepart {
-  background: #DD1367 !important;
+  background: #dd1367 !important;
   float: right;
   margin-top: -10px;
   margin-right: -9px;
@@ -121,8 +122,9 @@
     float: unset;
     margin-top: 10px;
   }
-  &:hover, &:active {
-    background: #A01951 !important;
+  &:hover,
+  &:active {
+    background: #a01951 !important;
   }
   &:focus {
     background: #fd0 !important;
@@ -145,7 +147,7 @@
 }
 
 .blank {
-  background-colour: #ffffff
+  background-colour: #ffffff;
 }
 
 #data-notice {
@@ -194,13 +196,13 @@ body.contrast-high {
     background-color: white !important;
     background: white !important;
     color: black !important;
-   }
+  }
   .goal-indicators div span.status.notstarted {
     background-color: black !important;
     background: black !important;
     color: white !important;
     border: 1px solid white;
-   }
+  }
 }
 
 .persona-list {

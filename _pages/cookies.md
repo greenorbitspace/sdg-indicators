@@ -3,6 +3,7 @@ layout: page
 title: Cookies on sdgdata.gov.uk
 permalink: /cookies/
 ---
+
 {% include custom/cookie-page-success.html %}
 
 Cookies are small files saved on your phone, tablet or computer when you visit a website.
@@ -17,15 +18,16 @@ We use Google Analytics and Hotjar to collect information about how you use the 
 
 Google Analytics and Hotjar set cookies that store anonymised information about:
 
-* how you got to the website
-* the pages you visit on the website and how long you spend on them
-* what you click on while you’re visiting the website
-* the way you use a page (for example, what you concentrate on and where you click and scroll)
-* whether you have participated in a Hotjar survey
+- how you got to the website
+- the pages you visit on the website and how long you spend on them
+- what you click on while you’re visiting the website
+- the way you use a page (for example, what you concentrate on and where you click and scroll)
+- whether you have participated in a Hotjar survey
 
 We do not allow Google or Hotjar to use or share the information about how you use this website.
 
 {% capture analytics_table %}
+
 <table class="table">
   <colgroup>
     <col class="twenty" />
@@ -131,6 +133,7 @@ Essential cookies keep your information secure, and do things like remember your
 They always need to be on.
 
 {% capture essential_table %}
+
 <table class="table">
   <colgroup>
     <col class="twenty" />

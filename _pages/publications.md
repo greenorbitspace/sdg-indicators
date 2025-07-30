@@ -4,11 +4,13 @@ permalink: /publications/
 layout: page
 toc: true
 ---
+
 Publications released by the ONS in relation to the Sustainable Development Goals.
 
 If you have any feedback on our publications, please [contact us]({{ site.baseurl }}/contact-us)
 
 ## Our annual updates
+
 We publish a yearly update on our progress towards measuring the global Sustainable Development Goal indicators in the UK:
 <br>
 <br>
@@ -95,7 +97,7 @@ We used target 3.2 (child mortality) to show the UK’s mortality rate is improv
 
 [Women most at risk of experiencing partner abuse](https://www.ons.gov.uk/releases/sustainabledevelopmentgoalsandachievingequalitywhichwomenarethemostvulnerableandatriskofexperiencingdomesticabusebyapartner)
 
-We used target 5.2 (violence against women and girls) to look at which groups are most at risk of abuse from a partner. 
+We used target 5.2 (violence against women and girls) to look at which groups are most at risk of abuse from a partner.
 
 <small>31 May 2018</small>
 <br>
@@ -109,7 +111,7 @@ We used target 7.2 (renewable energy) to look at renewable energies in the UK. W
 <small>22 November 2017</small>
 <br>
 
-## Goal 10: Reduced Inequalities 
+## Goal 10: Reduced Inequalities
 
 [Measuring Inequalities in the UK for the Sustainable Development Goals](https://www.ons.gov.uk/economy/nationalaccounts/uksectoraccounts/compendium/economicreview/july2018/measuringinequalitiesintheukforthesustainabledevelopmentgoals)
 
@@ -118,11 +120,11 @@ We used target 10.1 (household expenditure) to look at income and household expe
 <small>26 July 2018</small>
 <br>
 
-## Goal 16: Peace and Justice 
+## Goal 16: Peace and Justice
 
 [Reporting on the SDGs: People on remand in custody in England and Wales](https://www.ons.gov.uk/peoplepopulationandcommunity/crimeandjustice/articles/reportingonthesustainabledevelopmentgoalspeopleonremandincustodyinenglandandwales/2018-08-03)
 
-We used indicator 16.3.2 (unsentenced detainees) to look at prison populations disaggregated by sex, ethnicity and age. 
+We used indicator 16.3.2 (unsentenced detainees) to look at prison populations disaggregated by sex, ethnicity and age.
 
 <small>03 August 2018</small>
 <br>

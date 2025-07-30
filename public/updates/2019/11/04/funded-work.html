@@ -1,646 +1,1090 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-        <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Promise%2CString.prototype.includes%2CCustomEvent%2CArray.prototype.includes%2CArray.prototype.find%2CObject.assign%2CObject.values%2CObject.entries%2CArray.from%2CSet%2CArray.prototype.findIndex%2Cfetch"></script>
-<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.15.0/js/canvas-to-blob.min.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script
+      crossorigin="anonymous"
+      src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Promise%2CString.prototype.includes%2CCustomEvent%2CArray.prototype.includes%2CArray.prototype.find%2CObject.assign%2CObject.values%2CObject.entries%2CArray.from%2CSet%2CArray.prototype.findIndex%2Cfetch"
+    ></script>
+    <script
+      crossorigin="anonymous"
+      src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.15.0/js/canvas-to-blob.min.js"
+    ></script>
 
-        <script>
-// This is where we initialise any global variables, namespaced in "opensdg".
-var opensdg = {
+    <script>
+      // This is where we initialise any global variables, namespaced in "opensdg".
+      var opensdg = {
+        // A base URL for asynchronous calls to SDG data.
+        remoteDataBaseUrl: "https://ONSdigital.github.io/sdg-data/en",
 
-  // A base URL for asynchronous calls to SDG data.
-  remoteDataBaseUrl: 'https://ONSdigital.github.io/sdg-data/en',
+        chartConfigAlterations: [],
+        // A hook which can be used to modify the configuration for Chart.js.
+        chartConfigAlter: function (callback) {
+          this.chartConfigAlterations.push(callback);
+        },
 
-  chartConfigAlterations: [],
-  // A hook which can be used to modify the configuration for Chart.js.
-  chartConfigAlter: function(callback) {
-    this.chartConfigAlterations.push(callback);
-  },
+        tableConfigAlterations: [],
+        // A hook which can be used to modify the configuration for Datatables.
+        tableConfigAlter: function (callback) {
+          this.tableConfigAlterations.push(callback);
+        },
 
-  tableConfigAlterations: [],
-  // A hook which can be used to modify the configuration for Datatables.
-  tableConfigAlter: function(callback) {
-    this.tableConfigAlterations.push(callback);
-  },
+        // A hook which can be replaced to alter whether/how the values that are
+        // displayed on indicator tables/graphs get rounded. A "context" parameter
+        // is also passed which contains additional information.
+        dataRounding: function (value, context) {
+          // Alterations go here.
+          return value;
+        },
 
-  // A hook which can be replaced to alter whether/how the values that are
-  // displayed on indicator tables/graphs get rounded. A "context" parameter
-  // is also passed which contains additional information.
-  dataRounding: function(value, context) {
-    // Alterations go here.
-    return value;
-  },
+        // A hook which can be used to alter the data before it is displayed on charts/tables.
+        dataDisplayAlterations: [],
+        dataDisplayAlter: function (callback) {
+          this.dataDisplayAlterations.push(callback);
+        },
 
-  // A hook which can be used to alter the data before it is displayed on charts/tables.
-  dataDisplayAlterations: [],
-  dataDisplayAlter: function(callback) {
-    this.dataDisplayAlterations.push(callback);
-  },
+        // Disaggregations which should be ignored on indicator pages.
+        ignoredDisaggregations: null,
 
-  // Disaggregations which should be ignored on indicator pages.
-  ignoredDisaggregations: null,
+        language: "en",
 
-  language: 'en',
+        mapColors: {
+          default: [
+            "#c4e1c6",
+            "#b0d1b3",
+            "#9bc2a1",
+            "#87b28f",
+            "#74a37c",
+            "#60946b",
+            "#4d8559",
+            "#3a7747",
+            "#276836",
+          ],
+        },
+      };
+    </script>
 
-  mapColors: {
-    "default": [
-        "#c4e1c6",
-        "#b0d1b3",
-        "#9bc2a1",
-        "#87b28f",
-        "#74a37c",
-        "#60946b",
-        "#4d8559",
-        "#3a7747",
-        "#276836"
-    ]
-},
-};
+    <script>
+      // JavaScript container for translation data.
+      var translations = {
+        //Javascript version of the "t" filter from jekyll-open-sdg-plugins.
+        t: function (key) {
+          if (!key || typeof key !== "string") {
+            return "";
+          }
 
-</script>
+          // The majority of uses of this function are to translate disaggregation
+          // data. To spare data providers of needing to enter "data." in front of
+          // their disaggregation data, we specifically look for that here.
+          if (
+            typeof this.data === "object" &&
+            this.data !== null &&
+            this.data[key]
+          ) {
+            return this.data[key];
+          }
 
-        <script>
-// JavaScript container for translation data.
-var translations = {
-  //Javascript version of the "t" filter from jekyll-open-sdg-plugins.
-  t: function(key) {
+          var originalKey = key;
+          var drilled = this;
+          var levelsDrilled = 0;
+          var levels = key.split(".");
 
-    if (!key || typeof key !== 'string') {
-      return '';
-    }
+          for (var level in levels) {
+            // If we have drilled down to soon, abort.
+            if (typeof drilled !== "object") {
+              break;
+            }
 
-    // The majority of uses of this function are to translate disaggregation
-    // data. To spare data providers of needing to enter "data." in front of
-    // their disaggregation data, we specifically look for that here.
-    if (typeof this.data === 'object' && this.data !== null && this.data[key]) {
-      return this.data[key];
-    }
+            if (levels[level] in drilled) {
+              drilled = drilled[levels[level]];
+              levelsDrilled += 1;
+            }
+          }
 
-    var originalKey = key;
-    var drilled = this;
-    var levelsDrilled = 0;
-    var levels = key.split('.');
+          // If we didn't drill the right number of levels, return the original string.
+          if (levels.length != levelsDrilled) {
+            return originalKey;
+          }
 
-    for (var level in levels) {
-      // If we have drilled down to soon, abort.
-      if (typeof drilled !== 'object') {
-        break;
-      }
+          // Otherwise we must have drilled all the way.
+          return drilled;
+        },
+      };
+    </script>
 
-      if (levels[level] in drilled) {
-        drilled = drilled[levels[level]];
-        levelsDrilled += 1;
-      }
-    }
-
-    // If we didn't drill the right number of levels, return the original string.
-    if (levels.length != levelsDrilled) {
-      return originalKey;
-    }
-
-    // Otherwise we must have drilled all the way.
-    return drilled;
-  },
-};
-</script>
-
-        <!-- Basic Page Needs
+    <!-- Basic Page Needs
         ================================================== -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Mobile Specific Metas
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Specific Metas
         ================================================== -->
-        <meta name="HandheldFriendly" content="True">
-        <meta name="MobileOptimized" content="320">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Title and meta description
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Title and meta description
         ================================================== -->
 
-        
-    <title>Funded work - U.K. Indicators For The Sustainable Development Goals</title>
+    <title>
+      Funded work - U.K. Indicators For The Sustainable Development Goals
+    </title>
 
+    <meta name="robots" content="noindex, nofollow" />
 
+    <!--[if IE 9]>
+      <script src="/sdg-indicators/assets/js/lib/classList.js"></script>
+    <![endif]-->
 
-        
-        <meta name="robots" content="noindex, nofollow">
-        
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/sdg-indicators/assets/img/favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/sdg-indicators/assets/img/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/sdg-indicators/assets/img/favicons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/sdg-indicators/assets/img/favicons/favicon.ico"
+    />
 
-        <!--[if IE 9]>
-        <script src="/sdg-indicators/assets/js/lib/classList.js"></script>
-        <![endif]-->
+    <link rel="manifest" href="/sdg-indicators/manifest.json" />
 
-        <link rel="apple-touch-icon" sizes="180x180" href="/sdg-indicators/assets/img/favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/sdg-indicators/assets/img/favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/sdg-indicators/assets/img/favicons/favicon-16x16.png">
-<link rel="icon" type="image/x-icon" href="/sdg-indicators/assets/img/favicons/favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      res="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="/sdg-indicators/assets/css/style.css?v=20250630120056"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.kiprotect.com/klaro/v0.7/klaro.min.css"
+      crossorigin=""
+    />
 
-        
-        <link rel="manifest" href="/sdg-indicators/manifest.json">
-        
+    <!--[if IE]>
+      <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css" />
+    <![endif]-->
 
-        
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250630120056">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          crossorigin=""/>
-        <link rel="stylesheet" href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css"  crossorigin=""/>
-        <link rel="stylesheet" href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'  crossorigin=""/>
-        <link rel="stylesheet" href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css"  crossorigin=""/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css" crossorigin="">
-        <link rel="stylesheet" href="https://cdn.kiprotect.com/klaro/v0.7/klaro.min.css" crossorigin=""/>
-        
+    <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css" />
+    <!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+  </head>
+  <body class="language-en layout-post">
+    <!-- <div class="container"> -->
 
-        
+    <script>
+      translations["header"] = {
+        alpha: "Alpha",
+        default_contrast: "Default contrast",
+        disable_high_contrast: "Disable high contrast",
+        disclaimer:
+          'This is a development website. We welcome your <a href="mailto:%email_contacts.suggestions">feedback</a>.',
+        enable_high_contrast: "Enable high contrast",
+        hide_menu: "Hide navigation menu",
+        high_contrast: "High contrast",
+        internet_explorer_message:
+          "We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.",
+        internet_explorer_message_title:
+          "This internet browser is no longer supported",
+        logo_title: "Go to homepage",
+        show_menu: "Show navigation menu",
+        skip_link: "Skip to main content",
+        tag_line: "17 Goals to Transform our World",
+        toggle_menu: "Menu toggle. Click to expand or collapse the menu.",
+        toggle_search:
+          "Search toggle. Click to expand or collapse the search bar.",
+      };
+    </script>
 
+    <a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0"
+      >Skip to main content</a
+    >
 
-        <!--[if IE]>
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css">
-        <![endif]-->
+    <script>
+      document.body.className = document.body.className
+        ? document.body.className + " js-enabled"
+        : "js-enabled";
+    </script>
+    <div
+      id="cookie-banner"
+      style="display: none"
+      class="govuk-cookie-banner"
+      data-nosnippet
+      role="region"
+      aria-label="Cookies on sdgdata.gov.uk"
+    >
+      <div class="govuk-cookie-banner__message govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+              Cookies on sdgdata.gov.uk
+            </h2>
 
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css">
-<!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
-
-
-    </head>
-<body class="language-en
-layout-post
-">
-<!-- <div class="container"> -->
-
-
-
-<script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
-
-<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Skip to main content</a>
-
-<script>
-  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-</script>
-<div id="cookie-banner" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
-  <div class="govuk-cookie-banner__message govuk-width-container">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on sdgdata.gov.uk</h2>
-
-        <div class="govuk-cookie-banner__content">
-          <p>We use some essential cookies to make this service work.</p>
-          <p>We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="govuk-button-group">
-      <button id="cookie-accept" value="accept" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
-        Accept analytics cookies
-      </button>
-      <button id="cookie-reject" value="reject" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
-        Reject analytics cookies
-      </button>
-      <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
-    </div>
-  </div>
-</div>
-<div id="cookie-banner-accept" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
-  <div class="govuk-cookie-banner__message govuk-width-container">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-cookie-banner__content">
-          <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="govuk-button-group">
-      <a id="hide-accept" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
-      </a>
-    </div>
-  </div>
-</div>
-<div id="cookie-banner-reject" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
-  <div class="govuk-cookie-banner__message govuk-width-container">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-cookie-banner__content">
-          <p>You’ve rejected analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="govuk-button-group">
-      <a id="hide-reject" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
-      </a>
-    </div>
-  </div>
-</div>
-
-
-<div class="container internet-explorer-message">
-    <h2 class="internet-explorer-message-title">This internet browser is no longer supported</h2>
-    <p class="internet-explorer-message-body">We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.</p>
-</div>
-<div id="disclaimer">
-    
-<div class="container">
-  <div class="disclaimer-alert">
-    <p><strong class="phase-tag">BETA</strong>
-    Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts.
-     <a id="takepartButton" aria-labelledby="takepartButton" href="https://www.smartsurvey.co.uk/s/EZZRYJ/" target="_blank" class="btn btn-primary btn-download btn-takepart" role="link">Take the survey</a>
-
-    </p> 
-    <p>
-      <strong>
-      Since September 2023 we have <a href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities">paused</a>
-      the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is
-      published and whether newer data will become available in future. You can also find up to date SDG data on the
-      <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a> which reports globally comparable data.
-      </strong>
-    </p>
-  </div>
-</div>
-
-
-</div>
-
-<header role="banner" class="">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start">
-            <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
-    <img src="/sdg-indicators/assets/img/SDG_logo.png" alt="Sustainable Development Goals - 17 Goals to Transform our World" />
-</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Show navigation menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex flex-wrap w-100 justify-content-between">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav" id="menu"><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/">Home</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/reporting-status/">Reporting Status</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/publications/">Publications</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/updates/">Updates</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/faq/">FAQ</a>
-</li><li class="nav-item ">
-    <a class="nav-link" href="/sdg-indicators/about/">About</a>
-</li></ul>
-    
-                </div>
-                <div class="header-search-bar">
-                    <form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
-    <div class="input-group">
-        <label class="visually-hidden" for="indicator_search">Search</label>
-        <input class="form-control" type="search" name="q" id="indicator_search" title="Search">
-        <span class="input-group-append">
-            <button class="btn btn-outline-secondary ms-n5" aria-label="Site search" id="search-btn" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-        </span>
-    </div>
-</form>
-
-                </div>
-                <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
-    data-contrast-switch-to="" role="button" href="javascript:void(0)" data-on="click"
-data-event-category="Accessibility"
-data-event-action="Change contrast setting"
-data-event-label="high"
->A</a>
-                </div>
+            <div class="govuk-cookie-banner__content">
+              <p>We use some essential cookies to make this service work.</p>
+              <p>
+                We’d also like to use analytics cookies so we can understand how
+                you use the service and make improvements.
+              </p>
             </div>
+          </div>
+        </div>
+
+        <div class="govuk-button-group">
+          <button
+            id="cookie-accept"
+            value="accept"
+            type="button"
+            name="cookies"
+            class="govuk-button"
+            data-module="govuk-button"
+          >
+            Accept analytics cookies
+          </button>
+          <button
+            id="cookie-reject"
+            value="reject"
+            type="button"
+            name="cookies"
+            class="govuk-button"
+            data-module="govuk-button"
+          >
+            Reject analytics cookies
+          </button>
+          <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
+        </div>
+      </div>
+    </div>
+    <div
+      id="cookie-banner-accept"
+      style="display: none"
+      class="govuk-cookie-banner"
+      data-nosnippet
+      role="region"
+      aria-label="Cookies on sdgdata.gov.uk"
+    >
+      <div class="govuk-cookie-banner__message govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-cookie-banner__content">
+              <p>
+                You’ve accepted analytics cookies. You can
+                <a class="govuk-link" href="/sdg-indicators/cookies"
+                  >change your cookie settings</a
+                >
+                at any time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-button-group">
+          <a
+            id="hide-accept"
+            href="#"
+            role="button"
+            draggable="false"
+            class="govuk-button"
+            data-module="govuk-button"
+            aria-label="Hide cookie confirmation message"
+          >
+            Hide this message
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      id="cookie-banner-reject"
+      style="display: none"
+      class="govuk-cookie-banner"
+      data-nosnippet
+      role="region"
+      aria-label="Cookies on sdgdata.gov.uk"
+    >
+      <div class="govuk-cookie-banner__message govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-cookie-banner__content">
+              <p>
+                You’ve rejected analytics cookies. You can
+                <a class="govuk-link" href="/sdg-indicators/cookies"
+                  >change your cookie settings</a
+                >
+                at any time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-button-group">
+          <a
+            id="hide-reject"
+            href="#"
+            role="button"
+            draggable="false"
+            class="govuk-button"
+            data-module="govuk-button"
+            aria-label="Hide cookie confirmation message"
+          >
+            Hide this message
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container internet-explorer-message">
+      <h2 class="internet-explorer-message-title">
+        This internet browser is no longer supported
+      </h2>
+      <p class="internet-explorer-message-body">
+        We have detected that you are using Internet Explorer to visit this
+        website. Internet Explorer is now being phased out by Microsoft. As a
+        result, this website no longer supports any version of Internet
+        Explorer. Some features on this site will not work. You should use a
+        modern browser such as Edge, Chrome, Firefox, or Safari. If you have
+        difficulty installing or accessing a different browser, please contact
+        your IT support team.
+      </p>
+    </div>
+    <div id="disclaimer">
+      <div class="container">
+        <div class="disclaimer-alert">
+          <p>
+            <strong class="phase-tag">BETA</strong>
+            Your feedback will help us continue to improve the site. Complete
+            the short survey to share your thoughts.
+            <a
+              id="takepartButton"
+              aria-labelledby="takepartButton"
+              href="https://www.smartsurvey.co.uk/s/EZZRYJ/"
+              target="_blank"
+              class="btn btn-primary btn-download btn-takepart"
+              role="link"
+              >Take the survey</a
+            >
+          </p>
+          <p>
+            <strong>
+              Since September 2023 we have
+              <a
+                href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities"
+                >paused</a
+              >
+              the uploading of data reported on this site. However, the
+              hyperlinks for the indicator data sources could be used to see
+              where the data is published and whether newer data will become
+              available in future. You can also find up to date SDG data on the
+              <a href="https://unstats.un.org/sdgs/dataportal/"
+                >UN SDG website</a
+              >
+              which reports globally comparable data.
+            </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <header role="banner" class="">
+      <div class="container">
+        <nav
+          class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start"
+        >
+          <a
+            class="navbar-brand"
+            href="/sdg-indicators/"
+            id="home"
+            aria-label="Go to homepage"
+            title="Go to homepage"
+          >
+            <img
+              src="/sdg-indicators/assets/img/SDG_logo.png"
+              alt="Sustainable Development Goals - 17 Goals to Transform our World"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Show navigation menu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="d-flex flex-wrap w-100 justify-content-between">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav" id="menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/reporting-status/"
+                    >Reporting Status</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/publications/"
+                    >Publications</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/updates/"
+                    >Updates</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/faq/">FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sdg-indicators/about/">About</a>
+                </li>
+              </ul>
+            </div>
+            <div class="header-search-bar">
+              <form
+                class="align-self-lg-end"
+                id="search"
+                action="/sdg-indicators/search/"
+              >
+                <div class="input-group">
+                  <label class="visually-hidden" for="indicator_search"
+                    >Search</label
+                  >
+                  <input
+                    class="form-control"
+                    type="search"
+                    name="q"
+                    id="indicator_search"
+                    title="Search"
+                  />
+                  <span class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary ms-n5"
+                      aria-label="Site search"
+                      id="search-btn"
+                      type="submit"
+                    >
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                </div>
+              </form>
+            </div>
+            <div class="header-toggles d-flex">
+              <a
+                title="Enable high contrast"
+                aria-label="Enable high contrast"
+                data-contrast-switch-to=""
+                role="button"
+                href="javascript:void(0)"
+                data-on="click"
+                data-event-category="Accessibility"
+                data-event-action="Change contrast setting"
+                data-event-label="high"
+                >A</a
+              >
+            </div>
+          </div>
         </nav>
-    </div>
-</header>
-<div id="top" tabindex=-1></div>
+      </div>
+    </header>
+    <div id="top" tabindex="-1"></div>
 
+    <div class="container"></div>
 
-
-<div class="container">
-  
-
-</div>
-
-
-<div id="main-content" class="container" role="main">
-  <div class="row">
-    <div class="col-md-12">
-      <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-        <h1 class="post-title" itemprop="name headline">Funded work</h1>
-        <div class="post-header">
-          <time class="post-date" datetime="2019-11-04T00:00:00+00:00" itemprop="datePublished">04 November 2019</time><ul class="post-categories"><li>Data partners</li></ul><span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">SDGs team</span></span></div>
-
-        <div class="post-content" itemprop="articleBody">
-          
-
-
-    <p>Our Sustainable Development Goals (SDG) project funds specific work across the Office for National Statistics (ONS). In this update those teams that receive SDG project funding explain the work they have been doing directly related to SDGs.</p>
-
-<h3 id="ons-centre-for-crime-and-justice">ONS Centre for Crime and Justice</h3>
-<p>ONS <a href="https://blog.ons.gov.uk/2018/10/04/new-ons-centres-to-focus-on-the-public-policy-issues-that-matter/">announced five centres focussing on key policy areas</a> in 2018. Our [Centre for Crime and Justice] improves the understanding of the nature of crime.</p>
-
-<p>This year, we reviewed all the ONS crime data used to report the SDG indicators. We have used the latest and the most appropriate data sources to update indicators as appropriate.</p>
-
-<p>A key focus for us has been investigating SDG indicators for which data is not provided. This includes indicators on modern slavery, human trafficking and child exploitation (Goal 16). We have made progress exploring new research methods and identifying potential data sources to support these indicators. We engaged with stakeholders from across government, academia and the third sector to help shape the research.</p>
-
-<h3 id="ons-centre-for-equalities-and-inclusion">ONS Centre for Equalities and Inclusion</h3>
-<p>Our <a href="https://www.ons.gov.uk/aboutus/whatwedo/programmesandprojects/centreforequalitiesandinclusion">Centre for Equalities and Inclusion</a> was announced by ONS in 2018 too. We aim to work with others to ensure that the right data are available to address the main questions about fairness and equity in society.</p>
-
-<p>We are working with the SDG team to develop the protected characteristics which align with the SDG disaggregations. New data sources and methods could benefit work programmes. They could also increase efforts for disadvantaged or discriminated groups.</p>
-
-<h3 id="centre-for-international-migration">Centre for International Migration</h3>
-<p>Migration is one of the main SDG disaggregations the United Nations requires countries to measure and report.
-The Centre for International Migration has published a range of research outputs in the last year. The following research reports will provide input to SDG indicators. These reports give breakdowns by migratory status to provide evidence on the contribution that international migrants make to public services and the economy.</p>
-
-<ul>
-  <li><a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/articles/internationalmigrationandtheeducationsectorwhatdoesthecurrentevidenceshow/2019-05-03">International migration and the education sector</a>: This outlines the impact and contribution of international migration on the education sector at a local area. This will provide disaggregations for indicators within Goal 4: Quality Education.</li>
-  <li><a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/articles/internationalmigrationandthehealthcareworkforce/2019-08-15">International migration and the healthcare workforce</a>: This draws on all available data on the migrant workforce in health care in the UK. This will provide a disaggregation for indicator 3.c.1; Health Worker density and distribution by migratory status.</li>
-</ul>
-
-<p>In the coming year we will collaborate with colleagues across ONS to provide disaggregations for indicators related to birth rates and mortality using available data sources. We will also collaborate with colleagues from across the Government Statistical Service (GSS) to provide further disaggregations, specifically against Goal 4: Quality Education.</p>
-
-<h3 id="titchfield-city-group-on-ageing-and-age-disaggregated-data">Titchfield City Group on Ageing and Age-disaggregated data</h3>
-<p>In March 2018 the UN Statistics Committee endorsed the <a href="https://unstats.un.org/unsd/methodology/citygroups/Titchfield.cshtml">Titchfield City Group on Ageing and Age-disaggregated data</a>. The main aim of our group is working with statistical organisations and others with a particular interest in ageing across the world to improve the measurement of ageing populations and older people. Age is one of the disaggregations required by the UN for measuring the SDGs. This is so that no one is left behind in progress towards the 2030 Agenda.</p>
-
-<p>We discussed aligning our work to the SDGs at our <a href="https://gss.civilservice.gov.uk/wp-content/uploads/2019/07/Report-of-the-2nd-technical-meeting-of-the-Titchfield-City-Group-11-12-June-2019.pdf">second technical meeting in the Republic of Korea</a>. The four objectives for this work strand are to:
-*	assess the data available to monitor the “Leave No-one Behind” pledge
-*	interface with the IAEG on SDG indicators and to identify data needs to monitor the SDG framework for older people
-*	contribute to harmonisation and standards for producing ageing related data for disaggregation of SDG indicators
-*	pilot innovative approaches to overcome challenges faced by NSOs in relation to availability and presentation of SDG data in relation to older people</p>
-
-<p>In the past year we submitted a response to the Inter-Agency Expert Group (IAEG) for the SDGs 2020 indicator review. Over the coming year we will work on providing new age-related break downs of the SDG headline data for the UK.</p>
-
-<h3 id="natural-capital">Natural Capital</h3>
-<p><a href="https://www.ons.gov.uk/economy/nationalaccounts/uksectoraccounts/methodologies/naturalcapital">Natural Capital</a> links economic and environmental data. We use the resulting statistics to estimate the value of the goods and services provided by nature in the UK. We also provide environmental statistical support to the ONS SDG Team.</p>
-
-<p>We are developing statistics about where air temperature is cooled by trees and water. Our aim is to highlight inequalities between different geographical locations according to deprivation levels. This can inform sub-categories of headline environmental data reported about the SDGs in the UK.</p>
-
-<p>We are supporting the improvement of data reported for SDG indicators about marine protection. For SDG target 14.7 (indicator 14.7.1) we are working on linking data about fish stock sustainability and the fishing economy.</p>
-
-<h3 id="environmental-accounts">Environmental Accounts</h3>
-<p>The UK Environmental Accounts also link environmental and economic data. We have continued to help the ONS SDG team develop environmental related SDG indicators this year. We also highlighted the importance of SDG indicators within the UK Environmental Accounts in some publications.</p>
-
-<p>We worked with the ONS SDG team to write our <a href="https://www.ons.gov.uk/economy/environmentalaccounts/bulletins/greenhousegasintensityprovisionalestimatesuk/2017#toc">Greenhouse gas intensity, provisional estimates, UK: 2017 release</a>. It highlighted SDG target 9.4 (indicator 9.4.1) about carbon dioxide emissions for which our data is used to <a href="https://sustainabledevelopment-uk.github.io/9-4-1/">report the UK SDG statistics</a>.</p>
-
-<p>We analysed the environmental impact of burning organic materials alongside its contribution to the UK’s renewable energy industry. Our article, <a href="https://www.ons.gov.uk/economy/environmentalaccounts/articles/aburningissuebiomassisthebiggestsourceofrenewableenergyconsumedintheuk/2019-08-30">A burning issue: biomass is the biggest source of renewable energy consumed in the UK</a> highlighted SDG target 7.2 (indicator 7.2.1). We are working to provide sub-categories for UK SDG data about air emissions.</p>
-
-<p>We worked with the Department for the Environment, Food and Rural Affairs (DEFRA) and the University of Leeds on <a href="https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/measuringmaterialfootprintintheuk2008to2016#toc">Measuring material footprint in the UK: 2008 to 2016</a>. The article presents updated estimates and discusses methodology for the UK’s material footprint. This work feeds into international decisions about the best methods for estimating material footprint. The data for the UK’s material footprint is used to report SDG targets 8.4 (indicator 8.4.1) and target 12.2 (indicator 12.2.1).</p>
-
-<h3 id="geospatial-work-in-data-architecture">Geospatial work in Data Architecture</h3>
-<p>We worked on a major cross-team project to produce data for how close people live to roads. The UK data is <a href="https://sustainabledevelopment-uk.github.io/9-1-1/">used to report SDG target 9.1 (indicator 9.1.1)</a>. Our project’s methodology can produce figures for every country in the world and was presented at the UN World Data Forum in Dubai. The project won the inaugural Government Science and Engineering Geography in Government Award. This work led to the World Bank reclassifying the indicator from Tier 3 to Tier 2. Tier 2 indicators have internationally established methodologies and standards available.</p>
-
-<p>We are also sourcing data and analysing geographic data to tackle Goal 15 (indicators 15.1.1, 15.1.2 and 15.4.1.) Spatial disaggregation of forest area as a percentage of total land area (indicator 15.1.1) for the whole of UK is now available. This data is available at country and local authority level. It is available for years 2015 to 2017 for Great Britain and 2018 for Northern Ireland. Data showing the proportion of important sites for terrestrial and freshwater biodiversity that are covered by protected areas (indicator 15.1.2) should follow shortly. We are also working on coverage by protected areas of important sites for biodiversity (indicator 15.4.1).</p>
-
-<p>We carried out exploratory work on marine protected areas for SDG target 14.5 (indicator 14.5.1). We have also worked on national exclusive economic zones managed using ecosystem-based approaches for SDG target 14.2 (indicator 14.2.1).</p>
-
-<p>For more information about the work we are doing with other departments, please <a href="/sdg-indicators/contact-us">contact us</a>.</p>
-
-
-
-        </div>
-      </article>
-    </div>
-    
-  </div>
-</div>
-
-
-
-
-<footer role="contentinfo">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div id="footerLinks">
-                    <ul>
-                        <li>
-                            <a href="https://open-sdg.org">Built using Open SDG</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/sdg-indicators/contact-us">Contact us</a>
-                            
-                        </li>
-                        <li>
-                            
-                            <a href="https://twitter.com/ONS" target="_blank">Twitter</a>
-                            
-                        </li>
-                        <li>
-                            <a href="/sdg-indicators/cookies-no-javascript/">Cookies</a>
-                            
-                        </li>
-                        <li>
-                            <a href="/sdg-indicators/privacy-notice/">Privacy</a>
-                            
-                        </li>
-                        <li>
-                            <a href="/sdg-indicators/accessibility-statement/">Accessibility statement</a>
-                            
-                        </li>
-                        
-                        
-                        
-                        <li>
-                            <a href="/sdg-indicators/config">Configuration</a>
-                        </li>
-                        </ul>
-                </div>
+    <div id="main-content" class="container" role="main">
+      <div class="row">
+        <div class="col-md-12">
+          <article
+            class="post"
+            itemscope
+            itemtype="http://schema.org/BlogPosting"
+          >
+            <h1 class="post-title" itemprop="name headline">Funded work</h1>
+            <div class="post-header">
+              <time
+                class="post-date"
+                datetime="2019-11-04T00:00:00+00:00"
+                itemprop="datePublished"
+                >04 November 2019</time
+              >
+              <ul class="post-categories">
+                <li>Data partners</li>
+              </ul>
+              <span
+                class="post-author"
+                itemprop="author"
+                itemscope
+                itemtype="http://schema.org/Person"
+                ><span itemprop="name">SDGs team</span></span
+              >
             </div>
+
+            <div class="post-content" itemprop="articleBody">
+              <p>
+                Our Sustainable Development Goals (SDG) project funds specific
+                work across the Office for National Statistics (ONS). In this
+                update those teams that receive SDG project funding explain the
+                work they have been doing directly related to SDGs.
+              </p>
+
+              <h3 id="ons-centre-for-crime-and-justice">
+                ONS Centre for Crime and Justice
+              </h3>
+              <p>
+                ONS
+                <a
+                  href="https://blog.ons.gov.uk/2018/10/04/new-ons-centres-to-focus-on-the-public-policy-issues-that-matter/"
+                  >announced five centres focussing on key policy areas</a
+                >
+                in 2018. Our [Centre for Crime and Justice] improves the
+                understanding of the nature of crime.
+              </p>
+
+              <p>
+                This year, we reviewed all the ONS crime data used to report the
+                SDG indicators. We have used the latest and the most appropriate
+                data sources to update indicators as appropriate.
+              </p>
+
+              <p>
+                A key focus for us has been investigating SDG indicators for
+                which data is not provided. This includes indicators on modern
+                slavery, human trafficking and child exploitation (Goal 16). We
+                have made progress exploring new research methods and
+                identifying potential data sources to support these indicators.
+                We engaged with stakeholders from across government, academia
+                and the third sector to help shape the research.
+              </p>
+
+              <h3 id="ons-centre-for-equalities-and-inclusion">
+                ONS Centre for Equalities and Inclusion
+              </h3>
+              <p>
+                Our
+                <a
+                  href="https://www.ons.gov.uk/aboutus/whatwedo/programmesandprojects/centreforequalitiesandinclusion"
+                  >Centre for Equalities and Inclusion</a
+                >
+                was announced by ONS in 2018 too. We aim to work with others to
+                ensure that the right data are available to address the main
+                questions about fairness and equity in society.
+              </p>
+
+              <p>
+                We are working with the SDG team to develop the protected
+                characteristics which align with the SDG disaggregations. New
+                data sources and methods could benefit work programmes. They
+                could also increase efforts for disadvantaged or discriminated
+                groups.
+              </p>
+
+              <h3 id="centre-for-international-migration">
+                Centre for International Migration
+              </h3>
+              <p>
+                Migration is one of the main SDG disaggregations the United
+                Nations requires countries to measure and report. The Centre for
+                International Migration has published a range of research
+                outputs in the last year. The following research reports will
+                provide input to SDG indicators. These reports give breakdowns
+                by migratory status to provide evidence on the contribution that
+                international migrants make to public services and the economy.
+              </p>
+
+              <ul>
+                <li>
+                  <a
+                    href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/articles/internationalmigrationandtheeducationsectorwhatdoesthecurrentevidenceshow/2019-05-03"
+                    >International migration and the education sector</a
+                  >: This outlines the impact and contribution of international
+                  migration on the education sector at a local area. This will
+                  provide disaggregations for indicators within Goal 4: Quality
+                  Education.
+                </li>
+                <li>
+                  <a
+                    href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/articles/internationalmigrationandthehealthcareworkforce/2019-08-15"
+                    >International migration and the healthcare workforce</a
+                  >: This draws on all available data on the migrant workforce
+                  in health care in the UK. This will provide a disaggregation
+                  for indicator 3.c.1; Health Worker density and distribution by
+                  migratory status.
+                </li>
+              </ul>
+
+              <p>
+                In the coming year we will collaborate with colleagues across
+                ONS to provide disaggregations for indicators related to birth
+                rates and mortality using available data sources. We will also
+                collaborate with colleagues from across the Government
+                Statistical Service (GSS) to provide further disaggregations,
+                specifically against Goal 4: Quality Education.
+              </p>
+
+              <h3
+                id="titchfield-city-group-on-ageing-and-age-disaggregated-data"
+              >
+                Titchfield City Group on Ageing and Age-disaggregated data
+              </h3>
+              <p>
+                In March 2018 the UN Statistics Committee endorsed the
+                <a
+                  href="https://unstats.un.org/unsd/methodology/citygroups/Titchfield.cshtml"
+                  >Titchfield City Group on Ageing and Age-disaggregated data</a
+                >. The main aim of our group is working with statistical
+                organisations and others with a particular interest in ageing
+                across the world to improve the measurement of ageing
+                populations and older people. Age is one of the disaggregations
+                required by the UN for measuring the SDGs. This is so that no
+                one is left behind in progress towards the 2030 Agenda.
+              </p>
+
+              <p>
+                We discussed aligning our work to the SDGs at our
+                <a
+                  href="https://gss.civilservice.gov.uk/wp-content/uploads/2019/07/Report-of-the-2nd-technical-meeting-of-the-Titchfield-City-Group-11-12-June-2019.pdf"
+                  >second technical meeting in the Republic of Korea</a
+                >. The four objectives for this work strand are to: * assess the
+                data available to monitor the “Leave No-one Behind” pledge *
+                interface with the IAEG on SDG indicators and to identify data
+                needs to monitor the SDG framework for older people * contribute
+                to harmonisation and standards for producing ageing related data
+                for disaggregation of SDG indicators * pilot innovative
+                approaches to overcome challenges faced by NSOs in relation to
+                availability and presentation of SDG data in relation to older
+                people
+              </p>
+
+              <p>
+                In the past year we submitted a response to the Inter-Agency
+                Expert Group (IAEG) for the SDGs 2020 indicator review. Over the
+                coming year we will work on providing new age-related break
+                downs of the SDG headline data for the UK.
+              </p>
+
+              <h3 id="natural-capital">Natural Capital</h3>
+              <p>
+                <a
+                  href="https://www.ons.gov.uk/economy/nationalaccounts/uksectoraccounts/methodologies/naturalcapital"
+                  >Natural Capital</a
+                >
+                links economic and environmental data. We use the resulting
+                statistics to estimate the value of the goods and services
+                provided by nature in the UK. We also provide environmental
+                statistical support to the ONS SDG Team.
+              </p>
+
+              <p>
+                We are developing statistics about where air temperature is
+                cooled by trees and water. Our aim is to highlight inequalities
+                between different geographical locations according to
+                deprivation levels. This can inform sub-categories of headline
+                environmental data reported about the SDGs in the UK.
+              </p>
+
+              <p>
+                We are supporting the improvement of data reported for SDG
+                indicators about marine protection. For SDG target 14.7
+                (indicator 14.7.1) we are working on linking data about fish
+                stock sustainability and the fishing economy.
+              </p>
+
+              <h3 id="environmental-accounts">Environmental Accounts</h3>
+              <p>
+                The UK Environmental Accounts also link environmental and
+                economic data. We have continued to help the ONS SDG team
+                develop environmental related SDG indicators this year. We also
+                highlighted the importance of SDG indicators within the UK
+                Environmental Accounts in some publications.
+              </p>
+
+              <p>
+                We worked with the ONS SDG team to write our
+                <a
+                  href="https://www.ons.gov.uk/economy/environmentalaccounts/bulletins/greenhousegasintensityprovisionalestimatesuk/2017#toc"
+                  >Greenhouse gas intensity, provisional estimates, UK: 2017
+                  release</a
+                >. It highlighted SDG target 9.4 (indicator 9.4.1) about carbon
+                dioxide emissions for which our data is used to
+                <a href="https://sustainabledevelopment-uk.github.io/9-4-1/"
+                  >report the UK SDG statistics</a
+                >.
+              </p>
+
+              <p>
+                We analysed the environmental impact of burning organic
+                materials alongside its contribution to the UK’s renewable
+                energy industry. Our article,
+                <a
+                  href="https://www.ons.gov.uk/economy/environmentalaccounts/articles/aburningissuebiomassisthebiggestsourceofrenewableenergyconsumedintheuk/2019-08-30"
+                  >A burning issue: biomass is the biggest source of renewable
+                  energy consumed in the UK</a
+                >
+                highlighted SDG target 7.2 (indicator 7.2.1). We are working to
+                provide sub-categories for UK SDG data about air emissions.
+              </p>
+
+              <p>
+                We worked with the Department for the Environment, Food and
+                Rural Affairs (DEFRA) and the University of Leeds on
+                <a
+                  href="https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/measuringmaterialfootprintintheuk2008to2016#toc"
+                  >Measuring material footprint in the UK: 2008 to 2016</a
+                >. The article presents updated estimates and discusses
+                methodology for the UK’s material footprint. This work feeds
+                into international decisions about the best methods for
+                estimating material footprint. The data for the UK’s material
+                footprint is used to report SDG targets 8.4 (indicator 8.4.1)
+                and target 12.2 (indicator 12.2.1).
+              </p>
+
+              <h3 id="geospatial-work-in-data-architecture">
+                Geospatial work in Data Architecture
+              </h3>
+              <p>
+                We worked on a major cross-team project to produce data for how
+                close people live to roads. The UK data is
+                <a href="https://sustainabledevelopment-uk.github.io/9-1-1/"
+                  >used to report SDG target 9.1 (indicator 9.1.1)</a
+                >. Our project’s methodology can produce figures for every
+                country in the world and was presented at the UN World Data
+                Forum in Dubai. The project won the inaugural Government Science
+                and Engineering Geography in Government Award. This work led to
+                the World Bank reclassifying the indicator from Tier 3 to Tier
+                2. Tier 2 indicators have internationally established
+                methodologies and standards available.
+              </p>
+
+              <p>
+                We are also sourcing data and analysing geographic data to
+                tackle Goal 15 (indicators 15.1.1, 15.1.2 and 15.4.1.) Spatial
+                disaggregation of forest area as a percentage of total land area
+                (indicator 15.1.1) for the whole of UK is now available. This
+                data is available at country and local authority level. It is
+                available for years 2015 to 2017 for Great Britain and 2018 for
+                Northern Ireland. Data showing the proportion of important sites
+                for terrestrial and freshwater biodiversity that are covered by
+                protected areas (indicator 15.1.2) should follow shortly. We are
+                also working on coverage by protected areas of important sites
+                for biodiversity (indicator 15.4.1).
+              </p>
+
+              <p>
+                We carried out exploratory work on marine protected areas for
+                SDG target 14.5 (indicator 14.5.1). We have also worked on
+                national exclusive economic zones managed using ecosystem-based
+                approaches for SDG target 14.2 (indicator 14.2.1).
+              </p>
+
+              <p>
+                For more information about the work we are doing with other
+                departments, please
+                <a href="/sdg-indicators/contact-us">contact us</a>.
+              </p>
+            </div>
+          </article>
         </div>
-         
-
-<div class="row">
-  <div class="col-xs-12">
-    <div id="oglLicense">
-        <img alt="Open Government Licence logo" src="/sdg-indicators/assets/img/OGL_logo.png" width="35px" class="me-2">All data is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+      </div>
     </div>
-  </div>
-</div>
-<div class="mb-2"></div>
 
-    </div>
-</footer>
+    <footer role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div id="footerLinks">
+              <ul>
+                <li>
+                  <a href="https://open-sdg.org">Built using Open SDG</a>
+                </li>
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js" integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.js"></script>
+                <li>
+                  <a href="/sdg-indicators/contact-us">Contact us</a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/ONS" target="_blank">Twitter</a>
+                </li>
+                <li>
+                  <a href="/sdg-indicators/cookies-no-javascript/">Cookies</a>
+                </li>
+                <li>
+                  <a href="/sdg-indicators/privacy-notice/">Privacy</a>
+                </li>
+                <li>
+                  <a href="/sdg-indicators/accessibility-statement/"
+                    >Accessibility statement</a
+                  >
+                </li>
 
+                <li>
+                  <a href="/sdg-indicators/config">Configuration</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="oglLicense">
+              <img
+                alt="Open Government Licence logo"
+                src="/sdg-indicators/assets/img/OGL_logo.png"
+                width="35px"
+                class="me-2"
+              />All data is available under the
+              <a
+                href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+                >Open Government Licence v3.0</a
+              >, except where otherwise stated
+            </div>
+          </div>
+        </div>
+        <div class="mb-2"></div>
+      </div>
+    </footer>
 
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+      integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"
+      integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.js"></script>
 
-<script>
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
 
-
-var klaroConfig = {
-    noAutoLoad: true, // no autoload because we have a custom notice and form
-    storageMethod: 'cookie',
-    cookieName: 'cookie_settings',
-    cookieExpiresAfterDays: 365,
-    default: false,
-    services: [
-        {
-            name: 'contrast',
+    <script>
+      var klaroConfig = {
+        noAutoLoad: true, // no autoload because we have a custom notice and form
+        storageMethod: "cookie",
+        cookieName: "cookie_settings",
+        cookieExpiresAfterDays: 365,
+        default: false,
+        services: [
+          {
+            name: "contrast",
             default: true,
-            cookies: ['contrast'],
+            cookies: ["contrast"],
             required: true,
-        },
-        
-        {
-            name: 'google-analytics',
-            
-            cookies: ['_gat', '_gid', '_ga'],
-            
-        },
-        
-        
-    ],
-};
+          },
 
-  klaroConfig.lang = 'en';
-klaroConfig.translations = {
-    en: {
-        acceptAll: "Accept all",
-        acceptSelected: "Accept selected",
-        close: "Close",
-        consentModal: {
-            description: "Here you can change which cookies you're happy for us to use.",
+          {
+            name: "google-analytics",
+
+            cookies: ["_gat", "_gid", "_ga"],
+          },
+        ],
+      };
+
+      klaroConfig.lang = "en";
+      klaroConfig.translations = {
+        en: {
+          acceptAll: "Accept all",
+          acceptSelected: "Accept selected",
+          close: "Close",
+          consentModal: {
+            description:
+              "Here you can change which cookies you're happy for us to use.",
             title: "Cookie settings",
-        },
-        consentNotice: {
-            changeDescription: "The cookies used on this site have changed since you last visited, please renew your consent.",
-            description: "We use some essential cookies to make this service work. We’d also like to use {purposes} so we can understand how you use the service and make improvements.",
+          },
+          consentNotice: {
+            changeDescription:
+              "The cookies used on this site have changed since you last visited, please renew your consent.",
+            description:
+              "We use some essential cookies to make this service work. We’d also like to use {purposes} so we can understand how you use the service and make improvements.",
             learnMore: "View cookies",
             testing: "Testing mode!",
-        },
-        contextualConsent: {
+          },
+          contextualConsent: {
             acceptAlways: "Always",
             acceptOnce: "Yes",
-            description: "Do you want to load external content supplied by {title}?",
-        },
-        decline: "Reject additional cookies",
-        ok: "Accept additional cookies",
-        poweredBy: "Realized with Klaro!",
-        privacyPolicy: {
+            description:
+              "Do you want to load external content supplied by {title}?",
+          },
+          decline: "Reject additional cookies",
+          ok: "Accept additional cookies",
+          poweredBy: "Realized with Klaro!",
+          privacyPolicy: {
             name: "privacy policy",
             text: "To learn more, please read our privacy policy.",
-        },
-        purposeItem: {
+          },
+          purposeItem: {
             service: "service",
             services: "services",
-        },
-        purposes: {
+          },
+          purposes: {
             functional: {
-                description: "Essential cookies keep your information secure, and do things like remember your preferences and the choices you make whilst you use the website. They always need to be on.",
-                title: "Essential cookies",
+              description:
+                "Essential cookies keep your information secure, and do things like remember your preferences and the choices you make whilst you use the website. They always need to be on.",
+              title: "Essential cookies",
             },
             analytics: {
-                description: "These services collect information about how you use the website. We use this data to help make the website better.",
-                title: "Analytics cookies",
+              description:
+                "These services collect information about how you use the website. We use this data to help make the website better.",
+              title: "Analytics cookies",
             },
-        },
-        save: "Save",
-        service: {
+          },
+          save: "Save",
+          service: {
             disableAll: {
-                description: "Use this switch to enable or disable all services.",
-                title: "Enable or disable all services",
+              description: "Use this switch to enable or disable all services.",
+              title: "Enable or disable all services",
             },
             optOut: {
-                description: "This services is loaded by default (but you can opt out)",
-                title: "(opt-out)",
+              description:
+                "This services is loaded by default (but you can opt out)",
+              title: "(opt-out)",
             },
             purpose: "purpose",
             purposes: "purposes",
             required: {
-                description: "This service is always required",
-                title: "(always required)",
+              description: "This service is always required",
+              title: "(always required)",
             },
+          },
         },
-    },
-};
-var allRequired = true;
-klaroConfig.services.forEach(function(service) {
-    if (!service.required) {
-        allRequired = false;
-    }
-    if (service.name === 'contrast') {
-        service.translations = {
-            en: {
-                description: "Retains active state of accessibility services",
-                title: "Accessibility mode",
-            },
+      };
+      var allRequired = true;
+      klaroConfig.services.forEach(function (service) {
+        if (!service.required) {
+          allRequired = false;
         }
-    }
-    else if (service.name === 'cookie_settings') {
-        service.translations = {
+        if (service.name === "contrast") {
+          service.translations = {
             en: {
-                description: "Saves your cookie consent settings",
-                title: "Cookie settings",
+              description: "Retains active state of accessibility services",
+              title: "Accessibility mode",
             },
-        }
-    }
-    else if (service.name === 'google-analytics') {
-        service.translations = {
+          };
+        } else if (service.name === "cookie_settings") {
+          service.translations = {
             en: {
-                description: "Collects information about page visits using Google Analytics",
-                title: "Google Analytics",
+              description: "Saves your cookie consent settings",
+              title: "Cookie settings",
             },
+          };
+        } else if (service.name === "google-analytics") {
+          service.translations = {
+            en: {
+              description:
+                "Collects information about page visits using Google Analytics",
+              title: "Google Analytics",
+            },
+          };
         }
-    }
-});
+      });
 
-if (allRequired) {
-    klaroConfig.translations['en'].consentNotice.description = "We use some essential cookies to make this service work. They always need to be on.";
-    klaroConfig.translations['en'].ok = "OK";
-    klaroConfig.hideDeclineAll = true;
-    klaroConfig.hideLearnMore = true;
-}
+      if (allRequired) {
+        klaroConfig.translations["en"].consentNotice.description =
+          "We use some essential cookies to make this service work. They always need to be on.";
+        klaroConfig.translations["en"].ok = "OK";
+        klaroConfig.hideDeclineAll = true;
+        klaroConfig.hideLearnMore = true;
+      }
+    </script>
+    <script src="https://cdn.kiprotect.com/klaro/v0.7/klaro-no-css.js"></script>
+    <script>
+      translations["cookies"] = translations["cookies"] || {};
+      translations["cookies"]["cookie_settings"] = "Cookie settings";
+    </script>
 
-</script>
-<script src="https://cdn.kiprotect.com/klaro/v0.7/klaro-no-css.js"></script>
-<script>translations['cookies'] = translations['cookies'] || {};
-    translations['cookies']['cookie_settings'] = 'Cookie settings';</script>
+    <script>
+      translations["general"] = translations["general"] || {};
+      translations["general"]["hide"] = "hide";
+    </script>
 
+    <script>
+      translations["search"] = translations["search"] || {};
+      translations["search"]["search"] = "Search";
+    </script>
 
+    <script src="/sdg-indicators/assets/js/sdg.js?v=20250630120056"></script>
+    <script
+      src="//cdn.loop11.com/embed.js"
+      type="text/javascript"
+      async="async"
+    ></script>
+    <script src="/sdg-indicators/assets/js/govuk.js"></script>
+    <script>
+      window.GOVUKFrontend.initAll();
+    </script>
 
-
-
-
-
-<script>translations['general'] = translations['general'] || {};
-    translations['general']['hide'] = 'hide';</script>
-
-<script>translations['search'] = translations['search'] || {};
-    translations['search']['search'] = 'Search';</script>
-
-<script src='/sdg-indicators/assets/js/sdg.js?v=20250630120056'></script>
-<script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"></script>
-<script src="/sdg-indicators/assets/js/govuk.js"></script>
-<script>
-  window.GOVUKFrontend.initAll()
-</script>
-    
-    
-    <script src="/sdg-indicators/assets/js/custom.js?v=20250630120056"></script><script>
-    new indicatorInit();
-    new accessibilitySwitcher();
-</script>
-
-
-</body>
+    <script src="/sdg-indicators/assets/js/custom.js?v=20250630120056"></script>
+    <script>
+      new indicatorInit();
+      new accessibilitySwitcher();
+    </script>
+  </body>
 </html>

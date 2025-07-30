@@ -5,31 +5,30 @@ on:
     branches:
       - develop
   schedule:
-    - cron: '10 0 * * *'
+    - cron: "10 0 * * *"
   repository_dispatch:
     types: rebuild-staging
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby 3.2
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.2'
-    - name: Build the site
-      run: |
-        gem install bundler -v 2.4.22
-        bundle config path vendor/bundle
-        make install
-        make build.staging
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
-      with:
-        ACCESS_TOKEN: ${{ secrets.token }}
-        BRANCH: gh-pages
-        FOLDER: _site
-        CLEAN: true
+      - uses: actions/checkout@v2
+      - name: Set up Ruby 3.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+      - name: Build the site
+        run: |
+          gem install bundler -v 2.4.22
+          bundle config path vendor/bundle
+          make install
+          make build.staging
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          ACCESS_TOKEN: ${{ secrets.token }}
+          BRANCH: gh-pages
+          FOLDER: _site
+          CLEAN: true

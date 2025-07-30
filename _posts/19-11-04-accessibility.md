@@ -3,17 +3,18 @@ layout: post
 title: Digital Accessibility Testing
 author: SDGs team
 category: "Accessibility"
-excerpt: 
+excerpt:
 ---
 
 The commitment to “leave no one behind” is central to the Sustainable Development Goals (SDGs). It extends to making our digital content accessible and functional for all users regardless of any disability or physical impairment.
 
-Our SDG data site is still in a testing phase, so we are using the ‘alpha’ label. We want to move the site to the next phase known as ‘beta’. Before we can label the site as beta it has to reach the Web Content Accessibility Guidelines (WCAG) ‘AA’ standard, as well as other Government Digital Service criteria. This is a universally-recognised standard, designed to guarantee that assessed websites reach the predetermined accessibility criteria. 
+Our SDG data site is still in a testing phase, so we are using the ‘alpha’ label. We want to move the site to the next phase known as ‘beta’. Before we can label the site as beta it has to reach the Web Content Accessibility Guidelines (WCAG) ‘AA’ standard, as well as other Government Digital Service criteria. This is a universally-recognised standard, designed to guarantee that assessed websites reach the predetermined accessibility criteria.
 
 We updated some of the site’s features before it was tested, including:
--	making data tables and menus keyboard compatible
--	improving the high-contrast feature
--	adding descriptive labels and alternative text
+
+- making data tables and menus keyboard compatible
+- improving the high-contrast feature
+- adding descriptive labels and alternative text
 
 We tested the improvements on a range of desktop and mobile devices using a variety of browsers and screen-readers.
 The Digital Accessibility Centre tested the data site against the WCAG ‘AA’ standard in July 2019. The newly-accessible site was re-tested in July 2019 and passed, [receiving ‘AA’ certification](http://digitalaccessibilitycentre.org/index.php/office-for-national-statistics-sdg).

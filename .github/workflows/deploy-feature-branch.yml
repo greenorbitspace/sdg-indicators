@@ -3,7 +3,7 @@ name: Deploy feature branch to S3
 on:
   push:
     branches:
-      - 'feature-*'
+      - "feature-*"
 
 jobs:
   pre_job:
@@ -14,9 +14,9 @@ jobs:
         uses: fkirc/skip-duplicate-actions@master
         with:
           # All of these options are optional, so you can remove them if you are happy with the defaults
-          skip_after_successful_duplicate: 'false'
-          cancel_others: 'true'
-          
+          skip_after_successful_duplicate: "false"
+          cancel_others: "true"
+
   deploy:
     runs-on: ubuntu-latest
 
@@ -26,29 +26,29 @@ jobs:
       - name: Set up Ruby 3.2
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: "3.2"
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
       - name: Update the baseurl
         uses: fjogeleit/yaml-update-action@master
         with:
           # Update this if your 'baseurl' setting is in a different file.
-          valueFile: '_config.yml'
-          propertyPath: 'baseurl'
-          value: '/${{ env.GITHUB_REF_SLUG }}'
-          commitChange: 'false'
-          updateFile: 'true'
+          valueFile: "_config.yml"
+          propertyPath: "baseurl"
+          value: "/${{ env.GITHUB_REF_SLUG }}"
+          commitChange: "false"
+          updateFile: "true"
       - name: Update the remote_data_prefix
         uses: fjogeleit/yaml-update-action@master
         if: startsWith(github.ref, 'refs/heads/feature-site-') == false
         with:
           # Update this if your 'remote_data_prefix' setting is in a different file.
-          valueFile: '_data/site_config.yml'
-          propertyPath: 'remote_data_prefix'
+          valueFile: "_data/site_config.yml"
+          propertyPath: "remote_data_prefix"
           # Update this according to the public URL of your S3 bucket.
-          value: 'http://uk-sdg-feature-branches.s3-website.eu-west-2.amazonaws.com/${{ env.GITHUB_REF_SLUG }}-data'
-          commitChange: 'false'
-          updateFile: 'true'
+          value: "http://uk-sdg-feature-branches.s3-website.eu-west-2.amazonaws.com/${{ env.GITHUB_REF_SLUG }}-data"
+          commitChange: "false"
+          updateFile: "true"
       - name: Build the site
         run: |
           gem install bundler -v 2.4.22
