@@ -147,7 +147,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250730015211">
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250730020711">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -165,8 +165,8 @@ var translations = {
         <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css">
         <![endif]-->
 
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css">
-<!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css" /> <!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+
 
 
     </head>
@@ -175,114 +175,208 @@ layout-indicator
 ">
 <!-- <div class="container"> -->
 
+ <script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
 
-
-<script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
-
-<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Skip to main content</a>
+<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0"
+  >Skip to main content</a
+>
 
 <script>
-  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  document.body.className = document.body.className
+    ? document.body.className + " js-enabled"
+    : "js-enabled";
 </script>
-<div id="cookie-banner" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+ <div
+  id="cookie-banner"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on sdgdata.gov.uk</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+          Cookies on sdgdata.gov.uk
+        </h2>
 
         <div class="govuk-cookie-banner__content">
           <p>We use some essential cookies to make this service work.</p>
-          <p>We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+          <p>
+            We’d also like to use analytics cookies so we can understand how you
+            use the service and make improvements.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <button id="cookie-accept" value="accept" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+      <button
+        id="cookie-accept"
+        value="accept"
+        type="button"
+        name="cookies"
+        class="govuk-button"
+        data-module="govuk-button"
+      >
         Accept analytics cookies
       </button>
-      <button id="cookie-reject" value="reject" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+      <button
+        id="cookie-reject"
+        value="reject"
+        type="button"
+        name="cookies"
+        class="govuk-button"
+        data-module="govuk-button"
+      >
         Reject analytics cookies
       </button>
       <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
     </div>
   </div>
 </div>
-<div id="cookie-banner-accept" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+<div
+  id="cookie-banner-accept"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-cookie-banner__content">
-          <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+          <p>
+            You’ve accepted analytics cookies. You can
+            <a class="govuk-link" href="/sdg-indicators/cookies"
+              >change your cookie settings</a
+            >
+            at any time.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <a id="hide-accept" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
+      <a
+        id="hide-accept"
+        href="#"
+        role="button"
+        draggable="false"
+        class="govuk-button"
+        data-module="govuk-button"
+        aria-label="Hide cookie confirmation message"
+      >
+        Hide this message
       </a>
     </div>
   </div>
 </div>
-<div id="cookie-banner-reject" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+<div
+  id="cookie-banner-reject"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-cookie-banner__content">
-          <p>You’ve rejected analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+          <p>
+            You’ve rejected analytics cookies. You can
+            <a class="govuk-link" href="/sdg-indicators/cookies"
+              >change your cookie settings</a
+            >
+            at any time.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <a id="hide-reject" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
+      <a
+        id="hide-reject"
+        href="#"
+        role="button"
+        draggable="false"
+        class="govuk-button"
+        data-module="govuk-button"
+        aria-label="Hide cookie confirmation message"
+      >
+        Hide this message
       </a>
     </div>
   </div>
 </div>
-
-
-<div class="container internet-explorer-message">
+ <div class="container internet-explorer-message">
     <h2 class="internet-explorer-message-title">This internet browser is no longer supported</h2>
     <p class="internet-explorer-message-body">We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.</p>
 </div>
 <div id="disclaimer">
-    
 <div class="container">
   <div class="disclaimer-alert">
-    <p><strong class="phase-tag">BETA</strong>
-    Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts.
-     <a id="takepartButton" aria-labelledby="takepartButton" href="https://www.smartsurvey.co.uk/s/EZZRYJ/" target="_blank" class="btn btn-primary btn-download btn-takepart" role="link">Take the survey</a>
+    <p>
+      <strong class="phase-tag"
+        >BETA</strong
+      >
+      Your feedback will help us continue to improve the site. Complete the
+      short survey to share your thoughts. <a
+  id="takepartButton"
+  aria-labelledby="takepartButton"
+  href="https://www.smartsurvey.co.uk/s/EZZRYJ/"
+  target="_blank"
+  class="btn btn-primary btn-download btn-takepart"
+  role="link"
+  >Take the survey</a
+>
 
-    </p> 
+    </p>
     <p>
       <strong>
-      Since September 2023 we have <a href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities">paused</a>
-      the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is
-      published and whether newer data will become available in future. You can also find up to date SDG data on the
-      <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a> which reports globally comparable data.
+        Since September 2023 we have
+        <a
+          href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities"
+          >paused</a
+        >
+        the uploading of data reported on this site. However, the hyperlinks for
+        the indicator data sources could be used to see where the data is
+        published and whether newer data will become available in future. You
+        can also find up to date SDG data on the
+        <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a>
+        which reports globally comparable data.
       </strong>
     </p>
   </div>
 </div>
 
-
 </div>
 
 <header role="banner" class="">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start">
-            <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
+  <div class="container">
+    <nav
+      class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start"
+    >
+      <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
     <img src="/sdg-indicators/assets/img/SDG_logo.png" alt="Sustainable Development Goals - 17 Goals to Transform our World" />
 </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Show navigation menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex flex-wrap w-100 justify-content-between">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav" id="menu"><li class="nav-item ">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Show navigation menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="d-flex flex-wrap w-100 justify-content-between">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav" id="menu"><li class="nav-item ">
     <a class="nav-link" href="/sdg-indicators/">Home</a>
 </li><li class="nav-item ">
     <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
@@ -298,9 +392,8 @@ layout-indicator
     <a class="nav-link" href="/sdg-indicators/about/">About</a>
 </li></ul>
     
-                </div>
-                <div class="header-search-bar">
-                    <form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
+        </div>
+        <div class="header-search-bar"><form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
     <div class="input-group">
         <label class="visually-hidden" for="indicator_search">Search</label>
         <input class="form-control" type="search" name="q" id="indicator_search" title="Search">
@@ -311,21 +404,19 @@ layout-indicator
         </span>
     </div>
 </form>
-
-                </div>
-                <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
+</div>
+        <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
     data-contrast-switch-to="" role="button" href="javascript:void(0)" data-on="click"
 data-event-category="Accessibility"
 data-event-action="Change contrast setting"
 data-event-label="high"
 >A</a>
-                </div>
-            </div>
-        </nav>
-    </div>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>
 <div id="top" tabindex=-1></div>
-
 
 
 
@@ -472,9 +563,7 @@ data-event-label="high"
 
   
 
-  
-
-
+    
 
 
   
@@ -1230,25 +1319,58 @@ data-event-label="Change to Table tab"
     
         
 <li role="presentation" class="nav-item">
-    <button type="button" class="nav-link active" data-bs-toggle="tab" id="tab-national" data-bs-target="#national" aria-controls="national" role="tab" data-on="click"
+  <button
+    type="button"
+    class="nav-link active"
+    data-bs-toggle="tab"
+    id="tab-national"
+    data-bs-target="#national"
+    aria-controls="national"
+    role="tab"
+    data-on="click"
 data-event-category="Tab change"
 data-event-action="Change metadata view"
 data-event-label="Change to National Metadata tab"
->National Metadata</button>
+
+  >
+    National Metadata
+  </button>
 </li>
 <li role="presentation" class="nav-item">
-    <button type="button" class="nav-link" data-bs-toggle="tab" id="tab-global" data-bs-target="#global" aria-controls="global" role="tab" data-on="click"
+  <button
+    type="button"
+    class="nav-link"
+    data-bs-toggle="tab"
+    id="tab-global"
+    data-bs-target="#global"
+    aria-controls="global"
+    role="tab"
+    data-on="click"
 data-event-category="Tab change"
 data-event-action="Change metadata view"
 data-event-label="Change to Global Metadata tab"
->Global Metadata</button>
+
+  >
+    Global Metadata
+  </button>
 </li>
 <li role="presentation" class="nav-item">
-    <button type="button" class="nav-link" data-bs-toggle="tab" id="tab-sources" data-bs-target="#sources" aria-controls="sources" role="tab" data-on="click"
+  <button
+    type="button"
+    class="nav-link"
+    data-bs-toggle="tab"
+    id="tab-sources"
+    data-bs-target="#sources"
+    aria-controls="sources"
+    role="tab"
+    data-on="click"
 data-event-category="Tab change"
 data-event-action="Change metadata view"
 data-event-label="Change to Sources tab"
->Sources</button>
+
+  >
+    Sources
+  </button>
 </li>
 
     
@@ -3186,12 +3308,21 @@ data-event-label="Change to Sources tab"
                 </div>
             </div>
         </div>
-         
+        
 
 <div class="row">
   <div class="col-xs-12">
     <div id="oglLicense">
-        <img alt="Open Government Licence logo" src="/sdg-indicators/assets/img/OGL_logo.png" width="35px" class="me-2">All data is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+      <img
+        alt="Open Government Licence logo"
+        src="/sdg-indicators/assets/img/OGL_logo.png"
+        width="35px"
+        class="me-2"
+      />All data is available under the
+      <a
+        href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+        >Open Government Licence v3.0</a
+      >, except where otherwise stated
     </div>
   </div>
 </div>
@@ -3359,15 +3490,20 @@ if (allRequired) {
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/sdg-indicators/assets/js/sdg.js?v=20250730015211'></script>
-<script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"></script>
+<script src='/sdg-indicators/assets/js/sdg.js?v=20250730020711'></script>
+<script
+  src="//cdn.loop11.com/embed.js"
+  type="text/javascript"
+  async="async"
+></script>
 <script src="/sdg-indicators/assets/js/govuk.js"></script>
 <script>
-  window.GOVUKFrontend.initAll()
+  window.GOVUKFrontend.initAll();
 </script>
+
     
     
-    <script src="/sdg-indicators/assets/js/custom.js?v=20250730015211"></script><script>
+    <script src="/sdg-indicators/assets/js/custom.js?v=20250730020711"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>

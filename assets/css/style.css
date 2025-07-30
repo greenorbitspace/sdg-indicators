@@ -2830,7 +2830,8 @@ body.contrast-high.layout-search form input, body.contrast-high.layout-search fo
 .layout-frontpage .emergency-banner__description {
   margin: 20px 0; }
 
-.emergency-banner__link.govuk-link:link, .emergency-banner__link.govuk-link:visited {
+.emergency-banner__link.govuk-link:link,
+.emergency-banner__link.govuk-link:visited {
   color: #fff; }
 
 @media (min-width: 40.0625em) {
@@ -2869,7 +2870,7 @@ body.contrast-high.layout-search form input, body.contrast-high.layout-search fo
       background-repeat: no-repeat; } }
 
 #disclaimer .alert a {
-  color: #0000CD; }
+  color: #0000cd; }
 
 .navbar-brand img {
   width: 250px; }
@@ -2887,7 +2888,7 @@ body.contrast-high.layout-search form input, body.contrast-high.layout-search fo
   padding-top: 15px; }
 
 .btn-takepart {
-  background: #DD1367 !important;
+  background: #dd1367 !important;
   float: right;
   margin-top: -10px;
   margin-right: -9px;
@@ -2908,7 +2909,7 @@ body.contrast-high.layout-search form input, body.contrast-high.layout-search fo
       float: unset;
       margin-top: 10px; } }
   .btn-takepart:hover, .btn-takepart:active {
-    background: #A01951 !important; }
+    background: #a01951 !important; }
   .btn-takepart:focus {
     background: #fd0 !important;
     color: #0b0c0c !important; }

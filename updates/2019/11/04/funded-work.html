@@ -142,7 +142,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250730015211">
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250730020711">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -160,8 +160,8 @@ var translations = {
         <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css">
         <![endif]-->
 
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css">
-<!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css" /> <!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+
 
 
     </head>
@@ -170,114 +170,208 @@ layout-post
 ">
 <!-- <div class="container"> -->
 
+ <script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
 
-
-<script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
-
-<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Skip to main content</a>
+<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0"
+  >Skip to main content</a
+>
 
 <script>
-  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  document.body.className = document.body.className
+    ? document.body.className + " js-enabled"
+    : "js-enabled";
 </script>
-<div id="cookie-banner" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+ <div
+  id="cookie-banner"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on sdgdata.gov.uk</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+          Cookies on sdgdata.gov.uk
+        </h2>
 
         <div class="govuk-cookie-banner__content">
           <p>We use some essential cookies to make this service work.</p>
-          <p>We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+          <p>
+            We’d also like to use analytics cookies so we can understand how you
+            use the service and make improvements.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <button id="cookie-accept" value="accept" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+      <button
+        id="cookie-accept"
+        value="accept"
+        type="button"
+        name="cookies"
+        class="govuk-button"
+        data-module="govuk-button"
+      >
         Accept analytics cookies
       </button>
-      <button id="cookie-reject" value="reject" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+      <button
+        id="cookie-reject"
+        value="reject"
+        type="button"
+        name="cookies"
+        class="govuk-button"
+        data-module="govuk-button"
+      >
         Reject analytics cookies
       </button>
       <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
     </div>
   </div>
 </div>
-<div id="cookie-banner-accept" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+<div
+  id="cookie-banner-accept"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-cookie-banner__content">
-          <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+          <p>
+            You’ve accepted analytics cookies. You can
+            <a class="govuk-link" href="/sdg-indicators/cookies"
+              >change your cookie settings</a
+            >
+            at any time.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <a id="hide-accept" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
+      <a
+        id="hide-accept"
+        href="#"
+        role="button"
+        draggable="false"
+        class="govuk-button"
+        data-module="govuk-button"
+        aria-label="Hide cookie confirmation message"
+      >
+        Hide this message
       </a>
     </div>
   </div>
 </div>
-<div id="cookie-banner-reject" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+<div
+  id="cookie-banner-reject"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-cookie-banner__content">
-          <p>You’ve rejected analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+          <p>
+            You’ve rejected analytics cookies. You can
+            <a class="govuk-link" href="/sdg-indicators/cookies"
+              >change your cookie settings</a
+            >
+            at any time.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <a id="hide-reject" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
+      <a
+        id="hide-reject"
+        href="#"
+        role="button"
+        draggable="false"
+        class="govuk-button"
+        data-module="govuk-button"
+        aria-label="Hide cookie confirmation message"
+      >
+        Hide this message
       </a>
     </div>
   </div>
 </div>
-
-
-<div class="container internet-explorer-message">
+ <div class="container internet-explorer-message">
     <h2 class="internet-explorer-message-title">This internet browser is no longer supported</h2>
     <p class="internet-explorer-message-body">We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.</p>
 </div>
 <div id="disclaimer">
-    
 <div class="container">
   <div class="disclaimer-alert">
-    <p><strong class="phase-tag">BETA</strong>
-    Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts.
-     <a id="takepartButton" aria-labelledby="takepartButton" href="https://www.smartsurvey.co.uk/s/EZZRYJ/" target="_blank" class="btn btn-primary btn-download btn-takepart" role="link">Take the survey</a>
+    <p>
+      <strong class="phase-tag"
+        >BETA</strong
+      >
+      Your feedback will help us continue to improve the site. Complete the
+      short survey to share your thoughts. <a
+  id="takepartButton"
+  aria-labelledby="takepartButton"
+  href="https://www.smartsurvey.co.uk/s/EZZRYJ/"
+  target="_blank"
+  class="btn btn-primary btn-download btn-takepart"
+  role="link"
+  >Take the survey</a
+>
 
-    </p> 
+    </p>
     <p>
       <strong>
-      Since September 2023 we have <a href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities">paused</a>
-      the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is
-      published and whether newer data will become available in future. You can also find up to date SDG data on the
-      <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a> which reports globally comparable data.
+        Since September 2023 we have
+        <a
+          href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities"
+          >paused</a
+        >
+        the uploading of data reported on this site. However, the hyperlinks for
+        the indicator data sources could be used to see where the data is
+        published and whether newer data will become available in future. You
+        can also find up to date SDG data on the
+        <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a>
+        which reports globally comparable data.
       </strong>
     </p>
   </div>
 </div>
 
-
 </div>
 
 <header role="banner" class="">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start">
-            <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
+  <div class="container">
+    <nav
+      class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start"
+    >
+      <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
     <img src="/sdg-indicators/assets/img/SDG_logo.png" alt="Sustainable Development Goals - 17 Goals to Transform our World" />
 </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Show navigation menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex flex-wrap w-100 justify-content-between">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav" id="menu"><li class="nav-item ">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Show navigation menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="d-flex flex-wrap w-100 justify-content-between">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav" id="menu"><li class="nav-item ">
     <a class="nav-link" href="/sdg-indicators/">Home</a>
 </li><li class="nav-item ">
     <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
@@ -293,9 +387,8 @@ layout-post
     <a class="nav-link" href="/sdg-indicators/about/">About</a>
 </li></ul>
     
-                </div>
-                <div class="header-search-bar">
-                    <form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
+        </div>
+        <div class="header-search-bar"><form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
     <div class="input-group">
         <label class="visually-hidden" for="indicator_search">Search</label>
         <input class="form-control" type="search" name="q" id="indicator_search" title="Search">
@@ -306,21 +399,19 @@ layout-post
         </span>
     </div>
 </form>
-
-                </div>
-                <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
+</div>
+        <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
     data-contrast-switch-to="" role="button" href="javascript:void(0)" data-on="click"
 data-event-category="Accessibility"
 data-event-action="Change contrast setting"
 data-event-label="high"
 >A</a>
-                </div>
-            </div>
-        </nav>
-    </div>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>
 <div id="top" tabindex=-1></div>
-
 
 
 <div class="container">
@@ -344,6 +435,7 @@ data-event-label="high"
     <p>Our Sustainable Development Goals (SDG) project funds specific work across the Office for National Statistics (ONS). In this update those teams that receive SDG project funding explain the work they have been doing directly related to SDGs.</p>
 
 <h3 id="ons-centre-for-crime-and-justice">ONS Centre for Crime and Justice</h3>
+
 <p>ONS <a href="https://blog.ons.gov.uk/2018/10/04/new-ons-centres-to-focus-on-the-public-policy-issues-that-matter/">announced five centres focussing on key policy areas</a> in 2018. Our [Centre for Crime and Justice] improves the understanding of the nature of crime.</p>
 
 <p>This year, we reviewed all the ONS crime data used to report the SDG indicators. We have used the latest and the most appropriate data sources to update indicators as appropriate.</p>
@@ -351,11 +443,13 @@ data-event-label="high"
 <p>A key focus for us has been investigating SDG indicators for which data is not provided. This includes indicators on modern slavery, human trafficking and child exploitation (Goal 16). We have made progress exploring new research methods and identifying potential data sources to support these indicators. We engaged with stakeholders from across government, academia and the third sector to help shape the research.</p>
 
 <h3 id="ons-centre-for-equalities-and-inclusion">ONS Centre for Equalities and Inclusion</h3>
+
 <p>Our <a href="https://www.ons.gov.uk/aboutus/whatwedo/programmesandprojects/centreforequalitiesandinclusion">Centre for Equalities and Inclusion</a> was announced by ONS in 2018 too. We aim to work with others to ensure that the right data are available to address the main questions about fairness and equity in society.</p>
 
 <p>We are working with the SDG team to develop the protected characteristics which align with the SDG disaggregations. New data sources and methods could benefit work programmes. They could also increase efforts for disadvantaged or discriminated groups.</p>
 
 <h3 id="centre-for-international-migration">Centre for International Migration</h3>
+
 <p>Migration is one of the main SDG disaggregations the United Nations requires countries to measure and report.
 The Centre for International Migration has published a range of research outputs in the last year. The following research reports will provide input to SDG indicators. These reports give breakdowns by migratory status to provide evidence on the contribution that international migrants make to public services and the economy.</p>
 
@@ -367,17 +461,22 @@ The Centre for International Migration has published a range of research outputs
 <p>In the coming year we will collaborate with colleagues across ONS to provide disaggregations for indicators related to birth rates and mortality using available data sources. We will also collaborate with colleagues from across the Government Statistical Service (GSS) to provide further disaggregations, specifically against Goal 4: Quality Education.</p>
 
 <h3 id="titchfield-city-group-on-ageing-and-age-disaggregated-data">Titchfield City Group on Ageing and Age-disaggregated data</h3>
+
 <p>In March 2018 the UN Statistics Committee endorsed the <a href="https://unstats.un.org/unsd/methodology/citygroups/Titchfield.cshtml">Titchfield City Group on Ageing and Age-disaggregated data</a>. The main aim of our group is working with statistical organisations and others with a particular interest in ageing across the world to improve the measurement of ageing populations and older people. Age is one of the disaggregations required by the UN for measuring the SDGs. This is so that no one is left behind in progress towards the 2030 Agenda.</p>
 
-<p>We discussed aligning our work to the SDGs at our <a href="https://gss.civilservice.gov.uk/wp-content/uploads/2019/07/Report-of-the-2nd-technical-meeting-of-the-Titchfield-City-Group-11-12-June-2019.pdf">second technical meeting in the Republic of Korea</a>. The four objectives for this work strand are to:
-*	assess the data available to monitor the “Leave No-one Behind” pledge
-*	interface with the IAEG on SDG indicators and to identify data needs to monitor the SDG framework for older people
-*	contribute to harmonisation and standards for producing ageing related data for disaggregation of SDG indicators
-*	pilot innovative approaches to overcome challenges faced by NSOs in relation to availability and presentation of SDG data in relation to older people</p>
+<p>We discussed aligning our work to the SDGs at our <a href="https://gss.civilservice.gov.uk/wp-content/uploads/2019/07/Report-of-the-2nd-technical-meeting-of-the-Titchfield-City-Group-11-12-June-2019.pdf">second technical meeting in the Republic of Korea</a>. The four objectives for this work strand are to:</p>
+
+<ul>
+  <li>assess the data available to monitor the “Leave No-one Behind” pledge</li>
+  <li>interface with the IAEG on SDG indicators and to identify data needs to monitor the SDG framework for older people</li>
+  <li>contribute to harmonisation and standards for producing ageing related data for disaggregation of SDG indicators</li>
+  <li>pilot innovative approaches to overcome challenges faced by NSOs in relation to availability and presentation of SDG data in relation to older people</li>
+</ul>
 
 <p>In the past year we submitted a response to the Inter-Agency Expert Group (IAEG) for the SDGs 2020 indicator review. Over the coming year we will work on providing new age-related break downs of the SDG headline data for the UK.</p>
 
 <h3 id="natural-capital">Natural Capital</h3>
+
 <p><a href="https://www.ons.gov.uk/economy/nationalaccounts/uksectoraccounts/methodologies/naturalcapital">Natural Capital</a> links economic and environmental data. We use the resulting statistics to estimate the value of the goods and services provided by nature in the UK. We also provide environmental statistical support to the ONS SDG Team.</p>
 
 <p>We are developing statistics about where air temperature is cooled by trees and water. Our aim is to highlight inequalities between different geographical locations according to deprivation levels. This can inform sub-categories of headline environmental data reported about the SDGs in the UK.</p>
@@ -385,6 +484,7 @@ The Centre for International Migration has published a range of research outputs
 <p>We are supporting the improvement of data reported for SDG indicators about marine protection. For SDG target 14.7 (indicator 14.7.1) we are working on linking data about fish stock sustainability and the fishing economy.</p>
 
 <h3 id="environmental-accounts">Environmental Accounts</h3>
+
 <p>The UK Environmental Accounts also link environmental and economic data. We have continued to help the ONS SDG team develop environmental related SDG indicators this year. We also highlighted the importance of SDG indicators within the UK Environmental Accounts in some publications.</p>
 
 <p>We worked with the ONS SDG team to write our <a href="https://www.ons.gov.uk/economy/environmentalaccounts/bulletins/greenhousegasintensityprovisionalestimatesuk/2017#toc">Greenhouse gas intensity, provisional estimates, UK: 2017 release</a>. It highlighted SDG target 9.4 (indicator 9.4.1) about carbon dioxide emissions for which our data is used to <a href="https://sustainabledevelopment-uk.github.io/9-4-1/">report the UK SDG statistics</a>.</p>
@@ -394,6 +494,7 @@ The Centre for International Migration has published a range of research outputs
 <p>We worked with the Department for the Environment, Food and Rural Affairs (DEFRA) and the University of Leeds on <a href="https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/measuringmaterialfootprintintheuk2008to2016#toc">Measuring material footprint in the UK: 2008 to 2016</a>. The article presents updated estimates and discusses methodology for the UK’s material footprint. This work feeds into international decisions about the best methods for estimating material footprint. The data for the UK’s material footprint is used to report SDG targets 8.4 (indicator 8.4.1) and target 12.2 (indicator 12.2.1).</p>
 
 <h3 id="geospatial-work-in-data-architecture">Geospatial work in Data Architecture</h3>
+
 <p>We worked on a major cross-team project to produce data for how close people live to roads. The UK data is <a href="https://sustainabledevelopment-uk.github.io/9-1-1/">used to report SDG target 9.1 (indicator 9.1.1)</a>. Our project’s methodology can produce figures for every country in the world and was presented at the UN World Data Forum in Dubai. The project won the inaugural Government Science and Engineering Geography in Government Award. This work led to the World Bank reclassifying the indicator from Tier 3 to Tier 2. Tier 2 indicators have internationally established methodologies and standards available.</p>
 
 <p>We are also sourcing data and analysing geographic data to tackle Goal 15 (indicators 15.1.1, 15.1.2 and 15.4.1.) Spatial disaggregation of forest area as a percentage of total land area (indicator 15.1.1) for the whole of UK is now available. This data is available at country and local authority level. It is available for years 2015 to 2017 for Great Britain and 2018 for Northern Ireland. Data showing the proportion of important sites for terrestrial and freshwater biodiversity that are covered by protected areas (indicator 15.1.2) should follow shortly. We are also working on coverage by protected areas of important sites for biodiversity (indicator 15.4.1).</p>
@@ -455,12 +556,21 @@ The Centre for International Migration has published a range of research outputs
                 </div>
             </div>
         </div>
-         
+        
 
 <div class="row">
   <div class="col-xs-12">
     <div id="oglLicense">
-        <img alt="Open Government Licence logo" src="/sdg-indicators/assets/img/OGL_logo.png" width="35px" class="me-2">All data is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+      <img
+        alt="Open Government Licence logo"
+        src="/sdg-indicators/assets/img/OGL_logo.png"
+        width="35px"
+        class="me-2"
+      />All data is available under the
+      <a
+        href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+        >Open Government Licence v3.0</a
+      >, except where otherwise stated
     </div>
   </div>
 </div>
@@ -628,15 +738,20 @@ if (allRequired) {
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/sdg-indicators/assets/js/sdg.js?v=20250730015211'></script>
-<script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"></script>
+<script src='/sdg-indicators/assets/js/sdg.js?v=20250730020711'></script>
+<script
+  src="//cdn.loop11.com/embed.js"
+  type="text/javascript"
+  async="async"
+></script>
 <script src="/sdg-indicators/assets/js/govuk.js"></script>
 <script>
-  window.GOVUKFrontend.initAll()
+  window.GOVUKFrontend.initAll();
 </script>
+
     
     
-    <script src="/sdg-indicators/assets/js/custom.js?v=20250730015211"></script><script>
+    <script src="/sdg-indicators/assets/js/custom.js?v=20250730020711"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>

@@ -142,7 +142,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250730015211">
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/style.css?v=20250730020711">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -160,8 +160,8 @@ var translations = {
         <link rel="stylesheet" href="/sdg-indicators/assets/css/ie.css">
         <![endif]-->
 
-        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css">
-<!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+        <link rel="stylesheet" href="/sdg-indicators/assets/css/govuk.css" /> <!-- Hotjar Tracking Code for https://sdgdata.gov.uk/ -->
+
 
 
     </head>
@@ -170,114 +170,208 @@ layout-config-builder-2
 ">
 <!-- <div class="container"> -->
 
+ <script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
 
-
-<script>translations['header'] = {"alpha":"Alpha","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a development website. We welcome your <a href=\"mailto:%email_contacts.suggestions\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
-
-<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Skip to main content</a>
+<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0"
+  >Skip to main content</a
+>
 
 <script>
-  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  document.body.className = document.body.className
+    ? document.body.className + " js-enabled"
+    : "js-enabled";
 </script>
-<div id="cookie-banner" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+ <div
+  id="cookie-banner"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on sdgdata.gov.uk</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+          Cookies on sdgdata.gov.uk
+        </h2>
 
         <div class="govuk-cookie-banner__content">
           <p>We use some essential cookies to make this service work.</p>
-          <p>We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+          <p>
+            We’d also like to use analytics cookies so we can understand how you
+            use the service and make improvements.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <button id="cookie-accept" value="accept" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+      <button
+        id="cookie-accept"
+        value="accept"
+        type="button"
+        name="cookies"
+        class="govuk-button"
+        data-module="govuk-button"
+      >
         Accept analytics cookies
       </button>
-      <button id="cookie-reject" value="reject" type="button" name="cookies" class="govuk-button" data-module="govuk-button">
+      <button
+        id="cookie-reject"
+        value="reject"
+        type="button"
+        name="cookies"
+        class="govuk-button"
+        data-module="govuk-button"
+      >
         Reject analytics cookies
       </button>
       <a class="govuk-link" href="/sdg-indicators/cookies">View cookies</a>
     </div>
   </div>
 </div>
-<div id="cookie-banner-accept" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+<div
+  id="cookie-banner-accept"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-cookie-banner__content">
-          <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+          <p>
+            You’ve accepted analytics cookies. You can
+            <a class="govuk-link" href="/sdg-indicators/cookies"
+              >change your cookie settings</a
+            >
+            at any time.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <a id="hide-accept" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
+      <a
+        id="hide-accept"
+        href="#"
+        role="button"
+        draggable="false"
+        class="govuk-button"
+        data-module="govuk-button"
+        aria-label="Hide cookie confirmation message"
+      >
+        Hide this message
       </a>
     </div>
   </div>
 </div>
-<div id="cookie-banner-reject" style="display: none" class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on sdgdata.gov.uk">
+<div
+  id="cookie-banner-reject"
+  style="display: none"
+  class="govuk-cookie-banner"
+  data-nosnippet
+  role="region"
+  aria-label="Cookies on sdgdata.gov.uk"
+>
   <div class="govuk-cookie-banner__message govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-cookie-banner__content">
-          <p>You’ve rejected analytics cookies. You can <a class="govuk-link" href="/sdg-indicators/cookies">change your cookie settings</a> at any time.</p>
+          <p>
+            You’ve rejected analytics cookies. You can
+            <a class="govuk-link" href="/sdg-indicators/cookies"
+              >change your cookie settings</a
+            >
+            at any time.
+          </p>
         </div>
       </div>
     </div>
 
     <div class="govuk-button-group">
-      <a id="hide-reject" href="#" role="button" draggable="false" class="govuk-button" data-module="govuk-button" aria-label="Hide cookie confirmation message">
-          Hide this message
+      <a
+        id="hide-reject"
+        href="#"
+        role="button"
+        draggable="false"
+        class="govuk-button"
+        data-module="govuk-button"
+        aria-label="Hide cookie confirmation message"
+      >
+        Hide this message
       </a>
     </div>
   </div>
 </div>
-
-
-<div class="container internet-explorer-message">
+ <div class="container internet-explorer-message">
     <h2 class="internet-explorer-message-title">This internet browser is no longer supported</h2>
     <p class="internet-explorer-message-body">We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.</p>
 </div>
 <div id="disclaimer">
-    
 <div class="container">
   <div class="disclaimer-alert">
-    <p><strong class="phase-tag">BETA</strong>
-    Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts.
-     <a id="takepartButton" aria-labelledby="takepartButton" href="https://www.smartsurvey.co.uk/s/EZZRYJ/" target="_blank" class="btn btn-primary btn-download btn-takepart" role="link">Take the survey</a>
+    <p>
+      <strong class="phase-tag"
+        >BETA</strong
+      >
+      Your feedback will help us continue to improve the site. Complete the
+      short survey to share your thoughts. <a
+  id="takepartButton"
+  aria-labelledby="takepartButton"
+  href="https://www.smartsurvey.co.uk/s/EZZRYJ/"
+  target="_blank"
+  class="btn btn-primary btn-download btn-takepart"
+  role="link"
+  >Take the survey</a
+>
 
-    </p> 
+    </p>
     <p>
       <strong>
-      Since September 2023 we have <a href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities">paused</a>
-      the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is
-      published and whether newer data will become available in future. You can also find up to date SDG data on the
-      <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a> which reports globally comparable data.
+        Since September 2023 we have
+        <a
+          href="https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities"
+          >paused</a
+        >
+        the uploading of data reported on this site. However, the hyperlinks for
+        the indicator data sources could be used to see where the data is
+        published and whether newer data will become available in future. You
+        can also find up to date SDG data on the
+        <a href="https://unstats.un.org/sdgs/dataportal/">UN SDG website</a>
+        which reports globally comparable data.
       </strong>
     </p>
   </div>
 </div>
 
-
 </div>
 
 <header role="banner" class="">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start">
-            <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
+  <div class="container">
+    <nav
+      class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start"
+    >
+      <a class="navbar-brand" href="/sdg-indicators/" id="home" aria-label="Go to homepage" title="Go to homepage">
     <img src="/sdg-indicators/assets/img/SDG_logo.png" alt="Sustainable Development Goals - 17 Goals to Transform our World" />
 </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Show navigation menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="d-flex flex-wrap w-100 justify-content-between">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav" id="menu"><li class="nav-item ">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Show navigation menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="d-flex flex-wrap w-100 justify-content-between">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav" id="menu"><li class="nav-item ">
     <a class="nav-link" href="/sdg-indicators/">Home</a>
 </li><li class="nav-item ">
     <a class="nav-link" href="/sdg-indicators/goals">Goals</a>
@@ -293,9 +387,8 @@ layout-config-builder-2
     <a class="nav-link" href="/sdg-indicators/about/">About</a>
 </li></ul>
     
-                </div>
-                <div class="header-search-bar">
-                    <form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
+        </div>
+        <div class="header-search-bar"><form class="align-self-lg-end" id="search" action="/sdg-indicators/search/">
     <div class="input-group">
         <label class="visually-hidden" for="indicator_search">Search</label>
         <input class="form-control" type="search" name="q" id="indicator_search" title="Search">
@@ -306,21 +399,19 @@ layout-config-builder-2
         </span>
     </div>
 </form>
-
-                </div>
-                <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
+</div>
+        <div class="header-toggles d-flex"><a title="Enable high contrast" aria-label="Enable high contrast"
     data-contrast-switch-to="" role="button" href="javascript:void(0)" data-on="click"
 data-event-category="Accessibility"
 data-event-action="Change contrast setting"
 data-event-label="high"
 >A</a>
-                </div>
-            </div>
-        </nav>
-    </div>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>
 <div id="top" tabindex=-1></div>
-
 
 
 <div id="main-content" class="container" role="main">
@@ -3289,7 +3380,7 @@ data-event-label="high"
     ]
 }
 ;
-      opensdg.configForm.initialData = {"analytics":{"ua":"","gtag":"","gtm":""},"breadcrumbs":{"goal":[],"indicator":[],"post":[]},"cookie_consent_form":{"enabled":true},"country":{"name":"UK","adjective":"UK"},"create_goals":{"previous_next_links":false,"goals":[{"goal":1,"content":"\nGoal 1 calls for the eradication of poverty in all its forms. It envisions:\n-\tshared prosperity\n-\ta basic standard of living\n-\tsocial protection benefits for people everywhere - including the poorest and most vulnerable\nIt also seeks to ensure equal rights and access to economic and natural resources.","heading":"Goal 1 - No Poverty","content_heading":"End poverty in all its forms everywhere"},{"goal":2,"content":"\nGoal 2 seeks to:\n-\tend hunger and malnutrition\n-\tensure access to safe, nutritious, and sufficient food\n\nAchieving this goal will largely depend on:\n-\tpromoting sustainable production systems\n-\tincreasing investment in rural infrastructure and agricultural research and development","heading":"Goal 2 - Zero Hunger","content_heading":"End hunger, achieve food security and improved nutrition and promote sustainable agriculture"},{"goal":3,"content":"\nGoal 3 aims to ensure the health and promote the well-being of everyone (of all ages) by:\n-\timproving reproductive, maternal and child health\n-\tending epidemics of major contagious diseases\n-\treducing non-contagious diseases\n-\tpromoting mental health and well-being\n-\treducing behavioural and environmental health-risk factors","heading":"Goal 3 - Good Health and Well-Being","content_heading":"Ensure healthy lives and promote well-being for all at all ages"},{"goal":4,"content":"\nGoal 4 seeks to:\n-\tensure access to fair, impartial and quality education through all stages of life\n-\tincrease the number of young people and adults who have the relevant skills for employment, decent jobs, and entrepreneurship\n-\teliminate gender and income disparities in access to education","heading":"Goal 4 - Quality Education","content_heading":"Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all"},{"goal":5,"content":"\nGoal 5 aims to achieve gender equality by:\n-\tending all forms of discrimination, violence and harmful practices against women and girls\n-\tensuring the full participation of women and equal opportunities for leadership at all levels of political and economic decision making","heading":"Goal 5 - Gender Equality","content_heading":"Achieve gender equality and empower all women and girls"},{"goal":6,"content":"\nGoal 6 calls for ensuring universal access to:\n-\tsafe and affordable drinking water \n-\tsanitation and hygiene\nIt also aims to:\n-\tend defecation in the open\n-\timprove water quality and water use efficiency \n-\tencourage sustainable abstractions and supply of freshwater","heading":"Goal 6 - Clean Water and Sanitation","content_heading":"Ensure availability and sustainable management of water and sanitation for all"},{"goal":7,"content":"\nGoal 7 calls for:\n-\tensuring universal access to modern energy services\n-\timproving energy efficiency\n-\tincreasing the share of renewable energy\n\nTo accelerate the transition to an affordable, reliable and sustainable energy system that fulfils these demands countries need to:\n-\t facilitate access to clean energy research and technology \n-\t promote investment in resource and energy-efficient solutions and related infrastructure","heading":"Goal 7 - Affordable and Clean Energy","content_heading":"Ensure access to affordable, reliable, sustainable and modern energy for all"},{"goal":8,"content":"\nGoal 8 recognises the importance of sustained economic growth and high levels of economic productivity for:\n-\tthe creation of well-paid quality jobs \n-\tprogressive improvement of resource efficiency in consumption and production\n\nIt calls for: \n-\topportunities for full employment and decent work for all \n-\tthe eradication of forced labour, human trafficking and child labour\n-\tthe promotion of labour rights and safe and secure working environments","heading":"Goal 8 - Decent Work and Economic Growth","content_heading":"Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all"},{"goal":9,"content":"\nGoal 9 calls for building resilient and sustainable infrastructure and promotes inclusive and sustainable industrialisation. It also recognises the importance of research and innovation for finding lasting solutions to social, economic, and environmental challenges.","heading":"Goal 9 - Industry, Innovation and Infrastructure","content_heading":"Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation"},{"goal":10,"content":"\nGoal 10 addresses inequalities within countries, including:\n-\tincome \n-\tage\n-\tsex\n-\tdisability\n-\trace\n-\tethnicity\n-\torigin\n-\treligion\n-\teconomic \n-\tany other status \n\nIt also addresses inequalities among countries (including those related to representation) and calls for the orderly and safe migration  and mobility of people.","heading":"Goal 10 - Reduced Inequalities","content_heading":"Reduce inequality within and among countries"},{"goal":11,"content":"\nGoal 11 aims to renew and plan cities and other human settlements in a way that offers opportunities for all, whilst reducing resource use  and environmental impact. It calls for access for all to:\n-\tbasic services\n-\tenergy \n-\thousing\n-\ttransportation\n-\tgreen public spaces","heading":"Goal 11 - Sustainable Cities and Communities","content_heading":"Make cities and human settlements inclusive, safe, resilient and sustainable"},{"goal":12,"content":"\nGoal 12 calls for a comprehensive set of actions from businesses, policy-makers, researchers, and consumers to adapt to sustainable practices.  It envisions sustainable production and consumption based on advanced technological capacity, resource efficiency and reduced global waste.","heading":"Goal 12 - Responsible Consumption and Production","content_heading":"Ensure sustainable consumption and production patterns"},{"goal":13,"content":"\nGoal 13 seeks to implement the commitment of the United Nations Framework Convention on Climate Change to achieving a climate-neutral world. \n\nWith a particular focus on supporting the least developed countries, it also aims to strengthen countries’ resilience and adaptive capacity to climate-related natural hazards and the resulting disasters.","heading":"Goal 13 - Climate Action","content_heading":"Take urgent action to combat climate change and its impacts"},{"goal":14,"content":"\nGoal 14 aims to protect and ensure the sustainable use of oceans. This includes:\n-\tthe reduction of marine pollution\n-\tthe impacts of ocean acidification\n-\tthe ending of overfishing\n-\tthe conservation of marine and coastal areas and ecosystems\n\nGoal 14 has strong interdependencies with a broad range of other Sustainable Development Goals (SDGs), as oceans:\n-\tsustain coastal economies and livelihoods\n-\tcontribute to food production\n-\tremove carbon dioxide from the atmosphere","heading":"Goal 14 - Life Below Water","content_heading":"Conserve and sustainably use the oceans, seas and marine resources for sustainable development"},{"goal":15,"content":"\nGoal 15 seeks to protect, restore, and promote the conservation and sustainable use of terrestrial, inland-water and mountain ecosystems by:\n-\tmanaging forests sustainably\n-\thalting deforestation\n-\tcombating desertification\n-\trestoring degraded land and soil\n-\thalting biodiversity loss \n-\tprotecting threatened species","heading":"Goal 15 - Life on Land","content_heading":"Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss"},{"goal":16,"content":"\nGoal 16 calls for peaceful and inclusive societies based on:\n-\trespect for human rights\n-\tthe protection of the most vulnerable\n-\tthe rule of law and good governance at all levels\n\nIt also envisions transparent, effective, and accountable institutions.","heading":"Goal 16 - Peace, Justice and Strong Institutions","content_heading":"Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels"},{"goal":17,"content":"\nGoal 17 calls for a global partnership for sustainable development. The goal highlights the importance of:\n-\tglobal macroeconomic stability\n-\ttrade for developing countries \n-\tequitable rules for governing international trade \n-\taccess to science, technology and innovation - particularly internet-based information and communications technology\n\nThe goal also highlights the need to mobilise financial resources for developing countries from international sources (and through strengthened  domestic capacities) for revenue collection. ","heading":"Goal 17 - Partnerships for the Goals","content_heading":"Strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development"}]},"layout":"goal-by-target-vertical","create_indicators":{"previous_next_links":false,"layout":"indicator"},"create_pages":[{"filename":"","folder":"/goals","layout":"goals","title":"UK data for the Sustainable Development Goals"},{"filename":"","folder":"/reporting-status","layout":"reportingstatus","title":"Reporting Status"},{"filename":"","folder":"/search","layout":"search","title":"Search results"}],"custom_css":[],"custom_js":["/assets/js/custom.js"],"data_edit_url":"","data_fields":{"units":"","series":""},"date_formats":[{"type":"standard","language":"en","format":"%d %B %Y"}],"disclaimer":{"phase":"BETA","message":"Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts. <br> <br><b>Since September 2023 we have <a href=\"https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities\">paused</a> the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is published and whether newer data will become available in future. You can also find up to date SDG data on the <a href=\"https://unstats.un.org/sdgs/dataportal/\">UN SDG website</a> which reports globally comparable data.</b>","hidden":false},"email_contacts":{"questions":"sustainabledevelopment@ons.gov.uk","suggestions":"sustainabledevelopment@ons.gov.uk","functional":"sustainabledevelopment@ons.gov.uk"},"environment":"staging","footer_language_toggle":"none","footer_menu":[{"path":"/contact-us","translation_key":"menu.contact_us"},{"path":"https://twitter.com/ONS","translation_key":"general.twitter"},{"path":"/cookies-no-javascript/","translation_key":"menu.cookies"},{"path":"/privacy-notice/","translation_key":"Privacy"},{"path":"/accessibility-statement/","translation_key":"Accessibility statement"}],"frontpage_cards":[{"title":"Download all data","content":"","include":"components/download-all-data.html","button_label":"","button_link":"","rule_color":""},{"title":"Publications","content":"\n[Leaving no one behind - a review of who has been most affected by the coronavirus pandemic in the UK](https://www.ons.gov.uk/economy/environmentalaccounts/articles/leavingnoonebehindareviewofwhohasbeenmostaffectedbythecoronaviruspandemicintheuk/december2021)\n\n[UK Sustainable Development Goals: use of non-official sources](https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/uksustainabledevelopmentgoalsuseofnonofficialsources)\n<br/><br/>\n<a href=\"./publications\" aria-label=\"More publications\">More publications...</a>\n","include":"","button_label":"","button_link":"","rule_color":""},{"title":"Useful resources","content":"\n[The Global Goals](https://www.globalgoals.org/)\n\n[Implementing the Sustainable Development Goals](https://www.gov.uk/government/publications/implementing-the-sustainable-development-goals/implementing-the-sustainable-development-goals--2)\n\n<a href=\"./about/#more-resources\" aria-label=\"More resources\">More resources...</a>\n","include":"","button_label":"","button_link":"","rule_color":""}],"frontpage_goals_grid":{"title":"UK data for the Sustainable Development Goals","description":"Select each goal for indicator data."},"frontpage_introduction_banner":{"title":"UK data for the Sustainable Development Goals","description":"Welcome to the home of UK data for <a href=\"https://sdgs.un.org/goals\">the Sustainable Development Goals (SDGs)</a> – reported by <a href=\"https://www.ons.gov.uk/\">the Office for National Statistics</a>,  the UK’s national statistics institute.\n\nThe Sustainable Development Goals (SDGs) are a universal call to action to end poverty, protect the planet and improve the lives and prospects of everyone, everywhere. The 17 Goals were adopted by all UN Member States in 2015, as part of the <a href=\"https://sdgs.un.org/2030agenda\">2030 Agenda for Sustainable Development</a>.\n\nUK data for the Sustainable Development Goals are collated and reported here."},"goal_image_base":"https://open-sdg.github.io/sdg-translations/assets/img/goals","goal_image_extension":"svg","goals_page":{"title":"UK data for the Sustainable Development Goals","description":"Select each goal for indicator data."},"graph_color_headline":"#004466","graph_color_headline_high_contrast":"#55a6e5","graph_color_set":"accessible","graph_color_list":[],"graph_color_number":0,"graph_title_from_series":true,"header_language_toggle":"none","hide_empty_metadata":false,"hide_single_series":true,"hide_single_unit":true,"ignored_disaggregations":["Activity (default)","Age (default)","Urbanisation (default)"],"indicator_config_form":{"enabled":false,"dropdowns":[],"repository_link":"","translation_link":""},"indicator_data_form":{"enabled":false,"repository_link":""},"indicator_metadata_form":{"enabled":false,"dropdowns":[],"repository_link":"","translation_link":"","language":"","scopes":[],"exclude_fields":[],"translated":false},"indicator_tabs":{"tab_1":"","tab_2":"","tab_3":"","tab_4":""},"languages":["en"],"languages_public":[],"logos":[],"map_layers":[{"subfolder":"country","label":"Country","min_zoom":4,"max_zoom":6,"staticBorders":true},{"subfolder":"regions","label":"Regions","min_zoom":6,"max_zoom":8,"staticBorders":true},{"subfolder":"local_authorities","label":"Local Authorities","min_zoom":9,"max_zoom":12,"staticBorders":true}],"map_options":{"disaggregation_controls":false,"minZoom":4,"maxZoom":10,"tileURL":"https://{s}.tile.jawg.io/{id}/{z}/{x}/{y}{r}.png?access-token={accessToken}","tileOptions":{"id":"ed56748f-29f9-465e-9269-c715674ee5ff","accessToken":"yrcGMvxCkRD6zZBF4x3mnAT3OGQJstAj7JvG1iy1UjEdy6JFeDfnzKvXrTK07CxF","attribution":"<a href=\"http://jawg.io\" title=\"Provider of map tiles\" target=\"_blank\">&copy; <b>Jawg</b>Maps</a> &copy; <a href=\"https://www.openstreetmap.org/copyright\" title=\"Provider of map visual data copywrite information\">OpenStreetMap</a> contributors | <a href=\"http://geoportal.statistics.gov.uk/\" title=\"The Open Geography portal from the Office for National Statistics\">ONS</a>"},"colorRange":["#c4e1c6","#b0d1b3","#9bc2a1","#87b28f","#74a37c","#60946b","#4d8559","#3a7747","#276836"],"noValueColor":"#f0f0f0","styleNormal":{"weight":1,"opacity":1,"fillOpacity":0.7,"color":"#888888","dashArray":""},"styleHighlighted":{"weight":1,"opacity":1,"fillOpacity":0.7,"color":"#111111","dashArray":""},"styleStatic":{"weight":2,"opacity":1,"fillOpacity":0,"color":"#172d44","dashArray":"5,5"}},"menu":[{"path":"/","translation_key":"general.home","dropdown":[]},{"path":"/goals","translation_key":"general.goals","dropdown":[]},{"path":"/reporting-status/","translation_key":"menu.reporting_status","dropdown":[]},{"path":"/publications/","translation_key":"menu.publications","dropdown":[]},{"path":"/updates/","translation_key":"menu.updates","dropdown":[]},{"path":"/faq/","translation_key":"menu.faq","dropdown":[]},{"path":"/about/","translation_key":"menu.about","dropdown":[]}],"metadata_edit_url":"","metadata_tabs":[],"meta_tags":[{"path":"","name":"description","content":"UK data for the Sustainable Development Goals (SDGs) – reported by the Office for National Statistics"},{"path":"1","name":"description","content":"Goal 1 - No poverty - UK Indicators For The Sustainable Development Goals"},{"path":"2","name":"description","content":"Goal 2 - Zero hunger - UK Indicators For The Sustainable Development Goals"},{"path":"3","name":"description","content":"Goal 3 - Good Health and Well-Being - UK Indicators For The Sustainable Development Goals"},{"path":"4","name":"description","content":"Goal 4 - Quality Education - UK Indicators For The Sustainable Development Goals"},{"path":"5","name":"description","content":"Goal 5 - Gender Equality - UK Indicators For The Sustainable Development Goals"},{"path":"6","name":"description","content":"Goal 6 - Clean Water and Sanitation - UK Indicators For The Sustainable Development Goals"},{"path":"7","name":"description","content":"Goal 7 - Affordable and Clean Energy - UK Indicators For The Sustainable Development Goals"},{"path":"8","name":"description","content":"Goal 8 - Decent Work and Economic Growth - UK Indicators For The Sustainable Development Goals"},{"path":"9","name":"description","content":"Goal 9 - Industry, Innovation and Infrastructure - UK Indicators For The Sustainable Development Goals"},{"path":"10","name":"description","content":"Goal 10 - Reduced Inequalities - UK Indicators For The Sustainable Development Goals"},{"path":"11","name":"description","content":"Goal 11 - Sustainable Cities and Communities - UK Indicators For The Sustainable Development Goals"},{"path":"12","name":"description","content":"Goal 12 - Responsible Consumption and Production - UK Indicators For The Sustainable Development Goals"},{"path":"13","name":"description","content":"Goal 13 - Climate Action - UK Indicators For The Sustainable Development Goals"},{"path":"14","name":"description","content":"Goal 14 - Life Below Water - UK Indicators For The Sustainable Development Goals"},{"path":"15","name":"description","content":"Goal 15 - Life on Land - UK Indicators For The Sustainable Development Goals"},{"path":"16","name":"description","content":"Goal 16 - Peace, Justice and Strong Institutions - UK Indicators For The Sustainable Development Goals"},{"path":"17","name":"description","content":"Goal 17 - Partnerships for the Goals - UK Indicators For The Sustainable Development Goals"}],"news":{"category_links":false},"progress_status":{"status_heading":"","status_types":[]},"progressive_web_app":{"enabled":true,"name":"UK SDG Data App","short_name":"UK SDG App","precaching":true},"remote_data_prefix":"https://ONSdigital.github.io/sdg-data","reporting_status":{"title":"Reporting status","description":"\nReporting status provides an overview of how much Sustainable Development Goal (SDG) data the UK reports. For more information, see [What does the reporting status mean?](https://onsdigital.github.io/sdg-indicators/faq/#what-does-the-reporting-status-mean)\n\n\nDisaggregation status provides an overview of how many of the SDG indicators are disaggregated. For more information, see [What does the disaggregation status mean?](https://onsdigital.github.io/sdg-indicators/faq/#what-does-the-disaggregation-status-mean)\n\n\nFor details about all available disaggregations and how each indicator is disaggregated, see the [UK disaggregation report](https://onsdigital.github.io/sdg-data/disaggregations.html).\n\n\nNote: These percentages have been rounded. As a result, adding them together may not equal exactly 100%.\n\n\n*This page is updated automatically on a weekly basis.*\n","disaggregation_tabs":true,"status_types":[{"value":"complete","label":"status.reported","hide_on_goal_pages":false},{"value":"notstarted","label":"status.no_data_available","hide_on_goal_pages":false}],"disaggregation_indicator_count_label":"indicators in scope"},"repository_url_data":"https://github.com/ONSdigital/sdg-data","repository_url_site":"https://github.com/ONSdigital/sdg-indicators","search_index_boost":[],"search_index_extra_fields":["indicator_available","graph_title","data_keywords"],"site_config_form":{"enabled":true,"dropdowns":[],"repository_link":"/tree/develop/_data","translation_link":""},"time_series_attributes":[{"field":"COMMENT_TS","label":"indicator.footnote"},{"field":"DATA_LAST_UPDATE","label":"metadata_fields.national_data_update_url"}],"use_new_config_forms":true,"validate_indicator_config":false,"validate_site_config":false,"x_axis_label":""};
+      opensdg.configForm.initialData = {"analytics":{"ua":"","gtag":"","gtm":""},"breadcrumbs":{"goal":[],"indicator":[],"post":[]},"cookie_consent_form":{"enabled":true},"country":{"name":"UK","adjective":"UK"},"create_goals":{"previous_next_links":false,"goals":[{"goal":1,"content":"\nGoal 1 calls for the eradication of poverty in all its forms. It envisions:\n-\tshared prosperity\n-\ta basic standard of living\n-\tsocial protection benefits for people everywhere - including the poorest and most vulnerable\nIt also seeks to ensure equal rights and access to economic and natural resources.","heading":"Goal 1 - No Poverty","content_heading":"End poverty in all its forms everywhere"},{"goal":2,"content":"\nGoal 2 seeks to:\n-\tend hunger and malnutrition\n-\tensure access to safe, nutritious, and sufficient food\n\nAchieving this goal will largely depend on:\n-\tpromoting sustainable production systems\n-\tincreasing investment in rural infrastructure and agricultural research and development","heading":"Goal 2 - Zero Hunger","content_heading":"End hunger, achieve food security and improved nutrition and promote sustainable agriculture"},{"goal":3,"content":"\nGoal 3 aims to ensure the health and promote the well-being of everyone (of all ages) by:\n-\timproving reproductive, maternal and child health\n-\tending epidemics of major contagious diseases\n-\treducing non-contagious diseases\n-\tpromoting mental health and well-being\n-\treducing behavioural and environmental health-risk factors","heading":"Goal 3 - Good Health and Well-Being","content_heading":"Ensure healthy lives and promote well-being for all at all ages"},{"goal":4,"content":"\nGoal 4 seeks to:\n-\tensure access to fair, impartial and quality education through all stages of life\n-\tincrease the number of young people and adults who have the relevant skills for employment, decent jobs, and entrepreneurship\n-\teliminate gender and income disparities in access to education","heading":"Goal 4 - Quality Education","content_heading":"Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all"},{"goal":5,"content":"\nGoal 5 aims to achieve gender equality by:\n-\tending all forms of discrimination, violence and harmful practices against women and girls\n-\tensuring the full participation of women and equal opportunities for leadership at all levels of political and economic decision making","heading":"Goal 5 - Gender Equality","content_heading":"Achieve gender equality and empower all women and girls"},{"goal":6,"content":"\nGoal 6 calls for ensuring universal access to:\n-\tsafe and affordable drinking water \n-\tsanitation and hygiene\nIt also aims to:\n-\tend defecation in the open\n-\timprove water quality and water use efficiency \n-\tencourage sustainable abstractions and supply of freshwater","heading":"Goal 6 - Clean Water and Sanitation","content_heading":"Ensure availability and sustainable management of water and sanitation for all"},{"goal":7,"content":"\nGoal 7 calls for:\n-\tensuring universal access to modern energy services\n-\timproving energy efficiency\n-\tincreasing the share of renewable energy\n\nTo accelerate the transition to an affordable, reliable and sustainable energy system that fulfils these demands countries need to:\n-\t facilitate access to clean energy research and technology \n-\t promote investment in resource and energy-efficient solutions and related infrastructure","heading":"Goal 7 - Affordable and Clean Energy","content_heading":"Ensure access to affordable, reliable, sustainable and modern energy for all"},{"goal":8,"content":"\nGoal 8 recognises the importance of sustained economic growth and high levels of economic productivity for:\n-\tthe creation of well-paid quality jobs \n-\tprogressive improvement of resource efficiency in consumption and production\n\nIt calls for: \n-\topportunities for full employment and decent work for all \n-\tthe eradication of forced labour, human trafficking and child labour\n-\tthe promotion of labour rights and safe and secure working environments","heading":"Goal 8 - Decent Work and Economic Growth","content_heading":"Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all"},{"goal":9,"content":"\nGoal 9 calls for building resilient and sustainable infrastructure and promotes inclusive and sustainable industrialisation. It also recognises the importance of research and innovation for finding lasting solutions to social, economic, and environmental challenges.","heading":"Goal 9 - Industry, Innovation and Infrastructure","content_heading":"Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation"},{"goal":10,"content":"\nGoal 10 addresses inequalities within countries, including:\n-\tincome \n-\tage\n-\tsex\n-\tdisability\n-\trace\n-\tethnicity\n-\torigin\n-\treligion\n-\teconomic \n-\tany other status \n\nIt also addresses inequalities among countries (including those related to representation) and calls for the orderly and safe migration  and mobility of people.","heading":"Goal 10 - Reduced Inequalities","content_heading":"Reduce inequality within and among countries"},{"goal":11,"content":"\nGoal 11 aims to renew and plan cities and other human settlements in a way that offers opportunities for all, whilst reducing resource use  and environmental impact. It calls for access for all to:\n-\tbasic services\n-\tenergy \n-\thousing\n-\ttransportation\n-\tgreen public spaces","heading":"Goal 11 - Sustainable Cities and Communities","content_heading":"Make cities and human settlements inclusive, safe, resilient and sustainable"},{"goal":12,"content":"\nGoal 12 calls for a comprehensive set of actions from businesses, policy-makers, researchers, and consumers to adapt to sustainable practices.  It envisions sustainable production and consumption based on advanced technological capacity, resource efficiency and reduced global waste.","heading":"Goal 12 - Responsible Consumption and Production","content_heading":"Ensure sustainable consumption and production patterns"},{"goal":13,"content":"\nGoal 13 seeks to implement the commitment of the United Nations Framework Convention on Climate Change to achieving a climate-neutral world. \n\nWith a particular focus on supporting the least developed countries, it also aims to strengthen countries’ resilience and adaptive capacity to climate-related natural hazards and the resulting disasters.","heading":"Goal 13 - Climate Action","content_heading":"Take urgent action to combat climate change and its impacts"},{"goal":14,"content":"\nGoal 14 aims to protect and ensure the sustainable use of oceans. This includes:\n-\tthe reduction of marine pollution\n-\tthe impacts of ocean acidification\n-\tthe ending of overfishing\n-\tthe conservation of marine and coastal areas and ecosystems\n\nGoal 14 has strong interdependencies with a broad range of other Sustainable Development Goals (SDGs), as oceans:\n-\tsustain coastal economies and livelihoods\n-\tcontribute to food production\n-\tremove carbon dioxide from the atmosphere","heading":"Goal 14 - Life Below Water","content_heading":"Conserve and sustainably use the oceans, seas and marine resources for sustainable development"},{"goal":15,"content":"\nGoal 15 seeks to protect, restore, and promote the conservation and sustainable use of terrestrial, inland-water and mountain ecosystems by:\n-\tmanaging forests sustainably\n-\thalting deforestation\n-\tcombating desertification\n-\trestoring degraded land and soil\n-\thalting biodiversity loss \n-\tprotecting threatened species","heading":"Goal 15 - Life on Land","content_heading":"Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss"},{"goal":16,"content":"\nGoal 16 calls for peaceful and inclusive societies based on:\n-\trespect for human rights\n-\tthe protection of the most vulnerable\n-\tthe rule of law and good governance at all levels\n\nIt also envisions transparent, effective, and accountable institutions.","heading":"Goal 16 - Peace, Justice and Strong Institutions","content_heading":"Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels"},{"goal":17,"content":"\nGoal 17 calls for a global partnership for sustainable development. The goal highlights the importance of:\n-\tglobal macroeconomic stability\n-\ttrade for developing countries \n-\tequitable rules for governing international trade \n-\taccess to science, technology and innovation - particularly internet-based information and communications technology\n\nThe goal also highlights the need to mobilise financial resources for developing countries from international sources (and through strengthened  domestic capacities) for revenue collection.","heading":"Goal 17 - Partnerships for the Goals","content_heading":"Strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development"}]},"layout":"goal-by-target-vertical","create_indicators":{"previous_next_links":false,"layout":"indicator"},"create_pages":[{"filename":"","folder":"/goals","layout":"goals","title":"UK data for the Sustainable Development Goals"},{"filename":"","folder":"/reporting-status","layout":"reportingstatus","title":"Reporting Status"},{"filename":"","folder":"/search","layout":"search","title":"Search results"}],"custom_css":[],"custom_js":["/assets/js/custom.js"],"data_edit_url":"","data_fields":{"units":"","series":""},"date_formats":[{"type":"standard","language":"en","format":"%d %B %Y"}],"disclaimer":{"phase":"BETA","message":"Your feedback will help us continue to improve the site. Complete the short survey to share your thoughts. <br> <br><b>Since September 2023 we have <a href=\"https://www.ons.gov.uk/aboutus/whatwedo/statistics/changestoourpublicationsandactivities\">paused</a> the uploading of data reported on this site. However, the hyperlinks for the indicator data sources could be used to see where the data is published and whether newer data will become available in future. You can also find up to date SDG data on the <a href=\"https://unstats.un.org/sdgs/dataportal/\">UN SDG website</a> which reports globally comparable data.</b>","hidden":false},"email_contacts":{"questions":"sustainabledevelopment@ons.gov.uk","suggestions":"sustainabledevelopment@ons.gov.uk","functional":"sustainabledevelopment@ons.gov.uk"},"environment":"staging","footer_language_toggle":"none","footer_menu":[{"path":"/contact-us","translation_key":"menu.contact_us"},{"path":"https://twitter.com/ONS","translation_key":"general.twitter"},{"path":"/cookies-no-javascript/","translation_key":"menu.cookies"},{"path":"/privacy-notice/","translation_key":"Privacy"},{"path":"/accessibility-statement/","translation_key":"Accessibility statement"}],"frontpage_cards":[{"title":"Download all data","content":"","include":"components/download-all-data.html","button_label":"","button_link":"","rule_color":""},{"title":"Publications","content":"\n[Leaving no one behind - a review of who has been most affected by the coronavirus pandemic in the UK](https://www.ons.gov.uk/economy/environmentalaccounts/articles/leavingnoonebehindareviewofwhohasbeenmostaffectedbythecoronaviruspandemicintheuk/december2021)\n\n[UK Sustainable Development Goals: use of non-official sources](https://www.ons.gov.uk/economy/environmentalaccounts/methodologies/uksustainabledevelopmentgoalsuseofnonofficialsources)\n<br/><br/>\n<a href=\"./publications\" aria-label=\"More publications\">More publications...</a>\n","include":"","button_label":"","button_link":"","rule_color":""},{"title":"Useful resources","content":"\n[The Global Goals](https://www.globalgoals.org/)\n\n[Implementing the Sustainable Development Goals](https://www.gov.uk/government/publications/implementing-the-sustainable-development-goals/implementing-the-sustainable-development-goals--2)\n\n<a href=\"./about/#more-resources\" aria-label=\"More resources\">More resources...</a>\n","include":"","button_label":"","button_link":"","rule_color":""}],"frontpage_goals_grid":{"title":"UK data for the Sustainable Development Goals","description":"Select each goal for indicator data."},"frontpage_introduction_banner":{"title":"UK data for the Sustainable Development Goals","description":"Welcome to the home of UK data for <a href=\"https://sdgs.un.org/goals\">the Sustainable Development Goals (SDGs)</a> – reported by <a href=\"https://www.ons.gov.uk/\">the Office for National Statistics</a>,  the UK’s national statistics institute.\n\nThe Sustainable Development Goals (SDGs) are a universal call to action to end poverty, protect the planet and improve the lives and prospects of everyone, everywhere. The 17 Goals were adopted by all UN Member States in 2015, as part of the <a href=\"https://sdgs.un.org/2030agenda\">2030 Agenda for Sustainable Development</a>.\n\nUK data for the Sustainable Development Goals are collated and reported here."},"goal_image_base":"https://open-sdg.github.io/sdg-translations/assets/img/goals","goal_image_extension":"svg","goals_page":{"title":"UK data for the Sustainable Development Goals","description":"Select each goal for indicator data."},"graph_color_headline":"#004466","graph_color_headline_high_contrast":"#55a6e5","graph_color_set":"accessible","graph_color_list":[],"graph_color_number":0,"graph_title_from_series":true,"header_language_toggle":"none","hide_empty_metadata":false,"hide_single_series":true,"hide_single_unit":true,"ignored_disaggregations":["Activity (default)","Age (default)","Urbanisation (default)"],"indicator_config_form":{"enabled":false,"dropdowns":[],"repository_link":"","translation_link":""},"indicator_data_form":{"enabled":false,"repository_link":""},"indicator_metadata_form":{"enabled":false,"dropdowns":[],"repository_link":"","translation_link":"","language":"","scopes":[],"exclude_fields":[],"translated":false},"indicator_tabs":{"tab_1":"","tab_2":"","tab_3":"","tab_4":""},"languages":["en"],"languages_public":[],"logos":[],"map_layers":[{"subfolder":"country","label":"Country","min_zoom":4,"max_zoom":6,"staticBorders":true},{"subfolder":"regions","label":"Regions","min_zoom":6,"max_zoom":8,"staticBorders":true},{"subfolder":"local_authorities","label":"Local Authorities","min_zoom":9,"max_zoom":12,"staticBorders":true}],"map_options":{"disaggregation_controls":false,"minZoom":4,"maxZoom":10,"tileURL":"https://{s}.tile.jawg.io/{id}/{z}/{x}/{y}{r}.png?access-token={accessToken}","tileOptions":{"id":"ed56748f-29f9-465e-9269-c715674ee5ff","accessToken":"yrcGMvxCkRD6zZBF4x3mnAT3OGQJstAj7JvG1iy1UjEdy6JFeDfnzKvXrTK07CxF","attribution":"<a href=\"http://jawg.io\" title=\"Provider of map tiles\" target=\"_blank\">&copy; <b>Jawg</b>Maps</a> &copy; <a href=\"https://www.openstreetmap.org/copyright\" title=\"Provider of map visual data copywrite information\">OpenStreetMap</a> contributors | <a href=\"http://geoportal.statistics.gov.uk/\" title=\"The Open Geography portal from the Office for National Statistics\">ONS</a>"},"colorRange":["#c4e1c6","#b0d1b3","#9bc2a1","#87b28f","#74a37c","#60946b","#4d8559","#3a7747","#276836"],"noValueColor":"#f0f0f0","styleNormal":{"weight":1,"opacity":1,"fillOpacity":0.7,"color":"#888888","dashArray":""},"styleHighlighted":{"weight":1,"opacity":1,"fillOpacity":0.7,"color":"#111111","dashArray":""},"styleStatic":{"weight":2,"opacity":1,"fillOpacity":0,"color":"#172d44","dashArray":"5,5"}},"menu":[{"path":"/","translation_key":"general.home","dropdown":[]},{"path":"/goals","translation_key":"general.goals","dropdown":[]},{"path":"/reporting-status/","translation_key":"menu.reporting_status","dropdown":[]},{"path":"/publications/","translation_key":"menu.publications","dropdown":[]},{"path":"/updates/","translation_key":"menu.updates","dropdown":[]},{"path":"/faq/","translation_key":"menu.faq","dropdown":[]},{"path":"/about/","translation_key":"menu.about","dropdown":[]}],"metadata_edit_url":"","metadata_tabs":[],"meta_tags":[{"path":"","name":"description","content":"UK data for the Sustainable Development Goals (SDGs) – reported by the Office for National Statistics"},{"path":"1","name":"description","content":"Goal 1 - No poverty - UK Indicators For The Sustainable Development Goals"},{"path":"2","name":"description","content":"Goal 2 - Zero hunger - UK Indicators For The Sustainable Development Goals"},{"path":"3","name":"description","content":"Goal 3 - Good Health and Well-Being - UK Indicators For The Sustainable Development Goals"},{"path":"4","name":"description","content":"Goal 4 - Quality Education - UK Indicators For The Sustainable Development Goals"},{"path":"5","name":"description","content":"Goal 5 - Gender Equality - UK Indicators For The Sustainable Development Goals"},{"path":"6","name":"description","content":"Goal 6 - Clean Water and Sanitation - UK Indicators For The Sustainable Development Goals"},{"path":"7","name":"description","content":"Goal 7 - Affordable and Clean Energy - UK Indicators For The Sustainable Development Goals"},{"path":"8","name":"description","content":"Goal 8 - Decent Work and Economic Growth - UK Indicators For The Sustainable Development Goals"},{"path":"9","name":"description","content":"Goal 9 - Industry, Innovation and Infrastructure - UK Indicators For The Sustainable Development Goals"},{"path":"10","name":"description","content":"Goal 10 - Reduced Inequalities - UK Indicators For The Sustainable Development Goals"},{"path":"11","name":"description","content":"Goal 11 - Sustainable Cities and Communities - UK Indicators For The Sustainable Development Goals"},{"path":"12","name":"description","content":"Goal 12 - Responsible Consumption and Production - UK Indicators For The Sustainable Development Goals"},{"path":"13","name":"description","content":"Goal 13 - Climate Action - UK Indicators For The Sustainable Development Goals"},{"path":"14","name":"description","content":"Goal 14 - Life Below Water - UK Indicators For The Sustainable Development Goals"},{"path":"15","name":"description","content":"Goal 15 - Life on Land - UK Indicators For The Sustainable Development Goals"},{"path":"16","name":"description","content":"Goal 16 - Peace, Justice and Strong Institutions - UK Indicators For The Sustainable Development Goals"},{"path":"17","name":"description","content":"Goal 17 - Partnerships for the Goals - UK Indicators For The Sustainable Development Goals"}],"news":{"category_links":false},"progress_status":{"status_heading":"","status_types":[]},"progressive_web_app":{"enabled":true,"name":"UK SDG Data App","short_name":"UK SDG App","precaching":true},"remote_data_prefix":"https://ONSdigital.github.io/sdg-data","reporting_status":{"title":"Reporting status","description":"\nReporting status provides an overview of how much Sustainable Development Goal (SDG) data the UK reports. For more information, see [What does the reporting status mean?](https://onsdigital.github.io/sdg-indicators/faq/#what-does-the-reporting-status-mean)\n\n\nDisaggregation status provides an overview of how many of the SDG indicators are disaggregated. For more information, see [What does the disaggregation status mean?](https://onsdigital.github.io/sdg-indicators/faq/#what-does-the-disaggregation-status-mean)\n\n\nFor details about all available disaggregations and how each indicator is disaggregated, see the [UK disaggregation report](https://onsdigital.github.io/sdg-data/disaggregations.html).\n\n\nNote: These percentages have been rounded. As a result, adding them together may not equal exactly 100%.\n\n\n*This page is updated automatically on a weekly basis.*\n","disaggregation_tabs":true,"status_types":[{"value":"complete","label":"status.reported","hide_on_goal_pages":false},{"value":"notstarted","label":"status.no_data_available","hide_on_goal_pages":false}],"disaggregation_indicator_count_label":"indicators in scope"},"repository_url_data":"https://github.com/ONSdigital/sdg-data","repository_url_site":"https://github.com/ONSdigital/sdg-indicators","search_index_boost":[],"search_index_extra_fields":["indicator_available","graph_title","data_keywords"],"site_config_form":{"enabled":true,"dropdowns":[],"repository_link":"/tree/develop/_data","translation_link":""},"time_series_attributes":[{"field":"COMMENT_TS","label":"indicator.footnote"},{"field":"DATA_LAST_UPDATE","label":"metadata_fields.national_data_update_url"}],"use_new_config_forms":true,"validate_indicator_config":false,"validate_site_config":false,"x_axis_label":""};
       opensdg.configForm.repoUrl = "https://github.com/ONSdigital/sdg-indicators";
       opensdg.configForm.configFolder = null;
       opensdg.configForm.githubClientId = null;
@@ -3341,12 +3432,21 @@ data-event-label="high"
                 </div>
             </div>
         </div>
-         
+        
 
 <div class="row">
   <div class="col-xs-12">
     <div id="oglLicense">
-        <img alt="Open Government Licence logo" src="/sdg-indicators/assets/img/OGL_logo.png" width="35px" class="me-2">All data is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+      <img
+        alt="Open Government Licence logo"
+        src="/sdg-indicators/assets/img/OGL_logo.png"
+        width="35px"
+        class="me-2"
+      />All data is available under the
+      <a
+        href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+        >Open Government Licence v3.0</a
+      >, except where otherwise stated
     </div>
   </div>
 </div>
@@ -3514,15 +3614,20 @@ if (allRequired) {
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/sdg-indicators/assets/js/sdg.js?v=20250730015211'></script>
-<script src="//cdn.loop11.com/embed.js" type="text/javascript" async="async"></script>
+<script src='/sdg-indicators/assets/js/sdg.js?v=20250730020711'></script>
+<script
+  src="//cdn.loop11.com/embed.js"
+  type="text/javascript"
+  async="async"
+></script>
 <script src="/sdg-indicators/assets/js/govuk.js"></script>
 <script>
-  window.GOVUKFrontend.initAll()
+  window.GOVUKFrontend.initAll();
 </script>
+
     
     
-    <script src="/sdg-indicators/assets/js/custom.js?v=20250730015211"></script><script>
+    <script src="/sdg-indicators/assets/js/custom.js?v=20250730020711"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>
