@@ -1,7 +1,7 @@
 {% include head.html %}
 {% include header.html %}
 
-<div id="main-content" class="container">
+<main id="main-content" class="container" role="main">
   <h1>{{ page.title | t }}</h1>
   {{ content }}
 
@@ -13,23 +13,37 @@
     {% endif %}
   {% endfor %}
   {% assign indicator_objects = indicator_objects | sort: 'sort' %}
-  {% for indicator in indicator_objects %}
 
-  <div class="row mb-3">
-    <div class="col-2">
-      <h4>
-        <span class="indicator-number"><span class="visually-hidden">{{ page.t.general.indicator }}</span> {{ indicator.indicator_number }}</span>
-      </h4>
-    </div>
-    <div class="col-7">
-      <span class="indicator-name"><a href="{{ indicator.url }}">{{ indicator.name }}</a> ({{ indicator.archive_type }})</span>
-    </div>
-    <div class="col-12 col-md-2 ms-auto text-end text-nowrap">
-      <span class="visually-hidden">{{ page.t.indicator.status }}</span>
-      {% include components/reportingstatus/reporting-status-label.html indicator=indicator %}
-    </div>
-  </div>
-  {% endfor %}
-</div>
+  {% if indicator_objects.size > 0 %}
+    <section aria-labelledby="indicators-list-title" class="mt-4">
+      <h2 id="indicators-list-title" class="visually-hidden">{{ page.t.general.indicators_list }}</h2>
+
+      {% for indicator in indicator_objects %}
+      <div class="row align-items-center mb-3">
+        <div class="col-2">
+          <h3 class="h5 m-0">
+            <span class="indicator-number">
+              <span class="visually-hidden">{{ page.t.general.indicator }}</span>
+              {{ indicator.indicator_number }}
+            </span>
+          </h3>
+        </div>
+
+        <div class="col-7">
+          <span class="indicator-name">
+            <a href="{{ indicator.url }}">{{ indicator.name }}</a>
+            {% if indicator.archive_type %} ({{ indicator.archive_type }}){% endif %}
+          </span>
+        </div>
+
+        <div class="col-12 col-md-2 ms-auto text-end text-nowrap">
+          <span class="visually-hidden">{{ page.t.indicator.status }}</span>
+          {% include components/reportingstatus/reporting-status-label.html indicator=indicator %}
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+</main>
 
 {% include footer.html %}
