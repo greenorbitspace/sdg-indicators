@@ -3,16 +3,29 @@
 ---
 {% include custom/cookies.js %}
 
- opensdg.dataRounding = function(value, context) {
-    if (value == null) {
-    return value
+<script>
+// IE detection and warning
+(function() {
+  var ua = window.navigator.userAgent;
+  var isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
+
+  if (isIE) {
+    var warningDiv = document.createElement('div');
+    warningDiv.style.cssText = 'background: #ffcc00; color: #000; padding: 1em; text-align: center; font-weight: bold;';
+    warningDiv.innerHTML = '⚠️ This browser is not supported. Please upgrade to a modern browser like Chrome, Firefox, Edge, or Safari.';
+    document.body.insertBefore(warningDiv, document.body.firstChild);
   }
- // Round to 4 SF in indicator 5.3.2.
-    if (context.indicatorId === 'indicator_5-3-2') {
-        return Number(value.toPrecision(4))
-       }
-    // Otherwise round to 3 SF.
-    else {
-        return Number(value.toPrecision(3))
-    }
-};    
+})();
+
+// Rounding override
+opensdg.dataRounding = function(value, context) {
+  if (value == null) return value;
+
+  // Indicator-specific rounding
+  if (context.indicatorId === 'indicator_5-3-2') {
+    return Number(value.toPrecision(4));
+  } else {
+    return Number(value.toPrecision(3));
+  }
+};
+</script>
