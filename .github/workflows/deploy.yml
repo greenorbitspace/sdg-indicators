@@ -6,22 +6,24 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-open-sdg
+      cancel-in-progress: true
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Ruby
+      - name: Set up Ruby environment
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
+          bundler-cache: true    # caches gems between runs
 
       - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
+        run: bundle config set deployment 'true' && bundle install --jobs 4 --retry 3
 
       - name: Build Jekyll site
         run: bundle exec jekyll build -d public
@@ -36,3 +38,4 @@ jobs:
           publish_dir: public
           publish_branch: gh-pages
           keep_files: false
+          commit_message: "Deploy Open SDG site - ${{ github.sha }}"
