@@ -1,5 +1,3 @@
-// Enter any custom Sass in this file.
-
 .layout-frontpage .emergency-banner {
   border-bottom: 5px solid #fff;
   border-top: 5px solid #fff;
@@ -7,78 +5,94 @@
   margin-top: 0;
   position: relative;
   z-index: 10;
+  background-color: var(--color-primary-500);  // Brand primary background for banners
 }
 
 .emergency-banner {
   color: #fff;
+  font-family: var(--font-sans);
 }
 
 .emergency-banner__heading {
   font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
 }
 
 .emergency-banner--notable-death {
-  background-color: #0b0c0c;
+  background-color: var(--color-primary-900);  // Darker brand tone for serious alerts
 }
 
 .layout-frontpage .emergency-banner__description {
   margin: 20px 0;
+  font-size: 1.125rem;
+  line-height: 1.4;
 }
 
 .emergency-banner__link.govuk-link:link,
 .emergency-banner__link.govuk-link:visited {
-  color: #fff;
+  color: var(--color-accent-200);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.emergency-banner__link.govuk-link:hover,
+.emergency-banner__link.govuk-link:focus {
+  color: var(--color-accent-400);
+  outline-offset: 2px;
+  outline-color: var(--color-accent-400);
 }
 
 @media (min-width: 40.0625em) {
   .emergency-banner {
     padding: 30px 0;
+    font-size: 1.1875rem;
+    line-height: 1.3;
   }
   .layout-frontpage .emergency-banner__heading {
     margin-bottom: 20px;
-    font-size: 48px;
     font-size: 3rem;
-    line-height: 1.0416666667;
-  }
-  .emergency-banner {
-    font-size: 19px;
-    font-size: 1.1875rem;
-    line-height: 1.3157894737;
+    line-height: 1.04;
   }
   .emergency-banner__link {
-    font-size: 19px;
     font-size: 1.1875rem;
-    line-height: 1.3157894737;
+    line-height: 1.3;
   }
 }
 
 .site-intro {
   margin-top: 20px;
+  font-family: var(--font-sans);
+
   .description {
     margin-top: 30px;
-    font-size: 21px;
-
+    font-size: 1.3125rem;
     text-align: justify;
     text-justify: inter-word;
+    color: var(--color-primary-700);
   }
 
   @media only screen and (min-width: 700px) {
     padding-right: 300px;
     min-height: 180px;
-
-    background: url("../img/SDG Wheel_Transparent-01.png");
-    background-position: right 30px center;
+    background: url("../img/SDG Wheel_Transparent-01.png") right 30px center no-repeat;
     background-size: 220px;
-    background-repeat: no-repeat;
   }
 }
 
 #disclaimer .alert a {
-  color: #0000cd;
+  color: var(--color-accent-500);
+  text-decoration: underline;
 }
 
 .navbar-brand img {
   width: 250px;
+  transition: width 0.3s ease;
+}
+
+@media screen and (min-width: 500px) {
+  .navbar-brand img {
+    width: 350px;
+  }
 }
 
 #main-content .alert {
@@ -88,66 +102,56 @@
   }
 }
 
-@media screen and (min-width: 500px) {
-  .navbar-brand img {
-    width: 350px;
-  }
-}
-
 #disclaimer {
   .disclaimer-alert {
-    padding-bottom: 15px;
-    padding-top: 15px;
+    padding: 15px 0;
   }
 }
 
 .btn-takepart {
-  background: #dd1367 !important;
+  background: var(--color-accent-500) !important;
   float: right;
   margin-top: -10px;
   margin-right: -9px;
-  box-shadow: 0 2px 0 #580829;
+  box-shadow: 0 2px 0 var(--color-primary-700);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
   @media only screen and (min-width: 992px) {
     display: inline-block;
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     display: block;
     width: 220px;
-    float: unset;
-    margin-top: 0px;
+    float: none;
+    margin-top: 0;
   }
-  @media only screen and (min-width: 1px) and (max-width: 767px) {
+  @media only screen and (max-width: 767px) {
     display: block;
     width: 220px;
-    float: unset;
+    float: none;
     margin-top: 10px;
   }
   &:hover,
   &:active {
-    background: #a01951 !important;
+    background: var(--color-accent-700) !important;
   }
   &:focus {
-    background: #fd0 !important;
-    color: #0b0c0c !important;
+    background: var(--color-warning-400) !important;
+    color: var(--color-primary-900) !important;
+    outline-offset: 2px;
   }
 }
 
-.ten {
-  width: 10%;
-}
-.twenty {
-  width: 20%;
-}
-.fourtyfive {
-  width: 45%;
-}
+.ten { width: 10%; }
+.twenty { width: 20%; }
+.fourtyfive { width: 45%; }
 
 .govuk-fieldset__legend--l.cookie-form-legend {
   font-size: 16px;
 }
 
 .blank {
-  background-colour: #ffffff;
+  background-color: #ffffff;
 }
 
 #data-notice {
@@ -157,33 +161,41 @@
 .notice-heading {
   font-size: 19px;
   font-weight: bold;
+  color: var(--color-primary-700);
 }
 
 .inset-text {
-  border-left: 10px solid #b1b4b6;
+  border-left: 10px solid var(--color-gray-200);
   padding: 15px;
   margin-bottom: 20px;
   margin-left: 30px;
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-900);
 }
 
 #toc {
-  list-style-type: none;
+  list-style: none;
   padding-left: 0;
   margin-bottom: 30px;
   li {
     position: relative;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 7.5px;
+    padding: 7.5px 25px 7.5px 25px;
     &::before {
       content: "—";
       position: absolute;
       left: 0;
       width: 20px;
       overflow: hidden;
+      color: var(--color-primary-400);
     }
     a {
       text-decoration: none;
+      color: var(--color-primary-700);
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: var(--color-accent-500);
+      }
     }
   }
 }
@@ -194,25 +206,23 @@ body.contrast-high {
   }
   .goal-indicators div span.status.complete {
     background-color: white !important;
-    background: white !important;
     color: black !important;
   }
   .goal-indicators div span.status.notstarted {
     background-color: black !important;
-    background: black !important;
     color: white !important;
     border: 1px solid white;
   }
 }
 
 .persona-list {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   li {
     display: flex;
     .up-column {
       padding: 10px;
-      border: 1px solid;
+      border: 1px solid var(--color-primary-400);
       text-align: center;
       margin: 5px;
       display: flex;
@@ -221,13 +231,18 @@ body.contrast-high {
         font-size: 16px;
         font-weight: 700;
         margin-top: 5px;
+        color: var(--color-primary-700);
       }
       .persona-quote {
         margin-bottom: 75px;
+        font-style: italic;
+        color: var(--color-primary-600);
       }
       .persona-motivation {
         align-self: flex-end;
         margin-top: auto;
+        font-weight: 600;
+        color: var(--color-accent-500);
       }
     }
   }

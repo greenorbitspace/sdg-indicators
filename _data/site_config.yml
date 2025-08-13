@@ -630,7 +630,7 @@ reporting_status:
       hide_on_goal_pages: false
   disaggregation_indicator_count_label: indicators in scope
 repository_url_data: "https://github.com/ONSdigital/sdg-data"
-repository_url_site: "https://github.com/ONSdigital/sdg-indicators"
+repository_url_site: "https://github.com/greenorbitspace/sdg-indicators"
 search_index_boost: []
 search_index_extra_fields:
   - indicator_available
